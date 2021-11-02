@@ -1,0 +1,112 @@
+/* caddie mark map start */
+.caddie-mark-map {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: url("../images/control/dashboard/state_people.png");
+  background-size: cover !important;
+  background-position: center !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.caddie-mark-map.first-team {
+  background: url("../images/control/dashboard/state_first.png");
+}
+.caddie-mark-map.last-team {
+  background: url("../images/control/dashboard/state_last.png");
+}
+.caddie-mark-map.team-1 {
+  background: url("../images/control/dashboard/state_team1.png");
+}
+.caddie-mark-map.team-2 {
+  background: url("../images/control/dashboard/state_team2.png");
+}
+.caddie-mark-map.team-3 {
+  background: url("../images/control/dashboard/state_team3.png");
+}
+.caddie-mark-map.team-4 {
+  background: url("../images/control/dashboard/state_team4.png");
+}
+.caddie-mark-map.team-5 {
+  background: url("../images/control/dashboard/state_team5.png");
+}
+.caddie-mark-map.team-6 {
+  background: url("../images/control/dashboard/state_team6.png");
+}
+.caddie-mark-map.team-7 {
+  background: url("../images/control/dashboard/state_team7.png");
+}
+.caddie-mark-map.team-8 {
+  background: url("../images/control/dashboard/state_team8.png");
+}
+.caddie-mark-map.team-9 {
+  background: url("../images/control/dashboard/state_team9.png");
+}
+.caddie-mark-map.team-10 {
+  background: url("../images/control/dashboard/state_team10.png");
+}
+.caddie-mark-map.team-11 {
+  background: url("../images/control/dashboard/state_team11.png");
+}
+.caddie-mark-map.team-12 {
+  background: url("../images/control/dashboard/state_team12.png");
+}
+.caddie-mark-map.team-13 {
+  background: url("../images/control/dashboard/state_team13.png");
+}
+.caddie-mark-map.team-14 {
+  background: url("../images/control/dashboard/state_team14.png");
+}
+.caddie-mark-map.team-15 {
+  background: url("../images/control/dashboard/state_team15.png");
+}
+.caddie-mark-map.team-16 {
+  background: url("../images/control/dashboard/state_team16.png");
+}
+.caddie-mark-map.team-17 {
+  background: url("../images/control/dashboard/state_team17.png");
+}
+.caddie-mark-map.team-18 {
+  background: url("../images/control/dashboard/state_team18.png");
+}
+.caddie-mark-map.team-19 {
+  background: url("../images/control/dashboard/state_team19.png");
+}
+.caddie-mark-map.team-20 {
+  background: url("../images/control/dashboard/state_team20.png");
+}
+.caddie-mark-map.team-21 {
+  background: url("../images/control/dashboard/state_team21.png");
+}
+.caddie-mark-map.team-22 {
+  background: url("../images/control/dashboard/state_team22.png");
+}
+.caddie-mark-map.team-23 {
+  background: url("../images/control/dashboard/state_team23.png");
+}
+.caddie-mark-map.team-24 {
+  background: url("../images/control/dashboard/state_team24.png");
+}
+.caddie-mark-map.team-25 {
+  background: url("../images/control/dashboard/state_team25.png");
+}
+.caddie-mark-map.team-26 {
+  background: url("../images/control/dashboard/state_team26.png");
+}
+.caddie-mark-map.team-27 {
+  background: url("../images/control/dashboard/state_team27.png");
+}
+.caddie-mark-map.team-28 {
+  background: url("../images/control/dashboard/state_team28.png");
+}
+.caddie-mark-map.team-29 {
+  background: url("../images/control/dashboard/state_team29.png");
+}
+.caddie-mark-map.team-30 {
+  background: url("../images/control/dashboard/state_team30.png");
+}
+/* caddie mark map end */
+
+.caddie-mark-map.selected {
+  transform: scale(1.5);
+}

@@ -1,0 +1,30 @@
+/* page style start */
+.print {
+  padding: 15px;
+  display: grid;
+  grid-gap: 5px;
+  position: relative;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.print_size_selphy {
+  width: 14.8cm;
+  height: 10cm;
+}
+
+.print_size_a4 {
+  max-width: 29.7cm;
+  max-height: 21cm;
+  padding: 29px 26px;
+}
+/* page style end */
+
+/* print setting start */
+@media print {
+  /* @page {
+    size: landscape;
+  } */
+}
+/* print setting end */

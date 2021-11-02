@@ -1,0 +1,5 @@
+@font-face {
+  font-family: 'NanumSquare-Bold';
+  src: url('./NanumSquare-Bold.woff2') format('woff2'),
+  url('./NanumSquare-Bold.woff') format('woff');
+}

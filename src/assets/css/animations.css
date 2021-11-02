@@ -1,0 +1,150 @@
+/* basic start */
+@keyframes wobble {
+  0% {
+    color: gold;
+    /* transform: translateY(220%); */
+  }
+  10% {
+    transform: translateX(-8px) scale(1.2);
+    color: gold;
+  }
+  20% {
+    transform: translateX(8px) scale(1.2);
+    color: gold;
+  }
+  30% {
+    transform: translateX(-7px) scale(1.2);
+    color: gold;
+  }
+  40% {
+    transform: translateX(7px) scale(1.2);
+    color: gold;
+  }
+  50% {
+    transform: translateX(-6px) scale(1.2);
+    color: gold;
+  }
+  60% {
+    transform: translateX(6px) scale(1.2);
+    color: gold;
+  }
+  70% {
+    transform: translateX(-5px) scale(1.2);
+    color: gold;
+  }
+  80% {
+    transform: translateX(5px) scale(1.2);
+    color: gold;
+  }
+  90% {
+    transform: translateX(2px) scale(1.2);
+    color: gold;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    color: gold;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotationWithScale {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(360deg) scale(1.2);
+  }
+}
+
+@keyframes spinnerOne {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}
+
+@keyframes heartBeatSm {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes heartBeatXs {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes hereAnim {
+  0% {
+    background-color: tomato;
+  }
+
+  100% {
+    background-color: gold;
+  }
+}
+
+.here-anim {
+  animation: hereAnim 0.3s ease infinite alternate;
+}
+
+.heart-beat {
+  animation: heartBeat 0.8s ease infinite alternate;
+}
+
+.heart-beat-sm {
+  animation: heartBeatSm 0.8s ease infinite alternate;
+}
+
+.heart-beat-xs {
+  animation: heartBeatXs 0.8s ease infinite alternate;
+}
+
+.sending {
+  animation: rotation 1s ease infinite alternate;
+}
+
+.message_sending {
+  animation: rotationWithScale 1s ease infinite alternate;
+}
+/* basic end */
+
+/* vue transition start */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+/* vue transition end */

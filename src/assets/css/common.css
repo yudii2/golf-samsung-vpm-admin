@@ -1,0 +1,173 @@
+/* Basic */
+* {
+  outline: none;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: none;
+}
+
+:root {
+  --colorPrimary: #2e7458;
+  --colorPrimaryHover: #1f5b41;
+  --colorPositive: #1c39eb;
+  --colorNegative: #eb1c24;
+}
+
+.isMobile * {
+  cursor: pointer;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  min-width: 280px;
+}
+
+button,
+input,
+textarea,
+select {
+  outline: none;
+}
+
+button,
+input[type="radio"],
+input[type="checkbox"],
+select {
+  cursor: pointer;
+}
+
+button:disabled,
+input[type="radio"]:disabled,
+input[type="checkbox"]:disabled,
+select:disabled {
+  cursor: auto;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+input[type="file"]::-webkit-file-upload-button {
+  cursor: pointer;
+}
+
+/* Color */
+b.color-primary {
+  color: #2e7458;
+  font-weight: normal;
+}
+b.color-positive {
+  color: #1c39eb;
+  font-weight: normal;
+}
+b.color-negative {
+  color: #eb1c24;
+  font-weight: normal;
+}
+b.color-saturday {
+  color: #1c39eb;
+  font-weight: normal;
+}
+b.color-sunday {
+  color: #eb1c24;
+  font-weight: normal;
+}
+
+/* Sample */
+.sample {
+  box-sizing: border-box;
+  padding: 30px 40px;
+  margin: 0 auto;
+}
+.sample .sa-object {
+  padding: 10px 0;
+}
+.sample .sa-line {
+  padding: 30px 0;
+}
+.sample .sa-line::before {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  content: "";
+}
+@media (max-width: 1279px) {
+  .sample {
+    max-width: 540px;
+    padding: 30px 20px;
+  }
+}
+@media (max-width: 359px) {
+  .sample {
+    padding: 30px 10px;
+  }
+}
+@media (max-width: 319px) {
+  .sample {
+    padding: 30px 5px;
+  }
+}
+
+label.tag {
+  display: block;
+}
+b.tag {
+  font-weight: normal;
+}
+i.tag {
+  font-style: normal;
+}
+
+.component {
+  display: block;
+  box-sizing: border-box;
+  box-shadow: none;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.component:disabled {
+  color: #ccc;
+  opacity: 1;
+  -webkit-text-fill-color: #ccc;
+}
+
+.inlineBlock {
+  line-height: 0;
+}
+.inlineBlock .item {
+  display: inline-block;
+  line-height: 1.15;
+  text-align: left;
+}
+
+.vh {
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.clear::after {
+  display: block;
+  clear: both;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+  content: "";
+}
