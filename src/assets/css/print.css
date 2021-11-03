@@ -23,8 +23,8 @@
 
 /* print setting start */
 @media print {
-  /* @page {
-    size: landscape;
-  } */
+  @page {
+    size: auto;
+  }
 }
 /* print setting end */

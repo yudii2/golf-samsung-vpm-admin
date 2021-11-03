@@ -45,17 +45,17 @@
       <div class="first_half table__wrapper">
         <table class="round_table">
           <colgroup>
-            <col width="15%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="15%"/>
+            <col width="15%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="15%" />
           </colgroup>
           <thead>
           <tr>
@@ -105,17 +105,17 @@
       <div class="second_half table__wrapper">
         <table class="round_table">
           <colgroup>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="7.77%"/>
-            <col width="15%"/>
-            <col width="15%"/>
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="7.77%" />
+            <col width="15%" />
+            <col width="15%" />
           </colgroup>
           <thead>
           <tr>
@@ -166,7 +166,7 @@
 
     <!-- photo (우측 상단) -->
     <section class="photo__wrapper">
-      <img class="photo" :src="roundPhoto"/>
+      <img class="photo" :src="roundPhoto" />
     </section>
 
     <!-- ad bottom (최하단) -->
@@ -228,7 +228,7 @@ export default {
      */
     firstCourseName() {
       const {
-        round: {firstCourse},
+        round: { firstCourse },
       } = this.roundInfo;
       return firstCourse;
     },
@@ -238,7 +238,7 @@ export default {
      */
     secondCourseName() {
       const {
-        round: {secondCourse},
+        round: { secondCourse },
       } = this.roundInfo;
       return secondCourse;
     },
@@ -252,7 +252,7 @@ export default {
       return (bookgDate) => {
         const bookgDateByEight = bookgDate.replaceAll("-", "");
         const bookDateByDate = DateUtil.eightToDate(bookgDateByEight);
-        const {year, month, day} = DateUtil.dateDivider(bookDateByDate);
+        const { year, month, day } = DateUtil.dateDivider(bookDateByDate);
         return `${year}년 ${month}월 ${day}일`;
       };
     },
@@ -441,13 +441,13 @@ export default {
 }
 
 #round_photo__container .half_info tr:first-child th {
-  background-color: #31462c;
-  color: #ebb87c;
+  background-color: var(--khaki);
+  color: var(--amber);
 }
 
 #round_photo__container .half_info tr:last-child th {
-  background-color: #ebb87c;
-  color: #31462c;
+  background-color: var(--amber);
+  color: var(--khaki);
 }
 
 #round_photo__container .half_info tr {

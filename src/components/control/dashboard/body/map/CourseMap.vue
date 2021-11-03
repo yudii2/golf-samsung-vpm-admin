@@ -186,16 +186,17 @@ export default {
               lbLatitude,
               lbLongitude,
             } = first;
+
             this.imageUrl = downUrl;
             this.points = [
               ltLatitude,
               ltLongitude,
               rtLatitude,
               rtLongitude,
-              lbLatitude,
-              lbLongitude,
               rbLatitude,
               rbLongitude,
+              lbLatitude,
+              lbLongitude,
             ];
           }
         }
@@ -336,17 +337,17 @@ export default {
       if (DX2 < 0) DX2 = -DX2;
       x = Math.round(
         (X * (blnBetweenX === "N" && DX1 < DX2 ? -DX1 : DX1)) /
-          Math.sqrt(
-            (lats[1] - lats[0]) * (lats[1] - lats[0]) +
-              (lons[1] - lons[0]) * (lons[1] - lons[0])
-          )
+        Math.sqrt(
+          (lats[1] - lats[0]) * (lats[1] - lats[0]) +
+          (lons[1] - lons[0]) * (lons[1] - lons[0])
+        )
       );
       y = Math.round(
         (Y * (blnBetweenX === "N" && DY1 < DY2 ? -DY1 : DY1)) /
-          Math.sqrt(
-            (lats[3] - lats[0]) * (lats[3] - lats[0]) +
-              (lons[3] - lons[0]) * (lons[3] - lons[0])
-          )
+        Math.sqrt(
+          (lats[3] - lats[0]) * (lats[3] - lats[0]) +
+          (lons[3] - lons[0]) * (lons[3] - lons[0])
+        )
       );
       return {
         x,

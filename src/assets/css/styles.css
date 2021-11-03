@@ -15,6 +15,9 @@
   --par4: #116973;
   --par5: #268b62;
   --sky: rgb(138, 179, 255);
+  --amber: #ebb87c;
+  --khaki: #31462c;
+  --table-gray: #eaeaea;
 }
 
 html,
@@ -416,7 +419,7 @@ input::placeholder {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--dark);
-  padding: 20px;
+  padding: 16px;
   border: 1px solid var(--primary);
   border-radius: 20px;
   display: grid;
@@ -460,10 +463,12 @@ input::placeholder {
 /* scroll */
 *::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: #287881;
+  background-color: var(--soft-green);
 }
-*::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
   background-color: transparent;
 }
