@@ -55,6 +55,7 @@ module.exports = {
       chunkFilename: "js/[name].[hash].js",
     },
   },
+  productionSourceMap: false,
 };
 
 /**
