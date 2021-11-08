@@ -120,7 +120,7 @@ export default {
     updatePager(list) {
       this.pager = new Pager({
         list,
-        take: 5,
+        take: 15,
       });
       const res = this.pager.generate();
       this.rows = res.firstPageRows;

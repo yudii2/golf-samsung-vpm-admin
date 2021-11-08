@@ -2,35 +2,35 @@
   <div class="table__wrapper">
     <table>
       <colgroup>
-        <col width="3%" />
-        <col width="4%" />
-        <col width="4%" />
-        <col width="3%" />
-        <col width="4%" />
-        <col width="4%" />
-        <col width="7%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="13%" />
 
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
+        <!-- 1홀 ~ 9홀-->
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
+        <col width="*" />
 
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-        <col width="3%" />
-
-        <col width="4%" />
+        <col width="6%" />
       </colgroup>
       <thead>
         <tr>
@@ -102,7 +102,7 @@
         </tr>
 
         <tr>
-          <td>{{ row.visitMonth }}</td>
+          <td>{{ parsedVisitMonth(row.visitMonth) }}</td>
           <td>{{ row.endTime }}</td>
           <td>{{ row.cartNo }}</td>
           <td>{{ row.firstTime }}</td>
@@ -184,6 +184,17 @@ export default {
     getCourseParInfo(courseCd) {
       return this.getCourseParInfoByCourseCode(courseCd);
     },
+
+    /**
+     * visitMonth 파싱 메소드.
+     * input 09-14
+     * output 09.14
+     * @param visitMonth
+     * @returns {*|string}
+     */
+    parsedVisitMonth(visitMonth) {
+      return visitMonth.replaceAll("-", ".");
+    },
   },
 };
 </script>
@@ -192,6 +203,8 @@ export default {
 .table__wrapper {
   height: 610px;
   overflow-y: scroll;
+  table-layout: fixed;
+  word-break: keep-all;
 }
 
 table {
