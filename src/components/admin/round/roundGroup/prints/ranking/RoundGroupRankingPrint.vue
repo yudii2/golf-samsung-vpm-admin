@@ -21,123 +21,123 @@
           <col width="7%" />
         </colgroup>
         <thead>
-        <tr>
-          <th>
-            <span v-if="medalist">{{ medalist }}</span>
-            <span v-else>{{ "메달리스트" }}</span>
-          </th>
-          <th v-if="isCheckedNewPerio">
-            <span v-if="newPerioWinner">{{ newPerioWinner }}</span>
-            <span v-else>{{ "신페리오 우승" }}</span>
-          </th>
-          <th v-if="isCheckedLongAndNear">
-            <span v-if="longestWinner">{{ longestWinner }}</span>
-            <span v-else>{{ "롱기스트" }}</span>
-          </th>
-          <th v-if="isCheckedLongAndNear">
-            <span v-if="nearestWinner">{{ nearestWinner }}</span>
-            <span v-else>{{ "니어리스트" }}</span>
-          </th>
-          <th v-if="isCheckedBuddy">
-            <span v-if="buddyWinner">{{ buddyWinner }}</span>
-            <span v-else>{{ "버디" }}</span>
-          </th>
-          <th v-if="isCheckedPar">
-            <span v-if="parWinner">{{ parWinner }}</span>
-            <span v-else>{{ "파" }}</span>
-          </th>
-          <th v-if="isCheckedOneOver">
-            <span v-if="oneOverWinner">{{ oneOverWinner }}</span>
-            <span v-else>{{ "보기" }}</span>
-          </th>
-          <th v-if="isCheckedTwoOver">
-            <span v-if="twoOverWinner">{{ twoOverWinner }}</span>
-            <span v-else>{{ "더블보기" }}</span>
-          </th>
-          <th v-if="isCheckedThreeOver">
-            <span v-if="threeOverWinner">{{ threeOverWinner }}</span>
-            <span v-else>{{ "트리플보기" }}</span>
-          </th>
-          <th v-if="isCheckedDoublePar">
-            <span v-if="doubleParWinner">{{ doubleParWinner }}</span>
-            <span v-else>{{ "더블파" }}</span>
-          </th>
-          <th v-if="isCheckedFirstSecondGap">
+          <tr>
+            <th>
+              <span v-if="medalist">{{ medalist }}</span>
+              <span v-else>{{ "메달리스트" }}</span>
+            </th>
+            <th v-if="isCheckedNewPerio">
+              <span v-if="newPerioWinner">{{ newPerioWinner }}</span>
+              <span v-else>{{ "신페리오 우승" }}</span>
+            </th>
+            <th v-if="isCheckedLongAndNear">
+              <span v-if="longestWinner">{{ longestWinner }}</span>
+              <span v-else>{{ "롱기스트" }}</span>
+            </th>
+            <th v-if="isCheckedLongAndNear">
+              <span v-if="nearestWinner">{{ nearestWinner }}</span>
+              <span v-else>{{ "니어리스트" }}</span>
+            </th>
+            <th v-if="isCheckedBuddy">
+              <span v-if="buddyWinner">{{ buddyWinner }}</span>
+              <span v-else>{{ "버디" }}</span>
+            </th>
+            <th v-if="isCheckedPar">
+              <span v-if="parWinner">{{ parWinner }}</span>
+              <span v-else>{{ "파" }}</span>
+            </th>
+            <th v-if="isCheckedOneOver">
+              <span v-if="oneOverWinner">{{ oneOverWinner }}</span>
+              <span v-else>{{ "보기" }}</span>
+            </th>
+            <th v-if="isCheckedTwoOver">
+              <span v-if="twoOverWinner">{{ twoOverWinner }}</span>
+              <span v-else>{{ "더블보기" }}</span>
+            </th>
+            <th v-if="isCheckedThreeOver">
+              <span v-if="threeOverWinner">{{ threeOverWinner }}</span>
+              <span v-else>{{ "트리플보기" }}</span>
+            </th>
+            <th v-if="isCheckedDoublePar">
+              <span v-if="doubleParWinner">{{ doubleParWinner }}</span>
+              <span v-else>{{ "더블파" }}</span>
+            </th>
+            <th v-if="isCheckedFirstSecondGap">
               <span v-if="firstSecondGapWinner">{{
-                  firstSecondGapWinner
-                }}</span>
-            <span v-else>{{ "전후반" }}</span>
-          </th>
-        </tr>
+                firstSecondGapWinner
+              }}</span>
+              <span v-else>{{ "전후반" }}</span>
+            </th>
+          </tr>
         </thead>
 
         <tbody>
-        <tr>
-          <td v-if="medalistPlayerNm">
+          <tr>
+            <td v-if="medalistPlayerNm">
               <span v-if="updatedTotRankPlayerNm">{{
-                  updatedTotRankPlayerNm
-                }}</span>
-            <span v-else>{{ medalistPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedNewPerio">
+                updatedTotRankPlayerNm
+              }}</span>
+              <span v-else>{{ medalistPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedNewPerio">
               <span v-if="updatedScoreRankPlayerNm">{{
-                  updatedScoreRankPlayerNm
-                }}</span>
-            <span v-else>{{ newPerioWinnerPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedLongAndNear">
+                updatedScoreRankPlayerNm
+              }}</span>
+              <span v-else>{{ newPerioWinnerPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedLongAndNear">
               <span v-if="updatedLongestPlayerNm">{{
-                  updatedLongestPlayerNm
-                }}</span>
-            <span v-else>{{ longestPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedLongAndNear">
+                updatedLongestPlayerNm
+              }}</span>
+              <span v-else>{{ longestPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedLongAndNear">
               <span v-if="updatedNearestPlayerNm">{{
-                  updatedNearestPlayerNm
-                }}</span>
-            <span v-else>{{ nearestPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedBuddy">
+                updatedNearestPlayerNm
+              }}</span>
+              <span v-else>{{ nearestPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedBuddy">
               <span v-if="updatedBuddyPlayerNm">{{
-                  updatedBuddyPlayerNm
-                }}</span>
-            <span v-else>{{ buddyPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedPar">
-            <span v-if="updatedParPlayerNm">{{ updatedParPlayerNm }}</span>
-            <span v-else>{{ parPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedOneOver">
+                updatedBuddyPlayerNm
+              }}</span>
+              <span v-else>{{ buddyPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedPar">
+              <span v-if="updatedParPlayerNm">{{ updatedParPlayerNm }}</span>
+              <span v-else>{{ parPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedOneOver">
               <span v-if="updatedOneOverPlayerNm">{{
-                  updatedOneOverPlayerNm
-                }}</span>
-            <span v-else>{{ oneOverPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedTwoOver">
+                updatedOneOverPlayerNm
+              }}</span>
+              <span v-else>{{ oneOverPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedTwoOver">
               <span v-if="updatedTwoOverPlayerNm">{{
-                  updatedTwoOverPlayerNm
-                }}</span>
-            <span v-else>{{ twoOverPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedThreeOver">
+                updatedTwoOverPlayerNm
+              }}</span>
+              <span v-else>{{ twoOverPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedThreeOver">
               <span v-if="updatedThreeOverPlayerNm">{{
-                  updatedThreeOverPlayerNm
-                }}</span>
-            <span v-else>{{ threeOverPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedDoublePar">
+                updatedThreeOverPlayerNm
+              }}</span>
+              <span v-else>{{ threeOverPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedDoublePar">
               <span v-if="updatedDoubleParPlayerNm">{{
-                  updatedDoubleParPlayerNm
-                }}</span>
-            <span v-else>{{ doubleParPlayerNm }}</span>
-          </td>
-          <td v-if="isCheckedFirstSecondGap">
+                updatedDoubleParPlayerNm
+              }}</span>
+              <span v-else>{{ doubleParPlayerNm }}</span>
+            </td>
+            <td v-if="isCheckedFirstSecondGap">
               <span v-if="updatedFirstSecondGapPlayerNm">{{
-                  updatedFirstSecondGapPlayerNm
-                }}</span>
-            <span v-else>{{ firstSecondGapPlayerNm }}</span>
-          </td>
-        </tr>
+                updatedFirstSecondGapPlayerNm
+              }}</span>
+              <span v-else>{{ firstSecondGapPlayerNm }}</span>
+            </td>
+          </tr>
         </tbody>
       </table>
     </section>
@@ -213,407 +213,407 @@
           </template>
         </colgroup>
         <thead>
-        <tr>
-          <th rowspan="2">순위</th>
+          <tr>
+            <th rowspan="2">순위</th>
+            <template v-if="isCheckedNewPerio">
+              <th colspan="6">Score</th>
+            </template>
+            <template v-else>
+              <th colspan="4">Score</th>
+            </template>
+            <th colspan="4" v-if="isCheckedLongAndNear">롱/니어</th>
+            <th colspan="2" v-if="isCheckedBuddy">버디</th>
+            <th colspan="2" v-if="isCheckedPar">파</th>
+            <th colspan="2" v-if="isCheckedOneOver">보기</th>
+            <th colspan="2" v-if="isCheckedTwoOver">더블보기</th>
+            <th colspan="2" v-if="isCheckedThreeOver">트리플보기</th>
+            <th colspan="2" v-if="isCheckedDoublePar">더블파</th>
+            <th colspan="2" v-if="isCheckedFirstSecondGap">전후반차</th>
+            <th colspan="2" v-if="isCheckedLucky">행운상</th>
+          </tr>
           <template v-if="isCheckedNewPerio">
-            <th colspan="6">Score</th>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">전반</th>
+            <th class="second-head-column">후반</th>
+            <th class="second-head-column">Total</th>
+            <th class="second-head-column">Hcp</th>
+            <th class="second-head-column">Net</th>
           </template>
           <template v-else>
-            <th colspan="4">Score</th>
-          </template>
-          <th colspan="4" v-if="isCheckedLongAndNear">롱/니어</th>
-          <th colspan="2" v-if="isCheckedBuddy">버디</th>
-          <th colspan="2" v-if="isCheckedPar">파</th>
-          <th colspan="2" v-if="isCheckedOneOver">보기</th>
-          <th colspan="2" v-if="isCheckedTwoOver">더블보기</th>
-          <th colspan="2" v-if="isCheckedThreeOver">트리플보기</th>
-          <th colspan="2" v-if="isCheckedDoublePar">더블파</th>
-          <th colspan="2" v-if="isCheckedFirstSecondGap">전후반차</th>
-          <th colspan="2" v-if="isCheckedLucky">행운상</th>
-        </tr>
-        <template v-if="isCheckedNewPerio">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">전반</th>
-          <th class="second-head-column">후반</th>
-          <th class="second-head-column">Total</th>
-          <th class="second-head-column">Hcp</th>
-          <th class="second-head-column">Net</th>
-        </template>
-        <template v-else>
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">전반</th>
-          <th class="second-head-column">후반</th>
-          <th class="second-head-column">Total</th>
-        </template>
-
-        <template v-if="isCheckedLongAndNear">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">롱기</th>
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">니어</th>
-        </template>
-
-        <template v-if="isCheckedBuddy">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">개</th>
-        </template>
-
-        <template v-if="isCheckedPar">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">개</th>
-        </template>
-
-        <template v-if="isCheckedOneOver">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">개</th>
-        </template>
-
-        <template v-if="isCheckedTwoOver">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">개</th>
-        </template>
-
-        <template v-if="isCheckedThreeOver">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">개</th>
-        </template>
-
-        <template v-if="isCheckedDoublePar">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">개</th>
-        </template>
-
-        <template v-if="isCheckedFirstSecondGap">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">차이</th>
-        </template>
-
-        <template v-if="isCheckedLucky">
-          <th class="second-head-column">이름</th>
-          <th class="second-head-column">Lucky</th>
-        </template>
-        </thead>
-        <tbody>
-        <tr v-for="i in selectedRoundGroupRank.playerCount" :key="i">
-          <td>{{ i }}</td>
-          <template v-if="isCheckedNewPerio">
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
-                  "firstScore"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
-                  "secondScore"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
-                  "totScoreByNewPerio"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
-                  "handyValue"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
-                  "netScore"
-                )
-              }}
-            </td>
-          </template>
-          <template v-else>
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
-                  "firstScore"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
-                  "secondScore"
-                )
-              }}
-            </td>
-
-            <td>
-              {{
-                getScorePlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
-                  "totalScore"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">전반</th>
+            <th class="second-head-column">후반</th>
+            <th class="second-head-column">Total</th>
           </template>
 
           <template v-if="isCheckedLongAndNear">
-            <td>
-              {{
-                getLongOrNearPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerLongRankVOList,
-                  "playerLongNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getLongOrNearPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerLongRankVOList,
-                  "longValue"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getLongOrNearPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerNearRankVOList,
-                  "playerNearNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getLongOrNearPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerNearRankVOList,
-                  "nearValue"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">롱기</th>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">니어</th>
           </template>
 
           <template v-if="isCheckedBuddy">
-            <td>
-              {{
-                getBuddyPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerBuddyRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getBuddyPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerBuddyRankVOList,
-                  "buddyValue"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">개</th>
           </template>
 
           <template v-if="isCheckedPar">
-            <td>
-              {{
-                getParPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerParRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getParPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerParRankVOList,
-                  "parValue"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">개</th>
           </template>
 
           <template v-if="isCheckedOneOver">
-            <td>
-              {{
-                getOneOverPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerOneOverRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getOneOverPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerOneOverRankVOList,
-                  "oneOverValue"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">개</th>
           </template>
 
           <template v-if="isCheckedTwoOver">
-            <td>
-              {{
-                getTwoOverPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerTwoOverRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getTwoOverPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerTwoOverRankVOList,
-                  "twoOverValue"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">개</th>
           </template>
 
           <template v-if="isCheckedThreeOver">
-            <td>
-              {{
-                getThreeOverPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerThreeOverRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getThreeOverPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerThreeOverRankVOList,
-                  "threeOverValue"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">개</th>
           </template>
 
           <template v-if="isCheckedDoublePar">
-            <td>
-              {{
-                getDoubleParPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerDoubleParRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getDoubleParPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerDoubleParRankVOList,
-                  "doubleParValue"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">개</th>
           </template>
 
           <template v-if="isCheckedFirstSecondGap">
-            <td>
-              {{
-                getFirstSecondGapPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerFirstSecondGapRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              {{
-                getFirstSecondGapPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerFirstSecondGapRankVOList,
-                  "gapValue"
-                )
-              }}
-            </td>
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">차이</th>
           </template>
 
           <template v-if="isCheckedLucky">
-            <td>
-              {{
-                getLuckyPlayerInfo(
-                  i - 1,
-                  selectedRoundGroupRank.roundGroupPlayerLuckyYnRankVOList,
-                  "playerNm"
-                )
-              }}
-            </td>
-            <td>
-              <div>
-                <i
-                  class="lucky_check"
-                  v-if="
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">Lucky</th>
+          </template>
+        </thead>
+        <tbody>
+          <tr v-for="i in selectedRoundGroupRank.playerCount" :key="i">
+            <td>{{ i }}</td>
+            <template v-if="isCheckedNewPerio">
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "firstScore"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "secondScore"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "totScoreByNewPerio"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "handyValue"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "netScore"
+                  )
+                }}
+              </td>
+            </template>
+            <template v-else>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
+                    "firstScore"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
+                    "secondScore"
+                  )
+                }}
+              </td>
+
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
+                    "totalScore"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedLongAndNear">
+              <td>
+                {{
+                  getLongOrNearPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerLongRankVOList,
+                    "playerLongNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getLongOrNearPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerLongRankVOList,
+                    "longValue"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getLongOrNearPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNearRankVOList,
+                    "playerNearNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getLongOrNearPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNearRankVOList,
+                    "nearValue"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedBuddy">
+              <td>
+                {{
+                  getBuddyPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerBuddyRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getBuddyPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerBuddyRankVOList,
+                    "buddyValue"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedPar">
+              <td>
+                {{
+                  getParPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerParRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getParPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerParRankVOList,
+                    "parValue"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedOneOver">
+              <td>
+                {{
+                  getOneOverPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerOneOverRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getOneOverPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerOneOverRankVOList,
+                    "oneOverValue"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedTwoOver">
+              <td>
+                {{
+                  getTwoOverPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerTwoOverRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getTwoOverPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerTwoOverRankVOList,
+                    "twoOverValue"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedThreeOver">
+              <td>
+                {{
+                  getThreeOverPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerThreeOverRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getThreeOverPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerThreeOverRankVOList,
+                    "threeOverValue"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedDoublePar">
+              <td>
+                {{
+                  getDoubleParPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerDoubleParRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getDoubleParPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerDoubleParRankVOList,
+                    "doubleParValue"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedFirstSecondGap">
+              <td>
+                {{
+                  getFirstSecondGapPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerFirstSecondGapRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getFirstSecondGapPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerFirstSecondGapRankVOList,
+                    "gapValue"
+                  )
+                }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedLucky">
+              <td>
+                {{
+                  getLuckyPlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerLuckyYnRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                <div>
+                  <i
+                    class="lucky_check"
+                    v-if="
                       getLuckyPlayerInfo(
                         i - 1,
                         selectedRoundGroupRank.roundGroupPlayerLuckyYnRankVOList,
                         'luckyValue'
                       ) === 'N'
                     "
-                ></i>
-                <i
-                  class="fas fa-check lucky_check checker"
-                  v-if="
+                  ></i>
+                  <i
+                    class="fas fa-check lucky_check checker"
+                    v-if="
                       getLuckyPlayerInfo(
                         i - 1,
                         selectedRoundGroupRank.roundGroupPlayerLuckyYnRankVOList,
                         'luckyValue'
                       ) === 'Y'
                     "
-                ></i>
-              </div>
-            </td>
-          </template>
-        </tr>
+                  ></i>
+                </div>
+              </td>
+            </template>
+          </tr>
         </tbody>
       </table>
     </section>
@@ -899,7 +899,7 @@ export default {
   overflow: hidden;
   grid-template-columns: repeat(10, 1fr);
   width: 95%;
-  margin: 0 auto;
+  margin: 8mm auto;
   opacity: 1;
   visibility: visible;
   display: none;
@@ -942,9 +942,9 @@ th {
   size: A4 landscape;
 } */
 
-/* @media print {
+@media print {
   .page_divide {
     page-break-after: always;
   }
-} */
+}
 </style>

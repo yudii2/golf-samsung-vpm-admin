@@ -161,12 +161,8 @@
 <script>
 import useCaddie from "@/api/v1/monitor/useCaddie";
 import useCopy from "@/composables/useCopy.js";
-import { mapGetters, mapState } from "vuex";
-import {
-  myTestCaddies,
-  allCaddies,
-  tempCaddies,
-} from "@/utils/test/testCaddies.js";
+import { mapGetters } from "vuex";
+import { allCaddies } from "@/utils/test/testCaddies.js";
 
 const { clipboard } = useCopy();
 const { getCaddies, setCaddie } = useCaddie();
@@ -177,7 +173,7 @@ export default {
   data() {
     return {
       clipboard: null,
-      caddieInfos: myTestCaddies,
+      caddieInfos: allCaddies,
     };
   },
 

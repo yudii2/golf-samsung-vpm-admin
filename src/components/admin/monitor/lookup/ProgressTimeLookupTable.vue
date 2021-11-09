@@ -225,7 +225,7 @@ table th {
 
 table td {
   height: 50px;
-  padding: 0.25rem;
+  padding: 0.5rem;
   border: 1px solid var(--soft-green);
   font-size: 0.9rem;
 }

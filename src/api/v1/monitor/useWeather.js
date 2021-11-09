@@ -15,7 +15,7 @@ const useWeather = () => {
       },
     })
       .then((res) => res.json())
-      .catch((err) => err.message);
+      .catch((err) => console.error(err.message));
   };
 
   return { getWeather };

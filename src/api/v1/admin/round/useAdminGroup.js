@@ -6,8 +6,9 @@ const useAdminGroup = () => {
 
   /**
    * ### 단체 라운드 조회
-   * @param groupNm
    * @param visitDt
+   * @param groupNm
+   * @returns {Promise<Response | void>}
    */
   const getGroup = ({ visitDt, groupNm }) => {
     let uri = `${BASE_URI}/round/info/roundGroup-info`;

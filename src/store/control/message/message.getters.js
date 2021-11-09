@@ -7,7 +7,7 @@ export default {
   getReceivedMessages: (state) => {
     return state.messages.filter((message) => message.gubun == 2);
   },
-  getFirstReceivedMessage: (_) => {
+  getFirstReceivedMessage: () => {
     const receivedMessages = store.getters["control/getReceivedMessages"];
     return receivedMessages.length ? receivedMessages[0] : null;
   },
@@ -33,24 +33,24 @@ export default {
     return state.searchCaddieName;
   },
   findMatchedCaddies: (state, getter) => {
-    const selectedCourse = getter.getMessengerSelectedHoleInfo.course;
+    const { courseCode } = getter.getMessengerSelectedHoleInfo.course;
     const selectedHoles = getter.getMessengerSelectedHoleInfo.holes;
-    const selectedHolesByIndex = selectedHoles.map((h) => h[0]);
-    return state.caddies.filter((c) => {
-      const isAllCourse = selectedCourse.courseCode == 0;
-      if (!isAllCourse) {
-        const isNotMatchedCourse = c.bookgCourseCd != selectedCourse.courseCode;
-        if (isNotMatchedCourse) {
-          return false;
-        }
-      }
 
-      const holeIndex = getter.parseHoleIndex(c.currHoleIndex);
-      const isMatchedHole = selectedHolesByIndex.includes(holeIndex);
-      if (!isMatchedHole) {
-        return false;
-      }
-      return c;
+    const selectedHolesByIndex = selectedHoles.map((h) => h[0]);
+
+    const isAllCourses = courseCode == 0;
+
+    return state.caddies.filter((caddie) => {
+      const { currHoleCd } = caddie;
+
+      const parsedHoles = selectedHolesByIndex.map((selectedHoleIndex) =>
+        getter.getHoleCodeByHoleIndex(
+          isAllCourses ? 1 : courseCode,
+          selectedHoleIndex
+        )
+      );
+
+      return parsedHoles.includes(currHoleCd);
     });
   },
 

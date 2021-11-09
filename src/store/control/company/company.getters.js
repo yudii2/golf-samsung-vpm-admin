@@ -84,4 +84,23 @@ export default {
       return null;
     }
   },
+
+  /**
+   * ### 홀 번호로 홀 코드를 찾는 메소드.
+   * @param {String} courseCode > 찾고 싶은 홀의 코스 코드.
+   * @param {String|Number} holeIndex > 찾고 싶은 홀의 번호.
+   * @returns {String} 찾고 싶은 홀의 코드.
+   */
+  getHoleCodeByHoleIndex: (_, getters) => (courseCode, holeIndex) => {
+    try {
+      const { getCourseHolesByCourseCode } = getters;
+      const holes = getCourseHolesByCourseCode(courseCode);
+      if (holes && holes.length) {
+        const foundHole = holes.find((hole) => hole.holeNm == holeIndex);
+        return foundHole.holeCd;
+      }
+    } catch (e) {
+      console.error("getHoleCodeByHoleIndex", e.message);
+    }
+  },
 };
