@@ -146,12 +146,28 @@
     <section class="mt">
       <table id="second_table__wrapper">
         <colgroup>
-          <template v-if="isCheckedNewPerio">
+          <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
             <col width="4%" />
 
-            <col width="7%" />
+            <col width="5%" />
             <col width="4%" />
             <col width="4%" />
+            <col width="4%" />
+            <col width="4%" />
+            <col width="4%" />
+          </template>
+          <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
+            <col width="4%" />
+
+            <col width="5%" />
+            <col width="4%" />
+            <col width="4%" />
+            <col width="4%" />
+          </template>
+          <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+            <col width="4%" />
+
+            <col width="5%" />
             <col width="4%" />
             <col width="4%" />
             <col width="4%" />
@@ -159,67 +175,71 @@
           <template v-else>
             <col width="4%" />
 
-            <col width="7%" />
-            <col width="4%" />
-            <col width="4%" />
+            <col width="5%" />
             <col width="4%" />
           </template>
 
           <template v-if="isCheckedLongAndNear">
-            <col width="7%" />
+            <col width="5%" />
             <col width="4%" />
-            <col width="7%" />
+            <col width="5%" />
             <col width="4%" />
           </template>
 
           <template v-if="isCheckedBuddy">
-            <col width="7%" />
+            <col width="5%" />
             <col width="3%" />
           </template>
 
           <template v-if="isCheckedPar">
-            <col width="7%" />
+            <col width="5%" />
             <col width="3%" />
           </template>
 
           <template v-if="isCheckedOneOver">
-            <col width="7%" />
+            <col width="5%" />
             <col width="3%" />
           </template>
 
           <template v-if="isCheckedTwoOver">
-            <col width="7%" />
+            <col width="5%" />
             <col width="3%" />
           </template>
 
           <template v-if="isCheckedThreeOver">
-            <col width="7%" />
+            <col width="5%" />
             <col width="3%" />
           </template>
 
           <template v-if="isCheckedDoublePar">
-            <col width="7%" />
+            <col width="5%" />
             <col width="3%" />
           </template>
 
           <template v-if="isCheckedFirstSecondGap">
-            <col width="7%" />
+            <col width="5%" />
             <col width="4%" />
           </template>
 
           <template v-if="isCheckedLucky">
-            <col width="7%" />
+            <col width="5%" />
             <col width="4%" />
           </template>
         </colgroup>
         <thead>
           <tr>
             <th rowspan="2">순위</th>
-            <template v-if="isCheckedNewPerio">
+            <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
               <th colspan="6">Score</th>
             </template>
-            <template v-else>
+            <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
               <th colspan="4">Score</th>
+            </template>
+            <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+              <th colspan="4">Score</th>
+            </template>
+            <template v-else>
+              <th colspan="2">Score</th>
             </template>
             <th colspan="4" v-if="isCheckedLongAndNear">롱/니어</th>
             <th colspan="2" v-if="isCheckedBuddy">버디</th>
@@ -231,7 +251,7 @@
             <th colspan="2" v-if="isCheckedFirstSecondGap">전후반차</th>
             <th colspan="2" v-if="isCheckedLucky">행운상</th>
           </tr>
-          <template v-if="isCheckedNewPerio">
+          <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
             <th class="second-head-column">이름</th>
             <th class="second-head-column">전반</th>
             <th class="second-head-column">후반</th>
@@ -239,10 +259,20 @@
             <th class="second-head-column">Hcp</th>
             <th class="second-head-column">Net</th>
           </template>
-          <template v-else>
+          <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
             <th class="second-head-column">이름</th>
             <th class="second-head-column">전반</th>
             <th class="second-head-column">후반</th>
+            <th class="second-head-column">Total</th>
+          </template>
+          <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+            <th class="second-head-column">이름</th>
+            <th class="second-head-column">Total</th>
+            <th class="second-head-column">Hcp</th>
+            <th class="second-head-column">Net</th>
+          </template>
+          <template v-else>
+            <th class="second-head-column">이름</th>
             <th class="second-head-column">Total</th>
           </template>
 
@@ -296,7 +326,7 @@
         <tbody>
           <tr v-for="i in selectedRoundGroupRank.playerCount" :key="i">
             <td>{{ i }}</td>
-            <template v-if="isCheckedNewPerio">
+            <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
               <td>
                 {{
                   getScorePlayerInfo(
@@ -352,7 +382,7 @@
                 }}
               </td>
             </template>
-            <template v-else>
+            <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
               <td>
                 {{
                   getScorePlayerInfo(
@@ -380,7 +410,64 @@
                   )
                 }}
               </td>
-
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
+                    "totalScore"
+                  )
+                }}
+              </td>
+            </template>
+            <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "totScoreByNewPerio"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "handyValue"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "netScore"
+                  )
+                }}
+              </td>
+            </template>
+            <template v-else>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerScoreRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
               <td>
                 {{
                   getScorePlayerInfo(
@@ -638,6 +725,7 @@ export default {
     isCheckedFirstSecondGap: { type: Boolean, require: true },
     isCheckedLucky: { type: Boolean, require: true },
     isCheckedNewPerio: { type: Boolean, require: true },
+    isCheckedFirstSecond: { type: Boolean, require: true },
     medalist: { type: String, required: false },
     newPerioWinner: { type: String, required: false },
     longestWinner: { type: String, required: false },

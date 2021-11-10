@@ -29,6 +29,19 @@
           </div>
           <span class="rank no-drag">롱/니어</span>
         </li>
+        <li
+          @click="
+            $emit('handleCheckBoxClick', {
+              type: 'firstSecond',
+              status: isCheckedFirstSecond,
+            })
+          "
+        >
+          <div class="checkbox__wrapper">
+            <i v-if="isCheckedFirstSecond" class="checker fas fa-check"></i>
+          </div>
+          <span class="rank no-drag">전/후반</span>
+        </li>
       </div>
       <br />
       <div class="ranks_li__wrapper">
@@ -157,6 +170,7 @@ export default {
     isCheckedFirstSecondGap: { type: Boolean, require: true },
     isCheckedLucky: { type: Boolean, require: true },
     isCheckedNewPerio: { type: Boolean, require: true },
+    isCheckedFirstSecond: { type: Boolean, require: true },
   },
 };
 </script>
@@ -166,6 +180,7 @@ export default {
   font-weight: 800;
   display: flex;
 }
+
 .ranks__wrapper {
   display: flex;
   flex-direction: column;
