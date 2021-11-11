@@ -1,7 +1,7 @@
 <template>
   <div class="backdrop">
     <div id="score_detail__container" ref="scoreDetailContainer">
-      <CloseButton @onClose="handleClickClose"/>
+      <CloseButton @onClose="handleClickClose" />
       <header class="header">
         <div class="buttons">
           <button class="py-1/2 px" @click="handleClickPrint">인쇄하기</button>
@@ -11,9 +11,9 @@
         </div>
         <div class="company_info px">{{ currentCompany.name }}</div>
         <div class="company_info px" v-if="selectedRound.round.courseInOut">
-                      <span>
-                        {{ selectedRound.round.courseInOut }}
-                      </span>
+          <span>
+            {{ selectedRound.round.courseInOut }}
+          </span>
         </div>
         <div class="company_info px">
           <span>{{ parsedVisitDt(selectedRound.visitDt) }} </span>
@@ -28,160 +28,196 @@
         <section class="score_detail_tables">
           <table class="table_total">
             <colgroup>
-              <col width="20%"/>
-              <col width="20%"/>
-              <col width="20%"/>
-              <col width="20%"/>
-              <col width="20%"/>
+              <col width="20%" />
+              <col width="20%" />
+              <col width="20%" />
+              <col width="20%" />
+              <col width="20%" />
             </colgroup>
             <thead>
-            <tr>
-              <th>Player</th>
-              <th>스코어</th>
-              <th>퍼팅수</th>
-              <th>페어웨이 안착률</th>
-              <th>그린 적중률</th>
-            </tr>
+              <tr>
+                <th>Player</th>
+                <th>스코어</th>
+                <th>퍼팅수</th>
+                <th>페어웨이 안착률</th>
+                <th>그린 적중률</th>
+              </tr>
             </thead>
             <tbody v-if="selectedRound.roundTeamPlayerList.length">
-            <tr v-for="(player, idx) in selectedRound.roundTeamPlayerList" :key="idx">
-              <td>{{ maskedPlayerName(player.name) }}</td>
-              <td>{{ player.scoreTotal }}</td>
-              <td>{{ player.putterTotal }}</td>
-              <td>{{ player.fairWaySafe }}</td>
-              <td>{{ player.greenHit }}</td>
-            </tr>
+              <tr
+                v-for="(player, idx) in selectedRound.roundTeamPlayerList"
+                :key="idx"
+              >
+                <td>{{ maskedPlayerName(player.name) }}</td>
+                <td>{{ player.scoreTotal }}</td>
+                <td>{{ player.putterTotal }}</td>
+                <td>{{ player.fairWaySafe }}</td>
+                <td>{{ player.greenHit }}</td>
+              </tr>
             </tbody>
           </table>
 
           <table class="table_each_hole">
             <colgroup>
-              <col width="7%"/>
-              <col width="7%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="4%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="3.38%"/>
-              <col width="4%"/>
-              <col width="4%"/>
+              <col width="7%" />
+              <col width="7%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="4%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="3.38%" />
+              <col width="4%" />
+              <col width="4%" />
             </colgroup>
             <thead>
-            <tr>
-              <th rowspan="2">Player</th>
-              <th>Hole</th>
-              <th
-                v-for="(hole, idx) in selectedRound.roundTeamParList.slice(0,9)"
-                :key="`par_index_first_${idx}`"
-              >
-                {{ hole.holeNm }}
-              </th>
-              <th></th>
-              <th
-                v-for="(hole, jdx) in selectedRound.roundTeamParList.slice(9,18)"
-                :key="`par_index_second_${jdx}`"
-              >
-                {{ hole.holeNm }}
-              </th>
-              <th></th>
-              <th></th>
-              <th rowspan="2">SMS</th>
-            </tr>
-            <tr>
-              <th>Par</th>
-              <th
-                v-for="(par, idx) in selectedRound.roundTeamParList.slice(0,9)"
-                :key="`first_${idx}`"
-              >
-                {{ par.par }}
-              </th>
-              <th>
-                {{ accumulatorForPar(selectedRound, 0, 9) }}
-              </th>
-              <th
-                v-for="(par, idx) in selectedRound.roundTeamParList.slice(9,18)"
-                :key="`second_${idx}`"
-              >
-                {{ par.par }}
-              </th>
-              <th>
-                {{ accumulatorForPar(selectedRound, 9, 18) }}
-              </th>
-              <th>
-                {{ accumulatorForPar(selectedRound, 0, 9) + accumulatorForPar(selectedRound, 9, 18) }}
-              </th>
-            </tr>
+              <tr>
+                <th rowspan="2">Player</th>
+                <th>Hole</th>
+                <th
+                  v-for="(hole, idx) in selectedRound.roundTeamParList.slice(
+                    0,
+                    9
+                  )"
+                  :key="`par_index_first_${idx}`"
+                >
+                  {{ hole.holeNm }}
+                </th>
+                <th></th>
+                <th
+                  v-for="(hole, jdx) in selectedRound.roundTeamParList.slice(
+                    9,
+                    18
+                  )"
+                  :key="`par_index_second_${jdx}`"
+                >
+                  {{ hole.holeNm }}
+                </th>
+                <th></th>
+                <th></th>
+                <th rowspan="2">SMS</th>
+              </tr>
+              <tr>
+                <th>Par</th>
+                <th
+                  v-for="(par, idx) in selectedRound.roundTeamParList.slice(
+                    0,
+                    9
+                  )"
+                  :key="`first_${idx}`"
+                >
+                  {{ par.par }}
+                </th>
+                <th>
+                  {{ accumulatorForPar(selectedRound, 0, 9) }}
+                </th>
+                <th
+                  v-for="(par, idx) in selectedRound.roundTeamParList.slice(
+                    9,
+                    18
+                  )"
+                  :key="`second_${idx}`"
+                >
+                  {{ par.par }}
+                </th>
+                <th>
+                  {{ accumulatorForPar(selectedRound, 9, 18) }}
+                </th>
+                <th>
+                  {{
+                    accumulatorForPar(selectedRound, 0, 9) +
+                    accumulatorForPar(selectedRound, 9, 18)
+                  }}
+                </th>
+              </tr>
             </thead>
             <tbody>
-            <template v-for="player in selectedRound.roundTeamPlayerList">
-              <tr>
-                <td rowspan="2">{{ maskedPlayerName(player.name) }}</td>
-                <td>스코어</td>
-                <template v-if="player.roundPlayerScoreStrokeList !== null">
-                  <td v-for="(score,idx) in player.roundPlayerScoreStrokeList.slice(0,9)"
-                      :key="`${player.name}_first_score_${idx}`">
-                    {{ scoreByViewType(score.value, "first", idx) }}
+              <template
+                v-for="(player, i, j) in selectedRound.roundTeamPlayerList"
+              >
+                <tr :key="`${selectedRound.roundId}${i}`">
+                  <td rowspan="2">{{ maskedPlayerName(player.name) }}</td>
+                  <td>스코어</td>
+                  <template v-if="player.roundPlayerScoreStrokeList !== null">
+                    <td
+                      v-for="(
+                        score, idx
+                      ) in player.roundPlayerScoreStrokeList.slice(0, 9)"
+                      :key="`${player.name}_first_score_${idx}`"
+                    >
+                      {{ scoreByViewType(score.value, "first", idx) }}
+                    </td>
+                    <td>
+                      {{ player.firstScoreSum }}
+                    </td>
+                    <td
+                      v-for="(
+                        score, idx
+                      ) in player.roundPlayerScoreStrokeList.slice(9, 18)"
+                      :key="`${player.name}_second_score_${idx}`"
+                    >
+                      {{ scoreByViewType(score.value, "second", idx + 9) }}
+                    </td>
+                  </template>
+                  <td>
+                    {{ player.secondScoreSum }}
                   </td>
                   <td>
-                    {{ player.firstScoreSum }}
+                    {{ player.scoreTotal }}
                   </td>
-                  <td v-for="(score,idx) in player.roundPlayerScoreStrokeList.slice(9,18)"
-                      :key="`${player.name}_second_score_${idx}`">
-                    {{ scoreByViewType(score.value, "second", idx + 9) }}
+                  <td rowspan="2">
+                    <button
+                      class="button-dark"
+                      @click="handleClickSMS(player, selectedRound)"
+                    >
+                      SMS전송
+                    </button>
                   </td>
-                </template>
-                <td>
-                  {{ player.secondScoreSum }}
-                </td>
-                <td>
-                  {{ player.scoreTotal }}
-                </td>
-                <td rowspan="2">
-                  <button class="button-dark" @click="handleClickSMS(player,selectedRound)">SMS전송</button>
-                </td>
-              </tr>
-              <tr>
-                <td>퍼팅수</td>
-                <template v-if="player.roundPlayerScorePutterList !== null">
-                  <td
-                    v-for="(score,idx) in player.roundPlayerScorePutterList.slice(0,9)"
-                    :key="`${player.name}_first_score_putter_${idx}`"
-                  >
-                    {{ score.value === 0 ? '-' : score.value }}
+                </tr>
+                <tr :key="`${selectedRound.roundId}${i}${j}`">
+                  <td>퍼팅수</td>
+                  <template v-if="player.roundPlayerScorePutterList !== null">
+                    <td
+                      v-for="(
+                        score, idx
+                      ) in player.roundPlayerScorePutterList.slice(0, 9)"
+                      :key="`${player.name}_first_score_putter_${idx}`"
+                    >
+                      {{ score.value === 0 ? "-" : score.value }}
+                    </td>
+                    <td>
+                      {{ player.firstPutterSum }}
+                    </td>
+                    <td
+                      v-for="(
+                        score, idx
+                      ) in player.roundPlayerScorePutterList.slice(9, 18)"
+                      :key="`${player.name}_second_score_putter_${idx}`"
+                    >
+                      {{ score.value === 0 ? "-" : score.value }}
+                    </td>
+                  </template>
+                  <td>
+                    {{ player.secondPutterSum }}
                   </td>
                   <td>
-                    {{ player.firstPutterSum }}
+                    {{ player.putterTotal }}
                   </td>
-                  <td
-                    v-for="(score,idx) in player.roundPlayerScorePutterList.slice(9,18)"
-                    :key="`${player.name}_second_score_putter_${idx}`"
-                  >
-                    {{ score.value === 0 ? '-' : score.value }}
-                  </td>
-                </template>
-                <td>
-                  {{ player.secondPutterSum }}
-                </td>
-                <td>
-                  {{ player.putterTotal }}
-                </td>
-
-              </tr>
-            </template>
+                </tr>
+              </template>
             </tbody>
           </table>
         </section>
@@ -198,20 +234,17 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-import DateUtil from "@/utils/datetime/DateUtil";
+import { mapActions, mapGetters } from "vuex";
 import TimeUtil from "@/utils/datetime/TimeUtil";
 import CloseButton from "@/components/shared/CloseButton.vue";
 import RoundAllScorePrint from "@/components/admin/round/roundAll/RoundAllScorePrint.vue";
-import {print} from "@/composables/usePrinter";
-import {getListByPage} from "@/utils/usePage";
-import {nameToMasking} from "@/utils/string";
-
+import { print } from "@/composables/usePrinter";
+import { nameToMasking } from "@/utils/string";
 
 export default {
   name: "ScoreDetail",
 
-  components: {CloseButton, RoundAllScorePrint},
+  components: { CloseButton, RoundAllScorePrint },
 
   data() {
     return {
@@ -227,8 +260,8 @@ export default {
      */
     parsedBookgTime() {
       return (bookgTime) => {
-        return TimeUtil.timeFormatWithChar(bookgTime)
-      }
+        return TimeUtil.timeFormatWithChar(bookgTime);
+      };
     },
 
     /**
@@ -237,12 +270,14 @@ export default {
      */
     maskedPlayerName() {
       return (playerName) => {
-        return nameToMasking(playerName)
-      }
+        return nameToMasking(playerName);
+      };
     },
 
     viewTypeText() {
-      return this.viewTypeIsAll ? "오버타수로 변경해서 보기" : "총 타수로 변경해서 보기";
+      return this.viewTypeIsAll
+        ? "오버타수로 변경해서 보기"
+        : "총 타수로 변경해서 보기";
     },
 
     /**
@@ -250,7 +285,7 @@ export default {
      * */
     scoreByViewType() {
       return (originScore, half, index) => {
-        if (originScore === '-') return originScore;
+        if (originScore === "-") return originScore;
 
         if (this.viewTypeIsAll) {
           return originScore;
@@ -286,6 +321,7 @@ export default {
         targetElement: roundPhoto,
         before: this.beforePrint,
         after: this.afterPrint,
+        useGrid: true,
       });
     },
 
@@ -308,9 +344,11 @@ export default {
      */
     accumulatorForPar(selectedRound, firstNum, secondNum) {
       let parList = [];
-      selectedRound?.roundTeamParList?.slice(firstNum, secondNum).forEach((par) => {
-        parList.push(par.par)
-      })
+      selectedRound?.roundTeamParList
+        ?.slice(firstNum, secondNum)
+        .forEach((par) => {
+          parList.push(par.par);
+        });
       const parTotalValue = parList.reduce((acc, curr) => acc + curr);
       return parTotalValue;
     },
@@ -323,9 +361,9 @@ export default {
     handleClickSMS(player, selectedRound) {
       const playerInfo = {
         ...player,
-        "roundId": selectedRound.roundId
-      }
-      this.dispatchUpdateSelectedPlayer(playerInfo)
+        roundId: selectedRound.roundId,
+      };
+      this.dispatchUpdateSelectedPlayer(playerInfo);
       this.updateIsShowingSMSModal(true);
     },
 
@@ -337,19 +375,18 @@ export default {
      * @returns {*|string}
      */
     parsedVisitDt(visitDt) {
-      return visitDt.replaceAll('-', '.');
+      return visitDt.replaceAll("-", ".");
     },
     ...mapActions({
       updateIsShowingRoundAllScoreDetailModal:
         "dispatchIsShowingRoundAllScoreDetailModal",
-      updateIsShowingSMSModal: "dispatchIsShowingSMSModal"
+      updateIsShowingSMSModal: "dispatchIsShowingSMSModal",
     }),
     ...mapActions("admin/", {
       dispatchClearSelectedRound: "dispatchClearSelectedRound",
-      dispatchUpdateSelectedPlayer: 'dispatchUpdateSelectedPlayer'
+      dispatchUpdateSelectedPlayer: "dispatchUpdateSelectedPlayer",
     }),
   },
-
 };
 </script>
 
@@ -386,7 +423,6 @@ export default {
 #score_detail__container .header .company_info {
   display: inline-block;
 }
-
 
 #score_detail__container .header .buttons button {
   border-radius: 5px;

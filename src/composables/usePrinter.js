@@ -1,13 +1,14 @@
 export const print = async ({
-                              targetElement,
-                              before,
-                              after,
-                              autoClose = true,
-                            }) => {
+  targetElement,
+  before,
+  after,
+  autoClose = true,
+  useGrid = false,
+}) => {
   const elem = targetElement.cloneNode(true);
   elem.style.opacity = 1;
   elem.style.visibility = "visible";
-  elem.style.display = "inherit";
+  elem.style.display = useGrid ? "grid" : "block";
 
   let styleSheets = Array(
     ...document.querySelectorAll('style, link[rel="stylesheet"]')
