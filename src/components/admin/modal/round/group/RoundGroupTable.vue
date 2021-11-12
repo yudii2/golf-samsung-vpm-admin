@@ -92,7 +92,6 @@ import DateUtil from "@/utils/datetime/DateUtil";
 const {
   updateGroupHandyModeAsYes,
   getGroupScoreDetail,
-  getAwardInfo,
   getRankList,
 } = useAdminGroup();
 
@@ -238,7 +237,7 @@ export default {
 </script>
 <style scoped>
 .table__wrapper {
-  height: 550px;
+  height: 725px;
   overflow-y: scroll;
 }
 

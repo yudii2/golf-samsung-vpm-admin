@@ -2,86 +2,86 @@
   <div class="table_wrapper">
     <table>
       <colgroup>
-        <col width="4%"/>
-        <col width="7%"/>
-        <col width="7%"/>
-        <col width="6%"/>
-        <col width="12%"/>
-        <col width="18%"/>
-        <col width="7%"/>
-        <col width="8%"/>
-        <col width="9%"/>
-        <col width="12%"/>
-        <col width="10%"/>
+        <col width="4%" />
+        <col width="7%" />
+        <col width="7%" />
+        <col width="6%" />
+        <col width="12%" />
+        <col width="18%" />
+        <col width="7%" />
+        <col width="8%" />
+        <col width="9%" />
+        <col width="12%" />
+        <col width="10%" />
       </colgroup>
       <thead>
-      <tr>
-        <th>순번</th>
-        <th>날짜</th>
-        <th>티타임</th>
-        <th>코스</th>
-        <th>캐디</th>
-        <th>내장객</th>
-        <th>단체명</th>
-        <th>진행홀</th>
-        <th>종료시간</th>
-        <th>승인홀</th>
-        <th>승인</th>
-      </tr>
+        <tr>
+          <th>순번</th>
+          <th>날짜</th>
+          <th>티타임</th>
+          <th>코스</th>
+          <th>캐디</th>
+          <th>내장객</th>
+          <th>단체명</th>
+          <th>진행홀</th>
+          <th>종료시간</th>
+          <th>승인홀</th>
+          <th>승인</th>
+        </tr>
       </thead>
       <tbody v-if="hasRows">
-      <tr v-for="(row, idx) in rows" :key="`${row.roundId}${idx}`">
-        <td>{{ idx + 1 }}</td>
-        <td>
-          <div>
-            <span>{{ parsedVisitDt(row.visitDt) }}</span>
-          </div>
-        </td>
-        <td>
-          <div>
-            <span>{{ parsedBookgTime(row.bookgTime) }}</span>
-          </div>
-        </td>
-        <td>{{ row.firstCourse }} > {{ row.secondCourse }}</td>
-        <td>
-          <div>
-            <span>{{ row.caddieName }}</span>
-          </div>
-        </td>
-        <td>
-          <div class="players" v-if="row.roundPlayerList.length">
+        <tr v-for="(row, idx) in rows" :key="`${row.roundId}${idx}`">
+          <td>{{ idx + 1 }}</td>
+          <td>
+            <div>
+              <span>{{ parsedVisitDt(row.visitDt) }}</span>
+            </div>
+          </td>
+          <td>
+            <div>
+              <span>{{ parsedBookgTime(row.bookgTime) }}</span>
+            </div>
+          </td>
+          <td>{{ row.firstCourse }} > {{ row.secondCourse }}</td>
+          <td>
+            <div>
+              <span>{{ row.caddieName }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="players" v-if="row.roundPlayerList.length">
               <span
                 v-for="(player, idx) in row.roundPlayerList"
                 :key="`${player.playerId}${idx}`"
               >
                 {{ maskedPlayerName(player.name) }}
               </span>
-          </div>
-        </td>
-        <td>{{ row.groupNm }}</td>
-        <td>{{ row.roundHole }}</td>
-        <td>{{ row.endTime }}</td>
-        <td>
-          <input
-            type="number"
-            class="update_input"
-            :value="row.approveHole ? row.approveHole : ''"
-            @change="insertApprovalHoleValue"
-            ref="inputApprovalHoleName"
-          />
-        </td>
-        <td>
-          <!-- 종료시간 승인-->
-          <button class="button-dark" @click="handleClickAcceptButton(row)">
-            {{ row.approveYn === "Y" ? "승인완료" : "미승인" }}
-          </button>
-        </td>
-      </tr>
+            </div>
+          </td>
+          <td>{{ row.groupNm }}</td>
+          <td>{{ row.roundHole }}</td>
+          <td>{{ row.endTime }}</td>
+          <td>
+            <input
+              type="number"
+              class="update_input"
+              :value="row.approveHole ? row.approveHole : ''"
+              @change="insertApprovalHoleValue"
+              ref="inputApprovalHoleName"
+            />
+          </td>
+          <td>
+            <!-- 종료시간 승인-->
+            <button class="button-dark" @click="handleClickAcceptButton(row)">
+              {{ row.approveYn === "Y" ? "승인완료" : "미승인" }}
+            </button>
+          </td>
+        </tr>
       </tbody>
       <tbody v-else>
-      <tr>
-        <td colspan="11">조회된 결과가 없습니다.</td>
-      </tr>
+        <tr>
+          <td colspan="11">조회된 결과가 없습니다.</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -90,13 +90,13 @@
 <script>
 import DateUtil from "@/utils/datetime/DateUtil";
 import TimeUtil from "@/utils/datetime/TimeUtil";
-import {nameToMasking} from "@/utils/string";
-import {NO_REQUIRED_DATA} from "@/utils/constants";
-import {mapActions} from "vuex";
+import { nameToMasking } from "@/utils/string";
+import { NO_REQUIRED_DATA } from "@/utils/constants";
+import { mapActions } from "vuex";
 import useRound from "@/api/v1/admin/round/useRound";
-import {SUCCESS_APPROVAL} from "@/utils/constants";
+import { SUCCESS_APPROVAL } from "@/utils/constants";
 
-const {updateHoleOutApprove} = useRound();
+const { updateHoleOutApprove } = useRound();
 
 export default {
   name: "HoleOutTable",
@@ -159,8 +159,8 @@ export default {
         inputApprovalHoleValueIsNotEmpty &&
         inputApprovalHoleValueLength > 0
       ) {
-        const res = await updateHoleOutApprove({approveHoleCnt, roundId});
-        const {status} = res;
+        const res = await updateHoleOutApprove({ approveHoleCnt, roundId });
+        const { status } = res;
         if (status !== "OK") return;
 
         this.$emit("requestHoleOutLists");
@@ -187,12 +187,12 @@ export default {
      */
     parsedVisitDt(visitDt) {
       const date = DateUtil.eightToDate(visitDt);
-      const {year, month, day} = DateUtil.dateDivider(date);
+      const { year, month, day } = DateUtil.dateDivider(date);
       return `${year}.${month}.${day}`;
     },
 
     toastMessage(title, message) {
-      this.toast({title, message});
+      this.toast({ title, message });
     },
     ...mapActions({
       toast: "toast",
@@ -204,7 +204,7 @@ export default {
 
 <style scoped>
 .table_wrapper {
-  height: 550px;
+  height: 725px;
   overflow-y: scroll;
   text-align: center;
 }

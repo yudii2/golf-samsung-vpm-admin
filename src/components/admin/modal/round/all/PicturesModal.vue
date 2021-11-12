@@ -2,7 +2,7 @@
   <div class="backdrop">
     <article id="pictures-modal__container">
       <!-- 모달 닫기 버튼 -->
-      <CloseButton @onClose="handleClickClose"/>
+      <CloseButton @onClose="handleClickClose" />
 
       <!-- 사진 목록 -->
       <section class="images__container" v-if="hasPictures">
@@ -16,6 +16,7 @@
             :pictureId="idx"
             :pictureUrl="picture.downUrl"
             @onPictureClick="handleClickDetail"
+            :type="type"
           />
         </div>
       </section>
@@ -24,14 +25,20 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import CloseButton from "@/components/shared/CloseButton";
 import RoundPicture from "@/components/shared/RoundPicture.vue";
 
 export default {
   name: "PicturesModal",
 
-  components: {CloseButton, RoundPicture},
+  components: { CloseButton, RoundPicture },
+
+  data() {
+    return {
+      type: "pictures",
+    };
+  },
 
   computed: {
     hasPictures() {
@@ -49,7 +56,7 @@ export default {
     },
 
     handleClickDetail(pictureId) {
-      const {downUrl} = this.pictures.find((_, idx) => idx === pictureId);
+      const { downUrl } = this.pictures.find((_, idx) => idx === pictureId);
       window.open(downUrl, "_blank");
     },
 

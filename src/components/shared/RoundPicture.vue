@@ -6,11 +6,14 @@
     <!-- 옵션 -->
     <div class="picture-detail__wrapper">
       <span class="pointer" @click="handleDetailClick">자세히 보기</span>
+      <!--      <span class="pointer move_picture" @click="handleMovePictureClick">{{ type === 'pictures' ? '클럽사진' : '기념사진' }}으로 이동</span>-->
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "RoundPicture",
 
@@ -24,12 +27,23 @@ export default {
       type: String,
       require: true,
     },
+
+    type: {
+      type: String,
+      require: true,
+    },
   },
 
   methods: {
     handleDetailClick() {
       this.$emit("onPictureClick", this.pictureId);
     },
+    handleMovePictureClick() {
+      this.toastPreparing({ title: "사진이동" });
+    },
+    ...mapActions({
+      toastPreparing: "toastPreparing",
+    }),
   },
 };
 </script>
@@ -49,7 +63,12 @@ export default {
 .picture-detail__wrapper span {
   transition: color 0.3s ease;
 }
+
 .picture-detail__wrapper span:hover {
   color: gold;
+}
+
+.picture-detail__wrapper span:nth-child(2) {
+  float: right;
 }
 </style>

@@ -88,7 +88,7 @@ table {
 }
 
 .table__wrapper {
-  height: 550px;
+  height: 725px;
   overflow-y: scroll;
   text-align: center;
 }

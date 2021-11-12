@@ -122,7 +122,7 @@ export default {
 
 <style scoped>
 .table_wrapper {
-  height: 550px;
+  height: 725px;
   overflow-y: scroll;
 }
 

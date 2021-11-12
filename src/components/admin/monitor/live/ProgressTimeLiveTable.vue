@@ -2,10 +2,10 @@
   <div class="table__wrapper">
     <table>
       <colgroup>
-        <col width="3%" />
         <col width="4%" />
-        <col width="3%" />
-        <col width="3%" />
+        <col width="4%" />
+        <col width="4%" />
+        <col width="4%" />
         <col width="4%" />
         <col width="4%" />
         <col width="7%" />
@@ -189,7 +189,7 @@ export default {
 
 <style scoped>
 .table__wrapper {
-  height: 610px;
+  height: 725px;
   overflow-y: scroll;
   text-align: center;
 }

@@ -16,6 +16,7 @@
             :pictureId="idx"
             :pictureUrl="image.downUrl"
             @onPictureClick="handleClickDetail"
+            :type="type"
           />
         </div>
       </section>
@@ -32,6 +33,12 @@ export default {
   name: "ClubCheckModal",
 
   components: { CloseButton, RoundPicture },
+
+  data() {
+    return {
+      type: "clubCheck",
+    };
+  },
 
   computed: {
     hasPictures() {

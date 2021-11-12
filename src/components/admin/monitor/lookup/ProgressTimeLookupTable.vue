@@ -201,7 +201,7 @@ export default {
 
 <style scoped>
 .table__wrapper {
-  height: 610px;
+  height: 725px;
   overflow-y: scroll;
   table-layout: fixed;
   word-break: keep-all;
