@@ -16,7 +16,6 @@
 
 <script>
 import ProgressTimeStandardSettingTable from "@/components/admin/monitor/standardSetting/ProgressTimeStandardSettingUpdateTable.vue";
-import ProgressTimeStandardSettingViewTable from "@/components/admin/monitor/standardSetting/ProgressTimeStandardSettingViewTable.vue";
 import useStandardSetting from "@/api/v1/admin/monitor/useStandardSetting";
 import { mapActions, mapGetters } from "vuex";
 
@@ -26,7 +25,6 @@ export default {
 
   components: {
     ProgressTimeStandardSettingTable,
-    ProgressTimeStandardSettingViewTable,
   },
 
   data() {
