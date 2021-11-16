@@ -1,5 +1,5 @@
 export default {
-  setContentView(state, {title, subtitle}) {
+  setContentView(state, { title, subtitle }) {
     state.selectedContentViewTitle = title;
     state.selectedContentViewSubtitle = subtitle;
   },
@@ -20,10 +20,10 @@ export default {
     state.selectedClubCheckImages = [];
   },
   updatePictures(state, pictures) {
-    state.selectedPictures = pictures
+    state.selectedPictures = pictures;
   },
   clearPictures(state) {
-    state.selectedPictures = []
+    state.selectedPictures = [];
   },
   // roundAll all end
 
@@ -59,6 +59,10 @@ export default {
   },
   clearSelectedPlayerClubMemo(state) {
     state.selectedPlayerClubMemo = null;
-  }
+  },
 
+  // roundAll rows
+  setRoundAllRows(state, rows) {
+    state.roundAllRows = rows;
+  },
 };

@@ -132,12 +132,12 @@
 
 <script>
 import TimeUtil from "@/utils/datetime/TimeUtil";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import { nameToMasking } from "@/utils/string";
 import useRound from "@/api/v1/admin/round/useRound";
 import DateUtil from "@/utils/datetime/DateUtil";
 
-const { getRoundDetail, getPlayerClubThings } = useRound();
+const { getRoundDetail, getPlayerClubThings, getRoundPic } = useRound();
 export default {
   name: "RoundAllTable",
 
@@ -174,6 +174,9 @@ export default {
         return nameToMasking(playerName);
       };
     },
+    ...mapGetters("admin/", {
+      roundAllRows: "getRoundAllRows",
+    }),
   },
 
   methods: {
@@ -202,22 +205,41 @@ export default {
      * 기념사진 모달창.
      * @param pictures
      */
-    handlePicturesClick(pictures) {
-      if (pictures.length <= 0) return;
+    async handlePicturesClick(pictures) {
+      const picGubun = "2";
+      const { roundId } = pictures[0];
+
+      const res = await getRoundPic({ picGubun, roundId });
+      const { status } = res;
+      if (status !== "OK") return;
+
+      const {
+        data: { roundPicList },
+      } = res;
 
       this.updateIsShowingPicturesModal(true);
-      this.updatePictures(pictures);
+      this.updatePictures(roundPicList);
     },
 
     /**
      * 클럽체크 모달창.
      * @param clubCheckImages
      */
-    handleClubCheckClick(clubCheckImages) {
-      if (clubCheckImages.length <= 0) return;
+    async handleClubCheckClick(clubCheckImages) {
+      const picGubun = "1";
+      const { roundId } = clubCheckImages[0];
+
+      const res = await getRoundPic({ picGubun, roundId });
+      const { status } = res;
+
+      if (status !== "OK") return;
+
+      const {
+        data: { roundPicList },
+      } = res;
 
       this.updateIsShowingClubCheckModal(true);
-      this.updateClubCheckImages(clubCheckImages);
+      this.updateClubCheckImages(roundPicList);
     },
 
     /**

@@ -52,6 +52,7 @@ export default {
       pages: [],
       pager: null,
       visitDt,
+      startIndex: 0,
     };
   },
 
@@ -62,27 +63,13 @@ export default {
      * */
     handleSubmit({ caddieNm, groupNm, playerNames, visitDt }) {
       if (visitDt) {
-        this.refreshRounds({
+        this.requestRounds({
           visitDt,
           playerNames,
           caddieNm,
           groupNm,
         });
       }
-    },
-
-    /**
-     * 전체라운드 조회하는 API 호출 후, response Data 를 updatePager 메소드의 인자로 전달함.
-     * (페이징관련)
-     * */
-    async refreshRounds({ visitDt, playerNames, caddieNm, groupNm }) {
-      const list = await this.requestRounds({
-        visitDt,
-        playerNames,
-        caddieNm,
-        groupNm,
-      });
-      this.updatePager(list);
     },
 
     /* methods about paging start */
@@ -115,6 +102,21 @@ export default {
       this.currentPage = res.currentPage;
     },
     /* methods about paging end*/
+    /**
+     * 현재 페이지에 머무르면서, 화면 갱신.
+     * ex)기념사진, 클럽사진 버튼유무
+     * 사진 스위칭 기능이 추가되면서 만든 메소드.
+     * @param list
+     */
+    stayPage(list) {
+      this.pager = new Pager({
+        list,
+        take: 15,
+      });
+      const res = this.pager.generate();
+      this.rows = this.pager.getPageRowsByPage(this.currentPage);
+      this.pages = res.currentPages;
+    },
 
     /**
      * 전체라운드 조회 API 호출.
@@ -139,16 +141,23 @@ export default {
         data: { roundTeamList },
       } = res;
 
-      return roundTeamList;
+      this.setRoundAllRows(roundTeamList);
+      this.updatePager(this.originalAllRows);
     },
     ...mapActions({
       toast: "toast",
       toastPreparing: "toastPreparing",
     }),
+    ...mapActions("admin/", {
+      setRoundAllRows: "dispatchSetRoundAllRows",
+    }),
   },
   computed: {
     ...mapGetters("control/", {
       company: "getCompany",
+    }),
+    ...mapGetters("admin/", {
+      originalAllRows: "getRoundAllRows",
     }),
   },
 
@@ -158,7 +167,7 @@ export default {
     const caddieNm = "";
     const groupNm = "";
 
-    await this.refreshRounds({
+    await this.requestRounds({
       visitDt,
       playerNames,
       caddieNm,
@@ -170,10 +179,12 @@ export default {
     currentPage(newPage) {
       this.rows = this.pager.getPageRowsByPage(newPage);
     },
+    originalAllRows(rows) {
+      this.stayPage(rows);
+    },
   },
 };
 </script>
-
 <style scoped>
 #round_all__container {
   position: relative;

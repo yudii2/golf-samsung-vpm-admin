@@ -6,7 +6,9 @@
     <!-- 옵션 -->
     <div class="picture-detail__wrapper">
       <span class="pointer" @click="handleDetailClick">자세히 보기</span>
-      <!--      <span class="pointer move_picture" @click="handleMovePictureClick">{{ type === 'pictures' ? '클럽사진' : '기념사진' }}으로 이동</span>-->
+      <span class="pointer move_picture" @click="handleMovePictureClick"
+        >{{ type === "pictures" ? "클럽사진" : "기념사진" }}으로 이동</span
+      >
     </div>
   </div>
 </template>
@@ -39,7 +41,8 @@ export default {
       this.$emit("onPictureClick", this.pictureId);
     },
     handleMovePictureClick() {
-      this.toastPreparing({ title: "사진이동" });
+      //NOTE : 클럽사진 picGubun="1" , 기념사진 picGubun="2"
+      this.$emit("handleMovePictureClick", this.pictureId);
     },
     ...mapActions({
       toastPreparing: "toastPreparing",

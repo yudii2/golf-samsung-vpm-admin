@@ -20,6 +20,8 @@ export default {
   selectedClubThings: [],
 
   //club memo
-  selectedPlayerClubMemo: ""
+  selectedPlayerClubMemo: "",
 
+  // roundAll rows
+  roundAllRows: [],
 };
