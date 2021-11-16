@@ -476,6 +476,7 @@ export default {
   height: 66%;
   border: 1px solid var(--primary);
   margin-top: 20px;
+  word-break: keep-all;
 }
 
 #score_detail__container .score_detail_tables .table_each_hole th,
