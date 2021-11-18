@@ -1,25 +1,26 @@
 <template>
   <div class="backdrop">
     <div id="score_detail__container" ref="scoreDetailContainer">
-      <CloseButton @onClose="handleClickClose" />
+      <CloseButton @onClose="handleClickClose"/>
       <header class="header">
         <div class="buttons">
           <button class="py-1/2 px" @click="handleClickPrint">인쇄하기</button>
           <button class="py-1/2 px" @click="toggleViewType">
             {{ viewTypeText }}
           </button>
+          <button class="py-1/2 px" @click="handleClickUpdateAndSave">{{ isUpdatable ? '저장' : '수정하기' }}</button>
         </div>
-        <div class="company_info px">{{ currentCompany.name }}</div>
-        <div class="company_info px" v-if="selectedRound.round.courseInOut">
+        <div class="company_info p-1/2">{{ currentCompany.name }}</div>
+        <div class="company_info p-1/2" v-if="selectedRound.round.courseInOut">
           <span>
             {{ selectedRound.round.courseInOut }}
           </span>
         </div>
-        <div class="company_info px">
+        <div class="company_info p-1/2">
           <span>{{ parsedVisitDt(selectedRound.visitDt) }} </span>
           <span>{{ parsedBookgTime(selectedRound.round.bookgTime) }}</span>
         </div>
-        <div class="company_info px">
+        <div class="company_info p-1/2">
           <span>총 참가자 : </span>
           <span>{{ selectedRound.roundTeamPlayerList.length }} 명</span>
         </div>
@@ -28,196 +29,237 @@
         <section class="score_detail_tables">
           <table class="table_total">
             <colgroup>
-              <col width="20%" />
-              <col width="20%" />
-              <col width="20%" />
-              <col width="20%" />
-              <col width="20%" />
+              <col width="20%"/>
+              <col width="20%"/>
+              <col width="20%"/>
+              <col width="20%"/>
+              <col width="20%"/>
             </colgroup>
             <thead>
-              <tr>
-                <th>Player</th>
-                <th>스코어</th>
-                <th>퍼팅수</th>
-                <th>페어웨이 안착률</th>
-                <th>그린 적중률</th>
-              </tr>
+            <tr>
+              <th>Player</th>
+              <th>스코어</th>
+              <th>퍼팅수</th>
+              <th>페어웨이 안착률</th>
+              <th>그린 적중률</th>
+            </tr>
             </thead>
             <tbody v-if="selectedRound.roundTeamPlayerList.length">
-              <tr
-                v-for="(player, idx) in selectedRound.roundTeamPlayerList"
-                :key="idx"
-              >
-                <td>{{ maskedPlayerName(player.name) }}</td>
-                <td>{{ player.scoreTotal }}</td>
-                <td>{{ player.putterTotal }}</td>
-                <td>{{ player.fairWaySafe }}</td>
-                <td>{{ player.greenHit }}</td>
-              </tr>
+            <tr
+              v-for="(player, idx) in selectedRound.roundTeamPlayerList"
+              :key="idx"
+            >
+              <td>{{ maskedPlayerName(player.name) }}</td>
+              <td>{{ player.scoreTotal }}</td>
+              <td>{{ player.putterTotal }}</td>
+              <td>{{ player.fairWaySafe }}</td>
+              <td>{{ player.greenHit }}</td>
+            </tr>
             </tbody>
           </table>
 
           <table class="table_each_hole">
             <colgroup>
-              <col width="7%" />
-              <col width="7%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="4%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="3.38%" />
-              <col width="4%" />
-              <col width="4%" />
+              <col width="7%"/>
+              <col width="7%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="4%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="3.38%"/>
+              <col width="4%"/>
+              <col width="4%"/>
             </colgroup>
             <thead>
-              <tr>
-                <th rowspan="2">Player</th>
-                <th>Hole</th>
-                <th
-                  v-for="(hole, idx) in selectedRound.roundTeamParList.slice(
+            <tr>
+              <th rowspan="2">Player</th>
+              <th>Hole</th>
+              <th
+                v-for="(hole, idx) in selectedRound.roundTeamParList.slice(
                     0,
                     9
                   )"
-                  :key="`par_index_first_${idx}`"
-                >
-                  {{ hole.holeNm }}
-                </th>
-                <th></th>
-                <th
-                  v-for="(hole, jdx) in selectedRound.roundTeamParList.slice(
+                :key="`par_index_first_${idx}`"
+              >
+                {{ hole.holeNm }}
+              </th>
+              <th></th>
+              <th
+                v-for="(hole, jdx) in selectedRound.roundTeamParList.slice(
                     9,
                     18
                   )"
-                  :key="`par_index_second_${jdx}`"
-                >
-                  {{ hole.holeNm }}
-                </th>
-                <th></th>
-                <th></th>
-                <th rowspan="2">SMS</th>
-              </tr>
-              <tr>
-                <th>Par</th>
-                <th
-                  v-for="(par, idx) in selectedRound.roundTeamParList.slice(
+                :key="`par_index_second_${jdx}`"
+              >
+                {{ hole.holeNm }}
+              </th>
+              <th></th>
+              <th></th>
+              <th rowspan="2">SMS</th>
+            </tr>
+            <tr>
+              <th>Par</th>
+              <th
+                v-for="(par, idx) in selectedRound.roundTeamParList.slice(
                     0,
                     9
                   )"
-                  :key="`first_${idx}`"
-                >
-                  {{ par.par }}
-                </th>
-                <th>
-                  {{ accumulatorForPar(selectedRound, 0, 9) }}
-                </th>
-                <th
-                  v-for="(par, idx) in selectedRound.roundTeamParList.slice(
+                :key="`first_${idx}`"
+              >
+                {{ par.par }}
+              </th>
+              <th>
+                {{ accumulatorForPar(selectedRound, 0, 9) }}
+              </th>
+              <th
+                v-for="(par, idx) in selectedRound.roundTeamParList.slice(
                     9,
                     18
                   )"
-                  :key="`second_${idx}`"
-                >
-                  {{ par.par }}
-                </th>
-                <th>
-                  {{ accumulatorForPar(selectedRound, 9, 18) }}
-                </th>
-                <th>
-                  {{
-                    accumulatorForPar(selectedRound, 0, 9) +
-                    accumulatorForPar(selectedRound, 9, 18)
-                  }}
-                </th>
-              </tr>
+                :key="`second_${idx}`"
+              >
+                {{ par.par }}
+              </th>
+              <th>
+                {{ accumulatorForPar(selectedRound, 9, 18) }}
+              </th>
+              <th>
+                {{
+                  accumulatorForPar(selectedRound, 0, 9) +
+                  accumulatorForPar(selectedRound, 9, 18)
+                }}
+              </th>
+            </tr>
             </thead>
             <tbody>
-              <template
-                v-for="(player, i, j) in selectedRound.roundTeamPlayerList"
-              >
-                <tr :key="`${selectedRound.roundId}${i}`">
-                  <td rowspan="2">{{ maskedPlayerName(player.name) }}</td>
-                  <td>스코어</td>
-                  <template v-if="player.roundPlayerScoreStrokeList !== null">
-                    <td
-                      v-for="(
+            <template
+              v-for="(player, i, j) in selectedRound.roundTeamPlayerList"
+            >
+              <tr :key="`${selectedRound.roundId}${i}`">
+                <td rowspan="2">{{ maskedPlayerName(player.name) }}</td>
+                <td>스코어</td>
+                <template v-if="player.roundPlayerScoreStrokeList !== null">
+                  <td
+                    v-for="(
                         score, idx
                       ) in player.roundPlayerScoreStrokeList.slice(0, 9)"
-                      :key="`${player.name}_first_score_${idx}`"
-                    >
+                    :key="`${player.name}_first_score_${idx}`"
+                  >
+                    <template v-if="isUpdatable">
+                      <input
+                        class="update_input"
+                        type="number"
+                        :value="scoreByViewType(score.value, 'first', idx)"
+                        @change="updateScoreValue($event, score, player)"
+                      />
+                    </template>
+                    <template v-else>
                       {{ scoreByViewType(score.value, "first", idx) }}
-                    </td>
-                    <td>
-                      {{ player.firstScoreSum }}
-                    </td>
-                    <td
-                      v-for="(
+                    </template>
+                  </td>
+                  <td>
+                    {{ player.firstScoreSum }}
+                  </td>
+                  <td
+                    v-for="(
                         score, idx
                       ) in player.roundPlayerScoreStrokeList.slice(9, 18)"
-                      :key="`${player.name}_second_score_${idx}`"
-                    >
+                    :key="`${player.name}_second_score_${idx}`"
+                  >
+                    <template v-if="isUpdatable">
+                      <input
+                        class="update_input"
+                        type="number"
+                        :value="scoreByViewType(score.value, 'second', idx)"
+                        @change="updateScoreValue($event, score, player)"
+
+                      />
+                    </template>
+                    <template v-else>
                       {{ scoreByViewType(score.value, "second", idx + 9) }}
-                    </td>
-                  </template>
-                  <td>
-                    {{ player.secondScoreSum }}
+                    </template>
                   </td>
-                  <td>
-                    {{ player.scoreTotal }}
-                  </td>
-                  <td rowspan="2">
-                    <button
-                      class="button-dark"
-                      @click="handleClickSMS(player, selectedRound)"
-                    >
-                      SMS전송
-                    </button>
-                  </td>
-                </tr>
-                <tr :key="`${selectedRound.roundId}${i}${j}`">
-                  <td>퍼팅수</td>
-                  <template v-if="player.roundPlayerScorePutterList !== null">
-                    <td
-                      v-for="(
+                </template>
+                <td>
+                  {{ player.secondScoreSum }}
+                </td>
+                <td>
+                  {{ player.scoreTotal }}
+                </td>
+                <td rowspan="2">
+                  <button
+                    class="button-dark"
+                    @click="handleClickSMS(player, selectedRound)"
+                  >
+                    SMS전송
+                  </button>
+                </td>
+              </tr>
+              <tr :key="`${selectedRound.roundId}${i}${j}`">
+                <td>퍼팅수</td>
+                <template v-if="player.roundPlayerScorePutterList !== null">
+                  <td
+                    v-for="(
                         score, idx
                       ) in player.roundPlayerScorePutterList.slice(0, 9)"
-                      :key="`${player.name}_first_score_putter_${idx}`"
-                    >
+                    :key="`${player.name}_first_score_putter_${idx}`"
+                  >
+                    <template v-if="isUpdatable">
+                      <input
+                        class="update_input"
+                        type="number"
+                        :value="score.value === 0 ? '-' : score.value"
+                        @change="updatePutterValue($event, score, player)"
+                      />
+                    </template>
+                    <template v-else>
                       {{ score.value === 0 ? "-" : score.value }}
-                    </td>
-                    <td>
-                      {{ player.firstPutterSum }}
-                    </td>
-                    <td
-                      v-for="(
+                    </template>
+                  </td>
+                  <td>
+                    {{ player.firstPutterSum }}
+                  </td>
+                  <td
+                    v-for="(
                         score, idx
                       ) in player.roundPlayerScorePutterList.slice(9, 18)"
-                      :key="`${player.name}_second_score_putter_${idx}`"
-                    >
+                    :key="`${player.name}_second_score_putter_${idx}`"
+                  >
+                    <template v-if="isUpdatable">
+                      <input
+                        class="update_input"
+                        type="number"
+                        :value="score.value === 0 ? '-' : score.value"
+                        @change="updatePutterValue($event, score, player)"
+                      />
+                    </template>
+                    <template v-else>
                       {{ score.value === 0 ? "-" : score.value }}
-                    </td>
-                  </template>
-                  <td>
-                    {{ player.secondPutterSum }}
+                    </template>
                   </td>
-                  <td>
-                    {{ player.putterTotal }}
-                  </td>
-                </tr>
-              </template>
+                </template>
+                <td>
+                  {{ player.secondPutterSum }}
+                </td>
+                <td>
+                  {{ player.putterTotal }}
+                </td>
+              </tr>
+            </template>
             </tbody>
           </table>
         </section>
@@ -234,21 +276,28 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import TimeUtil from "@/utils/datetime/TimeUtil";
 import CloseButton from "@/components/shared/CloseButton.vue";
 import RoundAllScorePrint from "@/components/admin/round/roundAll/RoundAllScorePrint.vue";
-import { print } from "@/composables/usePrinter";
-import { nameToMasking } from "@/utils/string";
+import {print} from "@/composables/usePrinter";
+import {nameToMasking} from "@/utils/string";
+import useRound from "@/api/v1/admin/round/useRound";
+import {NO_REQUIRED_DATA} from "@/utils/constants";
 
+const {updateRoundScore, getRoundDetail} = useRound()
 export default {
   name: "ScoreDetail",
 
-  components: { CloseButton, RoundAllScorePrint },
+  components: {CloseButton, RoundAllScorePrint},
 
   data() {
     return {
       viewTypeIsAll: true,
+      isUpdatable: false,
+
+      roundPlayerScoreStrokeList: [],
+      roundPlayerScorePutterList: []
     };
   },
 
@@ -307,6 +356,13 @@ export default {
     }),
   },
   methods: {
+    /**
+     * 스코어, 퍼팅수 수정 메소드 request 객체
+     */
+    playerScoreReqInit() {
+      this.roundPlayerScorePutterList = [];
+      this.roundPlayerScoreStrokeList = [];
+    },
     toggleViewType() {
       this.viewTypeIsAll = !this.viewTypeIsAll;
     },
@@ -377,14 +433,247 @@ export default {
     parsedVisitDt(visitDt) {
       return visitDt.replaceAll("-", ".");
     },
+    /**
+     * 스코어, 퍼팅수 수정 API 호출 후 , 스코어카드 재조회.
+     * @returns {Promise<void>}
+     */
+    async handleClickUpdateAndSave() {
+      this.isUpdatable = !this.isUpdatable;
+      if (!this.isUpdatable) {
+        if (this.roundPlayerScoreStrokeList.length === 0 && this.roundPlayerScorePutterList.length === 0) {
+          return this.dataInvalidMessage(NO_REQUIRED_DATA)
+        }
+        const roundId = this.selectedRound.roundId
+        const res = await updateRoundScore({roundId}, {
+          "roundPlayerScorePutterList": this.roundPlayerScorePutterList,
+          "roundPlayerScoreStrokeList": this.roundPlayerScoreStrokeList
+        });
+
+        this.playerScoreReqInit();
+
+        const {status} = res;
+        if (status !== "OK") return;
+
+        await this.refreshRoundDetail(roundId)
+      }
+    },
+    /**
+     *  전체 라운드 스코어 조회  API 호출.
+     *  스코어 수정 후 화면 갱신 필요.
+     * @param paramRoundId
+     * @returns {Promise<void>}
+     */
+    async refreshRoundDetail(paramRoundId) {
+      const round = this.selectedRound.round
+      const res = await getRoundDetail({paramRoundId})
+
+      const {status} = res;
+      if (status !== "OK") return;
+
+      const {data} = res;
+
+      const selectedRound = {
+        ...data,
+        round
+      }
+      this.updateSelectedRound(selectedRound)
+    },
+    /**
+     * 스코어 수정 메소드(기존에 등록된 스코어가 있을 때.)
+     * @param e
+     * @param score
+     */
+    updateScoreValue(e, score, player) {
+      const copiedScore = {...score}
+
+      const {playerId} = score
+
+      if (e.target.value !== "" && playerId === null) {
+        const copiedScore = this.insertScoreValue(e, score, player)
+        return this.createRoundPlayerScoreStrokeListReq(copiedScore)
+      }
+
+      if (e.target.value !== "") {
+        copiedScore.value = e.target.value
+        this.createRoundPlayerScoreStrokeListReq(copiedScore)
+      } else {
+        this.dataInvalidMessage(NO_REQUIRED_DATA)
+      }
+    },
+    /**
+     * 스코어 수정 메소드.(기존에 스코어가 등록되지 않았을 때.)
+     * @param e
+     * @param score
+     * @param player
+     * @returns {*}
+     */
+    insertScoreValue(e, score, player) {
+      const copiedScore = {...score}
+
+      const {playerId} = player
+      const holeCd = this.getHoleCdByHoleIndex(copiedScore.holeIndex)
+      const courseCd = this.getCourseNameByHoleIndex(copiedScore.holeIndex)
+      const gubun = '1'
+      const {code} = this.currentCompany
+
+      copiedScore.companyCd = code
+      copiedScore.courseCd = courseCd
+      copiedScore.gubun = gubun
+      copiedScore.holeCd = holeCd
+      copiedScore.playerId = playerId
+      copiedScore.value = e.target.value
+
+      return copiedScore
+    },
+    /**
+     * 퍼팅수 수정 메소드.
+     * @param e
+     * @param putting
+     */
+    updatePutterValue(e, putting, player) {
+      const {playerId} = putting
+
+      if (e.target.value !== "" && playerId === null) {
+        const copiedPutting = this.insertPuttingValue(e, putting, player)
+        return this.createRoundPlayerScorePutterListReq(copiedPutting)
+      }
+      const copiedPutting = {...putting}
+      if (e.target.value !== "") {
+        copiedPutting.value = e.target.value
+        this.createRoundPlayerScorePutterListReq(copiedPutting);
+      } else {
+        this.dataInvalidMessage(NO_REQUIRED_DATA)
+      }
+    },
+    /**
+     * 퍼팅수 수정 메소드.(기존에 등록된 퍼팅수가 없을 때.)
+     * @param e
+     * @param putting
+     * @param player
+     * @returns {*}
+     */
+    insertPuttingValue(e, putting, player) {
+      const copiedPutting = {...putting}
+
+      const {playerId} = player
+      const holeCd = this.getHoleCdByHoleIndex(copiedPutting.holeIndex)
+      const courseCd = this.getCourseNameByHoleIndex(copiedPutting.holeIndex)
+      const gubun = '2'
+      const {code} = this.currentCompany
+
+      copiedPutting.companyCd = code
+      copiedPutting.courseCd = courseCd
+      copiedPutting.gubun = gubun
+      copiedPutting.holeCd = holeCd
+      copiedPutting.playerId = playerId
+      copiedPutting.value = e.target.value
+
+      return copiedPutting
+    },
+    /**
+     * 스코어 수정 메소드 request 객체(스코어 스트로크 리스트) 만드는 메소드.
+     * @param copiedScore
+     */
+    createRoundPlayerScoreStrokeListReq(copiedScore) {
+      if (this.roundPlayerScoreStrokeList.length === 0) {
+        this.roundPlayerScoreStrokeList.push(copiedScore)
+      } else {
+        const isSamePlayerScoreByHoleCd = this.roundPlayerScoreStrokeList.find((score) => score.playerId === copiedScore.playerId && score.holeCd === copiedScore.holeCd);
+        if (isSamePlayerScoreByHoleCd) {
+          isSamePlayerScoreByHoleCd.value = copiedScore.value
+        } else {
+          this.roundPlayerScoreStrokeList.push(copiedScore)
+        }
+      }
+    },
+    /**
+     * 퍼팅수 수정 메소드 request 객체(스코어 퍼팅수 리스트) 만드는 메소드.
+     * @param copiedPutting
+     */
+    createRoundPlayerScorePutterListReq(copiedPutting) {
+      if (this.roundPlayerScorePutterList.length === 0) {
+        this.roundPlayerScorePutterList.push(copiedPutting)
+      } else {
+        const isSamePlayerPuttingByHoleCd = this.roundPlayerScorePutterList.find((score) => score.playerId === copiedPutting.playerId && score.holeCd === copiedPutting.holeCd);
+        if (isSamePlayerPuttingByHoleCd) {
+          isSamePlayerPuttingByHoleCd.value = copiedPutting.value
+        } else {
+          this.roundPlayerScorePutterList.push(copiedPutting)
+        }
+      }
+    },
+    /**
+     * holeIndex로 courseName 가져오는 메소드.
+     * @param holeIndex
+     * @returns {*}
+     */
+    getCourseNameByHoleIndex(holeIndex) {
+      if (holeIndex <= 9) {
+        const firstCourseName = this.selectedRound.round.firstCourse
+        return this.getCourseCdByCourseName(firstCourseName)
+      } else {
+        const secondCourseName = this.selectedRound.round.secondCourse
+        return this.getCourseCdByCourseName(secondCourseName)
+      }
+    },
+    /**
+     * courseName 으로 courseCd 가져오는 메소드.
+     * @param courseName
+     * @returns {*}
+     */
+    getCourseCdByCourseName(courseName) {
+      const findCourse = this.currentCompany.courses.find((course) => course.courseNm === courseName)
+      return findCourse.courseCd
+    },
+    /**
+     * holeIndex로 holeCd 가져오는 메소드.
+     * @param holeIndex
+     * @returns {string}
+     */
+    getHoleCdByHoleIndex(holeIndex) {
+      switch (holeIndex) {
+        case '1' :
+        case '10' :
+          return '5'
+        case '2' :
+        case '11':
+          return '6'
+        case '3':
+        case '12':
+          return '7'
+        case '4':
+        case '13':
+          return '8'
+        case '5':
+        case '14':
+          return '9'
+        case '6':
+        case '15':
+          return 'a'
+        case '7':
+        case '16':
+          return 'b'
+        case '8':
+        case '17':
+          return 'c'
+        case '9':
+        case  '18':
+          return '1'
+      }
+    },
+    dataInvalidMessage(title, message) {
+      this.toast({title, message})
+    },
     ...mapActions({
       updateIsShowingRoundAllScoreDetailModal:
         "dispatchIsShowingRoundAllScoreDetailModal",
       updateIsShowingSMSModal: "dispatchIsShowingSMSModal",
+      toast: "toast",
     }),
     ...mapActions("admin/", {
       dispatchClearSelectedRound: "dispatchClearSelectedRound",
       dispatchUpdateSelectedPlayer: "dispatchUpdateSelectedPlayer",
+      updateSelectedRound: "dispatchSelectedRound"
     }),
   },
 };
@@ -491,4 +780,16 @@ export default {
 #score_detail__container .behind {
   position: relative;
 }
+
+.update_input {
+  width: 20px;
+  height: 25px;
+  line-height: 25px;
+  background-color: transparent;
+  color: var(--secondary);
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid var(--primary);
+}
+
 </style>

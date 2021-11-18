@@ -2,7 +2,7 @@ import useAuth from "@/api/v1/auth/useAuth";
 
 const useRound = () => {
   const BASE_URI = `${process.env.VUE_APP_BASE_URI_ADMIN}/v1`;
-  const { getAccessToken, authenticationIsValid } = useAuth();
+  const {getAccessToken, authenticationIsValid} = useAuth();
 
   /**
    * 전체라운드 조회
@@ -12,7 +12,7 @@ const useRound = () => {
    * @param caddieNm
    * @returns {Promise<Response|void>}
    */
-  const getRound = async ({ visitDt, groupNm, playerNames, caddieNm }) => {
+  const getRound = async ({visitDt, groupNm, playerNames, caddieNm}) => {
     let uri = `${BASE_URI}/round/info/round-info?visitDt=${visitDt}`;
     if (groupNm) uri += `&groupNm=${groupNm}`;
     if (playerNames) uri += `&playerNames=${playerNames}`;
@@ -35,7 +35,7 @@ const useRound = () => {
    * @param paramRoundId
    * @returns {Promise<Response|void>}
    */
-  const getRoundDetail = async ({ paramRoundId }) => {
+  const getRoundDetail = async ({paramRoundId}) => {
     const uri = `${BASE_URI}/round/info/round-detail?roundId=${paramRoundId}`;
     return await fetch(uri, {
       headers: {
@@ -73,7 +73,7 @@ const useRound = () => {
    * @param roundId
    * @returns {Promise<Response|void>}
    */
-  const updateHoleOutApprove = async ({ approveHoleCnt, roundId }) => {
+  const updateHoleOutApprove = async ({approveHoleCnt, roundId}) => {
     const uri = `${BASE_URI}/round/info/approve-hole-out/update?approveHoleCnt=${approveHoleCnt}&roundId=${roundId}`;
     return await fetch(uri, {
       method: "POST",
@@ -93,7 +93,7 @@ const useRound = () => {
    * @param roundId
    * @returns {Promise<Response|void>}
    */
-  const getPlayerClubThings = async ({ roundId }) => {
+  const getPlayerClubThings = async ({roundId}) => {
     const uri = `${BASE_URI}/round/info/player-club-memo?roundId=${roundId}`;
     return await fetch(uri, {
       headers: {
@@ -128,7 +128,7 @@ const useRound = () => {
       .catch((err) => console.error(err.message));
   };
 
-  const getRoundPic = async ({ picGubun, roundId }) => {
+  const getRoundPic = async ({picGubun, roundId}) => {
     const uri = `${BASE_URI}/round/info/roundPic?picGubun=${picGubun}&roundId=${roundId}`;
     return await fetch(uri, {
       headers: {
@@ -142,6 +142,22 @@ const useRound = () => {
       .catch((err) => console.error(err.message));
   };
 
+  const updateRoundScore = async ({roundId}, playerScoreReq) => {
+    const uri = `${BASE_URI}/round/info/round-score/update/${roundId}`
+    return await fetch(uri, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getAccessToken(),
+      },
+      body: JSON.stringify(playerScoreReq)
+    })
+      .then((res) => {
+        if (authenticationIsValid()) return res.json();
+      })
+      .catch((err) => console.error(err.message))
+  }
+
   return {
     getRound,
     getRoundDetail,
@@ -150,6 +166,7 @@ const useRound = () => {
     getPlayerClubThings,
     updateRoundPic,
     getRoundPic,
+    updateRoundScore
   };
 };
 

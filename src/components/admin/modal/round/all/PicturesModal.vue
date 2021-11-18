@@ -2,7 +2,7 @@
   <div class="backdrop">
     <article id="pictures-modal__container">
       <!-- 모달 닫기 버튼 -->
-      <CloseButton @onClose="handleClickClose" />
+      <CloseButton @onClose="handleClickClose"/>
 
       <!-- 사진 목록 -->
       <section class="images__container" v-if="hasPictures">
@@ -26,16 +26,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import CloseButton from "@/components/shared/CloseButton";
 import RoundPicture from "@/components/shared/RoundPicture.vue";
 import useRound from "@/api/v1/admin/round/useRound";
 
-const { updateRoundPic, getRoundPic } = useRound();
+const {updateRoundPic, getRoundPic} = useRound();
 export default {
   name: "PicturesModal",
 
-  components: { CloseButton, RoundPicture },
+  components: {CloseButton, RoundPicture},
 
   data() {
     return {
@@ -60,7 +60,7 @@ export default {
     },
 
     handleClickDetail(pictureId) {
-      const { downUrl } = this.pictures.find((_, idx) => idx === pictureId);
+      const {downUrl} = this.pictures.find((_, idx) => idx === pictureId);
       window.open(downUrl, "_blank");
     },
 
@@ -72,7 +72,7 @@ export default {
      */
     async handleMovePictureClick(pictureId) {
       const picGubun = "1"; //기념사진에서 클럽사진으로 이동
-      const { fileId, roundId } = this.pictures.find(
+      const {fileId, roundId} = this.pictures.find(
         (_, idx) => idx === pictureId
       );
 
@@ -82,33 +82,33 @@ export default {
         roundId: roundId,
       };
 
-      const { status } = await updateRoundPic(roundPicChangeReq);
+      const {status} = await updateRoundPic(roundPicChangeReq);
 
       if (status !== "OK") return;
-      await this.refreshRoundPic({ roundId });
+      await this.refreshRoundPic({roundId});
     },
     /**
      * 기념사진 리스트 재조회 API 호출.
      * @param roundId
      * @returns {Promise<void>}
      */
-    async refreshRoundPic({ roundId }) {
+    async refreshRoundPic({roundId}) {
       const picGubun = "2"; //기념사진 리스트 refresh
-      const res = await getRoundPic({ picGubun, roundId });
+      const res = await getRoundPic({picGubun, roundId});
 
-      const { status } = res;
+      const {status} = res;
 
       if (status !== "OK") return;
 
       const {
-        data: { roundPicList },
+        data: {roundPicList},
       } = res;
 
       this.updatePictures(roundPicList);
 
-      const resClubRoundPicList = await this.refreshRoundClubPic({ roundId });
+      const resClubRoundPicList = await this.refreshRoundClubPic({roundId});
 
-      this.refreshRoundAllRows({ roundId }, roundPicList, resClubRoundPicList);
+      this.refreshRoundAllRows({roundId}, roundPicList, resClubRoundPicList);
     },
     /**
      *
@@ -117,16 +117,16 @@ export default {
      * @param roundId
      * @returns {Promise<*>}
      */
-    async refreshRoundClubPic({ roundId }) {
+    async refreshRoundClubPic({roundId}) {
       const picGubun = "1"; // 클럽사진 리스트 refresh
-      const res = await getRoundPic({ picGubun, roundId });
+      const res = await getRoundPic({picGubun, roundId});
 
-      const { status } = res;
+      const {status} = res;
 
       if (status !== "OK") return;
 
       const {
-        data: { roundPicList },
+        data: {roundPicList},
       } = res;
 
       return roundPicList;
@@ -138,7 +138,7 @@ export default {
      * @param roundPicList
      * @param resClubRoundPicList
      */
-    refreshRoundAllRows({ roundId }, roundPicList, resClubRoundPicList) {
+    refreshRoundAllRows({roundId}, roundPicList, resClubRoundPicList) {
       const foundRow = this.originalAllRows.find(
         (round) => round.roundId === roundId
       );

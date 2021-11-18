@@ -1,7 +1,7 @@
 <template>
   <div class="backdrop">
     <div id="score_sms__container">
-      <CloseButton @onClose="handleClickClose" />
+      <CloseButton @onClose="handleClickClose"/>
       <article>
         <section class="mobile_no__wrapper">
           <div class="mobile_no_upper_wrapper">
@@ -17,11 +17,14 @@
               @keypress.enter="isUpdateMode"
             />
             <span class="mobile_no" v-else>{{
-              getPlayerMobileNo(getSelectedPlayer.mobileNo)
-            }}</span>
-            <button class="button-dark" @click="isUpdateMode">
+                getPlayerMobileNo(getSelectedPlayer.mobileNo)
+              }}</span>
+            <button class="button-dark" @click="isUpdateMode"
+                    :class="{'save_button' : isUpdatable}"
+            >
               {{ isUpdatable ? "저장" : "수정" }}
             </button>
+
           </div>
           <div>
             <button
@@ -43,19 +46,19 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import CloseButton from "@/components/shared/CloseButton";
 import useSMS from "@/api/v1/admin/sms/useSMS";
 import useRound from "@/api/v1/admin/round/useRound";
-import { useInput } from "@/utils/string";
+import {useInput} from "@/utils/string";
 import {
   SUCCESS_SMS_SEND_MESSAGE,
   FAIL_SMS_SEND_MESSAGE,
 } from "@/utils/constants";
 
-const { sendPlayerScore, updatePlayerMobileNo } = useSMS();
-const { getRoundDetail } = useRound();
-const { lengthIsInvalid, getValidText } = useInput(11);
+const {sendPlayerScore, updatePlayerMobileNo} = useSMS();
+const {getRoundDetail} = useRound();
+const {lengthIsInvalid, getValidText} = useInput(11);
 
 export default {
   name: "RoundAllSMSModal",
@@ -69,7 +72,7 @@ export default {
     };
   },
 
-  components: { CloseButton },
+  components: {CloseButton},
 
   computed: {
     ...mapGetters("admin/", {
@@ -97,9 +100,9 @@ export default {
       const mobileNo = this.getSelectedPlayer.mobileNo;
       const playerId = this.getSelectedPlayer.playerId;
 
-      const res = await sendPlayerScore({ mobileNo, playerId });
+      const res = await sendPlayerScore({mobileNo, playerId});
 
-      const { status } = res;
+      const {status} = res;
       if (status !== "OK") {
         this.resultMessage = FAIL_SMS_SEND_MESSAGE;
       } else {
@@ -119,6 +122,10 @@ export default {
         const changedMobileNo = this.changedMobileNo;
         const playerId = this.getSelectedPlayer.playerId;
 
+        if (changedMobileNo.length === 0) {
+          this.isUpdatable = !this.isUpdatable
+          return;
+        }
         const playerInfo = {
           roundTeamPlayerList: [
             {
@@ -128,8 +135,9 @@ export default {
           ],
         };
 
+
         const res = await updatePlayerMobileNo(playerInfo);
-        const { status } = res;
+        const {status} = res;
 
         if (status !== "OK") return this.init();
         await this.requestRoundDetail();
@@ -145,12 +153,12 @@ export default {
      */
     async requestRoundDetail() {
       const paramRoundId = this.getSelectedPlayer.roundId;
-      const res = await getRoundDetail({ paramRoundId });
+      const res = await getRoundDetail({paramRoundId});
 
-      const { status } = res;
+      const {status} = res;
       if (status !== "OK") return;
 
-      const { data } = res;
+      const {data} = res;
       const comparedPlayerId = this.getSelectedPlayer.playerId;
       const foundPlayer = data.roundTeamPlayerList.find(
         (player) => player.playerId === comparedPlayerId
@@ -187,9 +195,8 @@ export default {
     },
 
     resultSuccessMessage(title, message) {
-      this.toast({ title, message });
+      this.toast({title, message});
     },
-
     ...mapActions("admin/", {
       dispatchClearSelectedPlayer: "dispatchClearSelectedPlayer",
       dispatchUpdateSelectedPlayer: "dispatchUpdateSelectedPlayer",
@@ -262,8 +269,8 @@ export default {
 
 #score_sms__container .mobile_no__wrapper {
   text-align: center;
-  font-size: 25px;
-  margin-top: 20%;
+  font-size: 22px;
+  margin-top: 25%;
 }
 
 #score_sms__container .mobile_no__wrapper .mobile_no_upper_wrapper {
@@ -271,7 +278,7 @@ export default {
 }
 
 #score_sms__container .mobile_no__wrapper .mobile_no {
-  margin: 0 30px;
+  margin: 0 20px;
   letter-spacing: 3px;
 }
 
@@ -289,11 +296,18 @@ export default {
 
 #score_sms__container .mobile_no__wrapper .button-dark {
   font-size: 20px;
+  line-height: 20px;
 }
 
 #score_sms__container .mobile_no__wrapper .send_button {
   width: 300px;
   height: 60px;
+}
+
+#score_sms__container .mobile_no__wrapper .save_button {
+  width: 300px;
+  height: 60px;
+  margin-top: 60px;
 }
 
 #score_sms__container .mobile_no__wrapper .message_area {
