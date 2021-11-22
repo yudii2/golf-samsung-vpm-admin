@@ -5,7 +5,7 @@
 
     <!-- 로고 -->
     <section class="logo__container">
-      <ControlDashBoardHeaderLogo />
+      <ControlDashBoardHeaderLogo/>
     </section>
 
     <!-- 로그인 폼 -->
@@ -51,7 +51,7 @@
           buttonText="비밀번호 변경"
         />
 
-        <SimpleButton @onClick="handleLoginSubmit" buttonText="로그인" />
+        <SimpleButton @onClick="handleLoginSubmit" buttonText="로그인"/>
       </div>
     </section>
     <h1 class="hello no-drag">Hello</h1>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import ControlDashBoardHeaderLogo from "@/views/control/dashboard/header/logo/ControlDashBoardHeaderLogo.vue";
 import useAuth from "@/api/v1/auth/useAuth.js";
 import usePermission from "@/composables/usePermission";
@@ -73,13 +73,13 @@ import {
 import InputWithLabel from "@/components/shared/InputWithLabel.vue";
 import SimpleButton from "@/components/shared/SimpleButton.vue";
 
-const { signIn } = useAuth();
-const { setPermissions } = usePermission();
+const {signIn} = useAuth();
+const {setPermissions} = usePermission();
 
 export default {
   name: "Login",
 
-  components: { ControlDashBoardHeaderLogo, InputWithLabel, SimpleButton },
+  components: {ControlDashBoardHeaderLogo, InputWithLabel, SimpleButton},
 
   data() {
     return {
@@ -99,7 +99,8 @@ export default {
   },
 
   methods: {
-    init() {},
+    init() {
+    },
 
     /**
      * ### 헤더 아이콘 회전시키는 메소드.
@@ -158,6 +159,7 @@ export default {
       this.isSending = true;
 
       const res = await signIn(this.id.trim(), this.password);
+      this.isSending = false;
 
       if (res && res.status === "OK") {
         this.errorClear();
@@ -167,15 +169,14 @@ export default {
         this.setCompanyCode(res?.data?.companyCd);
         this.setAuthInfo(res?.data);
 
-        const { ok, data: grantedPermissions, error } = setPermissions(
+        const {ok, error} = setPermissions(
           res?.data?.menuUsingList
         );
-        if (ok && grantedPermissions.length) {
-          const [firstPermission] = grantedPermissions;
-          const [permissionKey] = Object.keys(firstPermission.permission);
-          this.navigateByKey(permissionKey);
+
+        if (ok) {
+          return this.$router.push({name: "Home"});
         } else {
-          console.error(error);
+          console.error(error)
         }
       } else {
         // 예외 처리
@@ -200,29 +201,27 @@ export default {
             break;
         }
       }
-
-      this.isSending = false;
     },
 
     navigateByKey(permissionKey) {
       switch (permissionKey) {
         case PERMISSION_KEY_DASHBOARD_DESKTOP:
-          this.$router.push({ name: "ControlDashBoard" });
+          this.$router.push({name: "ControlDashBoard"});
           break;
         case PERMISSION_KEY_DASHBOARD_MOBILE:
-          this.$router.push({ name: "DashboardMobileCommon" });
+          this.$router.push({name: "DashboardMobileCommon"});
           break;
         case PERMISSION_KEY_DASHBOARD_MOBILE_ORDERABLE:
-          this.$router.push({ name: "DashboardMobileOrderable" });
+          this.$router.push({name: "DashboardMobileOrderable"});
           break;
         case PERMISSION_KEY_DASHBOARD_ADMIN_PAGE:
-          this.$router.push({ name: "AdminManagement" });
+          this.$router.push({name: "AdminManagement"});
           break;
         case PERMISSION_KEY_DASHBOARD_SETTING_PAGE:
-          this.$router.push({ name: "AppSettingPage" });
+          this.$router.push({name: "AppSettingPage"});
           break;
         default:
-          this.$router.push({ name: "DashboardMobileCommon" });
+          this.$router.push({name: "DashboardMobileCommon"});
           break;
       }
     },
@@ -280,10 +279,12 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
 #login__container .login__form__header__container img {
   width: 50px;
   margin-bottom: 20px;
 }
+
 #login__container .login__form__header__container span {
   font-size: 1.5rem;
   font-weight: 700;
@@ -302,6 +303,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
+
 #login__container .login__form__container .login__form__background {
   position: absolute;
   top: 0;
@@ -337,9 +339,11 @@ export default {
   border-radius: 7px;
   letter-spacing: 2px;
 }
+
 #login__container .login__form .input__container input:focus {
   border: 2px solid var(--primary);
 }
+
 #login__container .input__container {
   width: 100%;
   display: flex;
@@ -347,6 +351,7 @@ export default {
   margin-bottom: 30px;
   color: var(--secondary);
 }
+
 #login__container .login__form .input__container > label {
   margin-bottom: 10px;
   margin-left: 5px;
@@ -379,6 +384,7 @@ export default {
   font-weight: 700;
   transition: all 0.3s ease;
 }
+
 #login__container .login__submit_button:hover {
   color: var(--secondary);
   background-color: var(--primary);
