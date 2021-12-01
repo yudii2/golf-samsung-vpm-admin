@@ -1,66 +1,67 @@
 <template>
   <table class="table-dark">
     <colgroup>
-      <col width="10%" />
+      <col width="10%"/>
 
-      <col width="10%" />
-      <col width="10%" />
-      <col width="10%" />
-      <col width="10%" />
-      <col width="10%" />
-      <col width="10%" />
-      <col width="10%" />
-      <col width="10%" />
-      <col width="10%" />
+      <col width="10%"/>
+      <col width="10%"/>
+      <col width="10%"/>
+      <col width="10%"/>
+      <col width="10%"/>
+      <col width="10%"/>
+      <col width="10%"/>
+      <col width="10%"/>
+      <col width="10%"/>
     </colgroup>
 
     <thead>
-      <tr>
-        <th>코스</th>
-        <th colspan="9">{{ tableHead }}</th>
-      </tr>
+    <tr>
+      <th>코스</th>
+      <th colspan="9">{{ tableHead }}</th>
+    </tr>
     </thead>
     <tbody v-if="hasRoundInfo">
-      <tr
-        v-for="(roundRuleSettingInfo, i) in roundRuleSettingInfoList"
-        :key="i"
-      >
-        <td>{{ roundRuleSettingInfo.courseNm }}</td>
-        <td
-          v-for="(hole, j) in getRoundHolesByCourseCd(
+    <tr
+      v-for="(roundRuleSettingInfo, i) in getRoundRuleSettingInfoList"
+      :key="i"
+    >
+      <td>{{ roundRuleSettingInfo.courseNm }}</td>
+      <td
+        v-for="(hole, j) in getRoundHolesByCourseCd(
             roundRuleSettingInfo.courseCd
           )"
-          :key="j"
-        >
-          <div
-            class="column"
-            :class="{ selected: getRoundHoleValueByHole(hole) === 'Y' }"
-            @click="
+        :key="j"
+      >
+        <div
+          class="column"
+          :class="{ selected: getRoundHoleValueByHole(hole) === 'Y' }"
+          @click="
               $emit('onColumnClick', {
                 tableHead,
                 hole,
                 courseCode: roundRuleSettingInfo.courseCd,
               })
             "
-          >
-            <span>{{ j + 1 }}</span>
-            <span>{{
+        >
+          <span>{{ j + 1 }}</span>
+          <span>{{
               getHoleParByCourseCode(roundRuleSettingInfo.courseCd, j)
             }}</span>
-          </div>
-        </td>
-      </tr>
+        </div>
+      </td>
+    </tr>
     </tbody>
     <tbody v-else>
-      <tr>
-        <td class="empty" colspan="10">{{ tableHead }} 정보가 없습니다.</td>
-      </tr>
+    <tr>
+      <td class="empty" colspan="10">{{ tableHead }} 정보가 없습니다.</td>
+    </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+
 export default {
   name: "RoundRuleSettingTable",
 
@@ -94,7 +95,7 @@ export default {
         const foundCourse = this.getRoundInfoByCourseCode(courseCode);
 
         if (foundCourse) {
-          const holes = Object.entries(foundCourse).filter(([key, value]) => {
+          const holes = Object.entries(foundCourse).filter(([key]) => {
             return String(key).includes("hole");
           });
           const parsedHoles = holes.map(([key, value]) => ({
@@ -119,7 +120,15 @@ export default {
         return parInfos[j].par;
       };
     },
+    getRoundRuleSettingInfoList() {
+      const copiedRoundRuleSettingInfoList = [...this.roundRuleSettingInfoList];
 
+      copiedRoundRuleSettingInfoList.sort((a, b) => {
+        return a.courseCd < b.courseCd ? -1 : a.courseCd > b.courseCd ? 1 : 0;
+      });
+
+      return copiedRoundRuleSettingInfoList
+    },
     ...mapGetters("control", {
       getCourseParInfoByCourseCode: "getCourseParInfoByCourseCode",
     }),
@@ -131,6 +140,7 @@ export default {
 table {
   width: 99%;
 }
+
 table td {
   border: 1px solid var(--soft-green);
   padding: 0;
@@ -144,9 +154,11 @@ table td {
   align-items: center;
   min-height: 50px;
 }
+
 .column:hover {
   background-color: var(--soft-green);
 }
+
 .column.selected {
   background-color: var(--primary);
 }

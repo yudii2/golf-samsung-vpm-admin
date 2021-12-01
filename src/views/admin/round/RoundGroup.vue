@@ -33,10 +33,11 @@
     </header>
 
     <body>
-      <RoundGroupTable
-        :roundGroups="roundGroups"
-        @clearSearchData="clearSearchData"
-      />
+    <RoundGroupTable
+      :roundGroups="roundGroups"
+      @clearSearchData="clearSearchData"
+      :searchParams="searchParams"
+    />
     </body>
 
     <footer class="pages">
@@ -55,16 +56,16 @@
 </template>
 
 <script scoped>
-import { mapActions, mapGetters } from "vuex";
-import { getGroupRoundByPage } from "@/utils/test/sampleApi";
+import {mapActions, mapGetters} from "vuex";
+import {getGroupRoundByPage} from "@/utils/test/sampleApi";
 import Pages from "@/components/shared/Pages.vue";
 import RoundGroupTable from "@/components/admin/modal/round/group/RoundGroupTable.vue";
 import useAdminGroup from "@/api/v1/admin/round/useAdminGroup";
 import DateUtil from "@/utils/datetime/DateUtil";
-import { Pager } from "@/utils/usePage";
-import { NO_REQUIRED_VISIT_DATE } from "@/utils/constants";
+import {Pager} from "@/utils/usePage";
+import {NO_REQUIRED_VISIT_DATE} from "@/utils/constants";
 
-const { getGroup } = useAdminGroup();
+const {getGroup} = useAdminGroup();
 
 export default {
   name: "RoundGroup",
@@ -83,6 +84,7 @@ export default {
       visitDt: "",
       groupNm: "",
       groupNmPlaceholder: "단체 이름",
+      searchParams: {}
     };
   },
 
@@ -96,23 +98,32 @@ export default {
 
     ...mapGetters("admin/", {
       roundGroups: "getRoundGroupTeamList",
+      selectedRoundGroupName: "getSelectedRoundGroupName",
+      selectedRoundGroupVisitDt: "getSelectedRoundGroupVisitDt",
     }),
   },
 
   methods: {
     init() {
-      this.initData();
+      const visitDt = this.selectedRoundGroupVisitDt
+      const groupNm = this.selectedRoundGroupName
+      if (visitDt || groupNm) {
+        this.visitDt = visitDt;
+        this.refreshGroups({visitDt, groupNm})
+      } else {
+        this.initData();
+      }
     },
 
     async initData() {
       // 조회일 초기화.
       this.initVisitDt();
-      await this.refreshGroups({ visitDt: this.visitDt });
+      await this.refreshGroups({visitDt: this.visitDt});
     },
 
     initVisitDt() {
       const now = new Date();
-      const { year, month, day } = DateUtil.dateDivider(now);
+      const {year, month, day} = DateUtil.dateDivider(now);
       this.visitDt = `${year}-${month}-${day}`;
     },
 
@@ -122,17 +133,22 @@ export default {
     handleClickSearch() {
       const hasVisitDt = this.visitDt.length !== 0;
 
+      this.searchParams = {
+        visitDt: this.visitDt,
+        groupNm: this.groupNm,
+      }
+
       if (hasVisitDt) {
-        this.refreshGroups({
-          visitDt: this.visitDt,
-          groupNm: this.groupNm,
-        });
+        this.refreshGroups(this.searchParams);
       } else {
         this.dateInvalidMessage(NO_REQUIRED_VISIT_DATE);
 
         this.clearSearchData();
         this.$refs.inputName.focus();
       }
+
+      // this.updateSelectedRoundGroupName(this.groupNm);
+      // this.updateSelectedRoundGroupVisitDt(this.visitDt);
     },
     /**
      * 단체팀명 초기화.
@@ -146,7 +162,7 @@ export default {
     },
 
     dateInvalidMessage(title, message) {
-      this.toast({ title, message });
+      this.toast({title, message});
     },
 
     updateRoundsByPage(page) {
@@ -169,8 +185,8 @@ export default {
      * @param groupNm
      * @returns {Promise<void>}
      */
-    async refreshGroups({ visitDt, groupNm }) {
-      const parsedVisitDt = visitDt.replaceAll("-", "");
+    async refreshGroups({visitDt, groupNm}) {
+      const parsedVisitDt = visitDt?.includes('-') ? visitDt?.replaceAll("-", "") : visitDt;
       const list = await this.requestGroups({
         visitDt: parsedVisitDt,
         groupNm,
@@ -178,22 +194,25 @@ export default {
 
       this.updatePager(list);
       this.setRoundGroupTeamList(list);
-    },
 
+    },
     /**
      * 단체라운드 조회 API 호출.
      * @param visitDt
      * @param groupNm
      * @returns {Promise<*>}
      */
-    async requestGroups({ visitDt, groupNm }) {
-      const res = await getGroup({ visitDt, groupNm });
-      const { status } = res;
+    async requestGroups({visitDt, groupNm}) {
+      const res = await getGroup({visitDt, groupNm});
+      const {status} = res;
       if (status !== "OK") return;
 
       const {
-        data: { roundGroupTeamVOList },
+        data: {roundGroupTeamVOList},
       } = res;
+
+      this.updateSelectedRoundGroupVisitDt();
+      this.updateSelectedRoundGroupName();
       return roundGroupTeamVOList;
     },
 
@@ -234,13 +253,19 @@ export default {
     }),
     ...mapActions("admin/", {
       setRoundGroupTeamList: "updateRoundGroupTeamList",
+      updateSelectedRoundGroupName: "dispatchSetSelectedRoundGroupName",
+      updateSelectedRoundGroupVisitDt: "dispatchSetSelectedRoundGroupVisitDt",
+      clearRoundGroupTeamList: "updateRoundGroupTeamList"
+
     }),
   },
 
   async mounted() {
     this.init();
   },
-
+  destroyed() {
+    this.clearRoundGroupTeamList();
+  },
   watch: {
     currentPage(newPage) {
       this.rows = this.pager?.getPageRowsByPage(newPage);

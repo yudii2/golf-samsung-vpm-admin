@@ -19,7 +19,7 @@
           <span>단체 라운드</span>
         </li>
         <li
-          @click="updateContentView({ title: 'round', subtitle: 3 })"
+          @click="updateContentView({title : 'round', subtitle : 3})"
           :class="{ clicked: isMe('round', 3) }"
         >
           <span>전체 골프장 설정</span>
@@ -95,20 +95,47 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "RoundNavigation",
+
   methods: {
     ...mapActions("admin/", {
       updateContentView: "dispatchContentView",
+      clearRoundRuleSettingInfo: 'updateRoundRuleSettingInfo',
+      updateSelectedRoundGroupName: "dispatchSetSelectedRoundGroupName",
+      updateSelectedRoundGroupVisitDt: "dispatchSetSelectedRoundGroupVisitDt",
     }),
   },
   computed: {
     isMe() {
-      return (title, i) => title === this.viewTitle && i === this.viewSubTitle;
+      return (title, i) => {
+        const {groupNm} = this.selectedRoundGroup || {};
+        if (groupNm) {
+          return false;
+        } else {
+          return title === this.viewTitle && i === this.viewSubTitle;
+        }
+      }
     },
     ...mapGetters("admin/", {
       viewTitle: "getSelectedContentViewTitle",
       viewSubTitle: "getSelectedContentViewSubtitle",
+      selectedRoundGroup: "getSelectedRoundGroup",
+      selectedRoundGroupName: "getSelectedRoundGroupName",
+      selectedRoundGroupVisitDt: "getSelectedRoundGroupVisitDt",
+
     }),
   },
+  watch: {
+    viewSubTitle() {
+      this.clearRoundRuleSettingInfo();
+      // this.updateSelectedRoundGroupVisitDt();
+      // this.updateSelectedRoundGroupName();
+    },
+    viewTitle() {
+      this.clearRoundRuleSettingInfo();
+      // this.updateSelectedRoundGroupVisitDt();
+      // this.updateSelectedRoundGroupName();
+    }
+  }
 };
 </script>
 

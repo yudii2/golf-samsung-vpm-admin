@@ -65,4 +65,8 @@ export default {
   setRoundAllRows(state, rows) {
     state.roundAllRows = rows;
   },
+
+
+
+
 };

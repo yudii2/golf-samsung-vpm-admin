@@ -2,7 +2,7 @@ import useAuth from "@/api/v1/auth/useAuth";
 
 const useAdminGroup = () => {
   const BASE_URI = `${process.env.VUE_APP_BASE_URI_ADMIN}/v1`;
-  const { getAccessToken, authenticationIsValid } = useAuth();
+  const {getAccessToken, authenticationIsValid} = useAuth();
 
   /**
    * ### 단체 라운드 조회
@@ -10,7 +10,7 @@ const useAdminGroup = () => {
    * @param groupNm
    * @returns {Promise<Response | void>}
    */
-  const getGroup = ({ visitDt, groupNm }) => {
+  const getGroup = ({visitDt, groupNm}) => {
     let uri = `${BASE_URI}/round/info/roundGroup-info`;
     if (visitDt) {
       if (uri.includes("?")) uri = `${uri}&visitDt=${visitDt}`;
@@ -40,7 +40,7 @@ const useAdminGroup = () => {
    * @param visitDt
    * @returns {Promise<Response|void>}
    */
-  const getGroupScoreDetail = async ({ groupCd, visitDt }) => {
+  const getGroupScoreDetail = async ({groupCd, visitDt}) => {
     const uri = `${BASE_URI}/round/info/roundGroup-score?groupCd=${groupCd}&visitDt=${visitDt}`;
     return await fetch(uri, {
       headers: {
@@ -60,7 +60,7 @@ const useAdminGroup = () => {
    * @param visitDt
    * @returns {Promise<Response|void>}
    */
-  const updateGroupHandyModeAsYes = async ({ groupCd, visitDt }) => {
+  const updateGroupHandyModeAsYes = async ({groupCd, visitDt}) => {
     const uri = `${BASE_URI}/round/info/roundGroup-game?groupCd=${groupCd}&visitDt=${visitDt}`;
     return await fetch(uri, {
       method: "POST",
@@ -81,7 +81,7 @@ const useAdminGroup = () => {
    * @param {String} groupCd > 단체 이름.
    * @returns {Promise<Response|void>}
    */
-  const getAwardInfo = ({ visitDt = "00000000", groupCd }) => {
+  const getAwardInfo = ({visitDt = "00000000", groupCd}) => {
     let uri = `${BASE_URI}/round/info/award-info`;
 
     if (visitDt) {
@@ -128,12 +128,33 @@ const useAdminGroup = () => {
   };
 
   /**
+   * 시상설정 수정(삭제)
+   * @param body
+   * @returns {Promise<Response|void>}
+   */
+  const deleteAwardInfo = async (body) => {
+    const uri = `${BASE_URI}/round/info/award-info/delete`;
+    return await fetch(uri, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getAccessToken(),
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => {
+        if (authenticationIsValid()) return res.json();
+      })
+      .catch((err) => console.error(err.message));
+  }
+
+  /**
    * 단체 스코어 시상 조회
    * @param groupCd
    * @param visitDt
    * @returns {Promise<Response|void>}
    */
-  const getRankList = async ({ groupCd, visitDt }) => {
+  const getRankList = async ({groupCd, visitDt}) => {
     const uri = `${BASE_URI}/round/info/roundGroup-rank?groupCd=${groupCd}&visitDt=${visitDt}`;
     return await fetch(uri, {
       headers: {
@@ -153,7 +174,7 @@ const useAdminGroup = () => {
    * @param visitDt
    * @returns {Promise<Response|void>}
    */
-  const resetRank = async ({ groupCd, visitDt }) => {
+  const resetRank = async ({groupCd, visitDt}) => {
     const uri = `${BASE_URI}/round/info/roundGroup-rank/init?groupCd=${groupCd}&visitDt=${visitDt}`;
     return await fetch(uri, {
       method: "POST",
@@ -175,7 +196,7 @@ const useAdminGroup = () => {
    * @param playerGroupScoreRankReq
    * @returns {Promise<Response|void>}
    */
-  const updateRank = async ({ groupCd, visitDt }, playerGroupScoreRankReq) => {
+  const updateRank = async ({groupCd, visitDt}, playerGroupScoreRankReq) => {
     const uri = `${BASE_URI}/round/info/roundGroup-rank/update?groupCd=${groupCd}&visitDt=${visitDt}`;
     return await fetch(uri, {
       method: "POST",
@@ -200,6 +221,7 @@ const useAdminGroup = () => {
     getRankList,
     resetRank,
     updateRank,
+    deleteAwardInfo
   };
 };
 

@@ -1,5 +1,5 @@
 <template>
-  <article id="round_rule_setting__container">
+  <article id="round_rule_setting__container" v-if="roundRuleSettingInfo !== null">
     <!-- 헤더 -->
     <RoundRuleSettingHeader
       :headerTitle="headerTitle"
@@ -7,27 +7,39 @@
       @onSaveClick="handleSaveClick"
       @onRollbackClick="handleRollbackClick"
       @releaseGroup="handleReleaseGroupClick"
+      @onCancelClick="handleCancelClick"
+      @onUpdateClick="handleUpdateClick"
+      @onGoBackListClick="handleGoBackListClick"
     />
 
     <!-- 바디 -->
     <RoundRuleSettingBody
+      ref="apiRequest"
       v-if="hasRoundRuleSettingInfo"
       :roundRuleInfo="roundRuleSettingInfo"
       :hasSelectedRoundGroup="hasSelectedRoundGroup"
+      :isUpdatable="isUpdatable"
     />
   </article>
 </template>
 
 <script scoped>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import useAdminGroup from "@/api/v1/admin/round/useAdminGroup";
 import RoundRuleSettingHeader from "./RoundRuleSettingHeader.vue";
 import RoundRuleSettingBody from "./RoundRuleSettingBody.vue";
 
-const { getAwardInfo } = useAdminGroup();
+const {getAwardInfo} = useAdminGroup();
 
 export default {
   name: "RoundRuleSetting",
+
+  data() {
+    return {
+      isUpdatable: false,
+      isDeleted: false
+    }
+  },
 
   components: {
     RoundRuleSettingHeader,
@@ -36,7 +48,7 @@ export default {
 
   computed: {
     headerTitle() {
-      const { groupNm } = this.roundRuleSettingInfo || {};
+      const {groupNm} = this.roundRuleSettingInfo || {};
 
       return groupNm ? groupNm : this.getCompanyName;
     },
@@ -52,6 +64,7 @@ export default {
     ...mapGetters("admin/", {
       selectedRoundGroup: "getSelectedRoundGroup",
       roundRuleSettingInfo: "getRoundRuleSettingInfo",
+
     }),
     ...mapGetters("control/", {
       getCompanyName: "getCompanyName",
@@ -72,10 +85,10 @@ export default {
     },
 
     async requestAwardInfo() {
-      const { visitDt, groupCd } = this.selectedRoundGroup || {};
-      const { status, data } = await getAwardInfo({
-        ...(visitDt && { visitDt }),
-        ...(groupCd && { groupCd }),
+      const {visitDt, groupCd} = this.selectedRoundGroup || {};
+      const {status, data} = await getAwardInfo({
+        ...(visitDt && {visitDt}),
+        ...(groupCd && {groupCd}),
       });
       if (status && status === "OK") {
         this.setRoundRuleSettingInfo(data);
@@ -101,6 +114,7 @@ export default {
     clearStore() {
       // Group award 초기화.
       this.setSelectedGroupAward();
+      this.handleReleaseGroupClick();
     },
 
     /**
@@ -119,6 +133,7 @@ export default {
 
     handleSaveClick() {
       this.setNeedFetch();
+      this.isUpdatable = false;
     },
 
     handleRollbackClick() {
@@ -133,11 +148,36 @@ export default {
       this.requestAwardInfo();
     },
 
+    /**
+     * 취소버튼 눌렀을 시.
+     */
+    handleCancelClick() {
+      this.isDeleted = true;
+      this.$refs.apiRequest.handleCancelClick();
+
+    },
+    /**
+     * 수정하기 버튼 눌렀을 시.
+     */
+    handleUpdateClick() {
+      this.isUpdatable = !this.isUpdatable;
+    },
+    /**
+     * 목록으로 버튼 눌렀을 시
+     */
+    handleGoBackListClick() {
+      this.isDeleted = true;
+      this.updateContentView({title: "round", subtitle: 2})
+    },
+
     ...mapActions("admin/", {
       setSelectedGroupAward: "updateSelectedGroupAward",
       setRoundRuleSettingInfo: "updateRoundRuleSettingInfo",
       setNeedFetch: "updateNeedFetch",
       setSelectedRoundGroup: "updateSelectedRoundGroup",
+      updateSelectedRoundGroupName: "dispatchSetSelectedRoundGroupName",
+      updateSelectedRoundGroupVisitDt: "dispatchSetSelectedRoundGroupVisitDt",
+      updateContentView: "dispatchContentView",
     }),
   },
 
@@ -147,6 +187,11 @@ export default {
 
   beforeDestroy() {
     this.clearStore();
+    if (!this.isDeleted) {
+      this.updateSelectedRoundGroupName();
+      this.updateSelectedRoundGroupVisitDt();
+    }
+
   },
 };
 </script>

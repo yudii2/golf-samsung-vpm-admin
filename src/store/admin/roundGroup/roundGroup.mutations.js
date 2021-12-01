@@ -18,4 +18,69 @@ export default {
   CLEAR_SELECTED_ROUND_GROUP(state) {
     state.selectedRoundGroup = null;
   },
+
+  // roundGroup Award competitionSettingList
+  setSelectedRoundGroupCompetitionSettingList(state, selectedRoundGroupCompetitionSetting) {
+    state.selectedRoundGroupCompetitionSettingList = selectedRoundGroupCompetitionSetting;
+  },
+
+  //roundGroup ranking checkYn
+  setIsCheckedLong(state, checkYn) { //롱
+    state.isCheckedLong = checkYn
+  },
+  setIsCheckedNear(state, checkYn) { //니어
+    state.isCheckedNear = checkYn
+  },
+  setIsCheckedBuddy(state, checkYn) { //버디
+    state.isCheckedBuddy = checkYn
+  },
+  setIsCheckedPar(state, checkYn) {  //파
+    state.isCheckedPar = checkYn
+  },
+  setIsCheckedOneOver(state, checkYn) { //보기
+    state.isCheckedOneOver = checkYn
+  },
+  setIsCheckedTwoOver(state, checkYn) { //더블보기
+    state.isCheckedTwoOver = checkYn
+  },
+  setIsCheckedThreeOver(state, checkYn) { //트리플보기
+    state.isCheckedThreeOver = checkYn
+  },
+  setIsCheckedDoublePar(state, checkYn) {  // 더블파
+    state.isCheckedDoublePar = checkYn
+  },
+  setIsCheckedFirstSecondGap(state, checkYn) { //전후반차
+    state.isCheckedFirstSecondGap = checkYn
+  },
+  setIsCheckedLucky(state, checkYn) {//행운상
+    state.isCheckedLucky = checkYn
+  },
+  setIsCheckedNewPerio(state, checkYn) {//신페리오
+    state.isCheckedNewPerio = checkYn
+  },
+  setIsCheckedFirstSecond(state, checkYn) {//전,후반
+    state.isCheckedFirstSecond = checkYn
+  },
+  setIsCheckedStrokeHandy(state, checkYn) { //스트로크핸디
+    state.isCheckedStrokeHandy = checkYn
+  },
+  setIsCheckedHonest(state, checkYn) { //어니스트
+    state.isCheckedHonest = checkYn
+  },
+
+  //roundGroup selectedRoundGroup(시상설정 전페이지)
+  setSelectedRoundGroupName(state, groupName) {
+    state.selectedRoundGroupName = groupName
+  },
+  setSelectedRoundGroupVisitDt(state, visitDt) {
+    state.selectedRoundGroupVisitDt = visitDt
+  },
+  clearSelectedRoundGroupName(state) {
+    state.selectedRoundGroupName = '';
+  },
+  clearSelectedRoundGroupVisitDt(state) {
+    state.selectedRoundGroupVisitDt = '';
+  },
+
+
 };
