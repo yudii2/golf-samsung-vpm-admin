@@ -90,7 +90,8 @@ export default {
       };
     },
 
-    getRoundHolesByCourseCd() {
+    getRoundHolesByCourseCd()
+    {
       return (courseCode) => {
         const foundCourse = this.getRoundInfoByCourseCode(courseCode);
 
@@ -105,7 +106,8 @@ export default {
         }
         return [];
       };
-    },
+    }
+,
 
     getRoundHoleValueByHole() {
       return (hole) => {

@@ -2,7 +2,8 @@
   <main id="round_manage__container">
     <RoundAll v-if="getSelectedContentViewSubtitle === 1" />
     <RoundGroup v-else-if="getSelectedContentViewSubtitle === 2" />
-    <RoundRuleSetting v-else-if="getSelectedContentViewSubtitle === 3" />
+    <RoundRuleSetting v-else-if="getSelectedContentViewSubtitle === 3"
+    />
     <CertificateIssue v-else-if="getSelectedContentViewSubtitle === 4" />
     <HoleOut v-else-if="getSelectedContentViewSubtitle === 5" />
   </main>

@@ -249,6 +249,8 @@ export default {
             message: "라운드 룰이 정상적으로 저장되었습니다.",
           });
         }
+        this.$emit('handleGoBackListClick')
+
       }
     },
   },

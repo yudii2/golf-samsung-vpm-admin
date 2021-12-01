@@ -1,16 +1,14 @@
 <template>
-  <table class="table-dark">
-    <tbody>
-    <tr class="table_th">
-      <template v-for="idx in colGroups">
-        <td :key="idx"></td>
-        <td :key="`gubun_${idx}`">시상구분</td>
-        <td :key="`competition_name_${idx}`">시상명</td>
-      </template>
-    </tr>
-    <tr v-for="idx in computedSettingInfoList" :key="idx">
-      <template v-for="(competition, j) in slicedCompetitionSettingInfoList(idx)">
-        <td :key="`competitions_check_box_${competition.competitionId}${j}`">
+  <section class="table_wrapper">
+    <table class="table-dark" v-for="(settingList,i) in competitionSettingLists" :key="i">
+      <tbody>
+      <tr class="table_th">
+        <td></td>
+        <td>시상구분</td>
+        <td>시상명</td>
+      </tr>
+      <tr class="table_tr" v-for="(competition, j) in settingList" :key="competition[j]">
+        <td>
           <div class="ranks_li__wrapper">
             <li @click="checkedAwardBox(competition)">
               <div class="checkbox__wrapper">
@@ -19,10 +17,10 @@
             </li>
           </div>
         </td>
-        <td :key="`competition_display_name_${competition.competitionId}${j}`">
+        <td>
           {{ competition.orgName }}
         </td>
-        <td :key="`competition_updated_name_${competition.competitionId}${j}`">
+        <td>
           <template v-if="isUpdatable">
             <input
               type="text"
@@ -35,10 +33,10 @@
             {{ competition.displayName }}
           </template>
         </td>
-      </template>
-    </tr>
-    </tbody>
-  </table>
+      </tr>
+      </tbody>
+    </table>
+  </section>
 </template>
 
 <script>
@@ -49,7 +47,7 @@ export default {
 
   data() {
     return {
-      colGroups: 2,
+      colGroups: 3,
     }
   },
 
@@ -68,7 +66,15 @@ export default {
     computedSettingInfoList() {
       if (this.roundCompetitionSettingInfoList === null) return;
       else return Math.ceil(this.roundCompetitionSettingInfoList?.length / this.colGroups)
-    }
+    },
+    competitionSettingLists() {
+      const settingList = [];
+      settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '10' || obj.gubun === '11' || obj.gubun === '22' || obj.gubun === '24')));
+      settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '12' || obj.gubun === '13' || obj.gubun === '20' || obj.gubun === '21' || obj.gubun === '23')));
+      settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '14' || obj.gubun === '15' || obj.gubun === '16' || obj.gubun === '17' || obj.gubun === '18' || obj.gubun === '19')))
+
+      return settingList
+    },
   },
 
   methods: {
@@ -121,6 +127,10 @@ export default {
 </script>
 
 <style scoped>
+.table_wrapper {
+  display: flex;
+}
+
 table {
   width: 99%;
 }
@@ -128,6 +138,7 @@ table {
 table .table_th {
   background-color: var(--soft-green);
   font-weight: bold;
+  height: 10px;
 }
 
 table td {

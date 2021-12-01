@@ -1,19 +1,19 @@
 <template>
   <section class="round-group-ranking-award-table__container">
     <table id="excel__medal__table">
-      <!--      <colgroup>-->
-      <!--        <col width="7%"/>-->
-      <!--        <col width="9%"/>-->
-      <!--        <col width="7%"/>-->
-      <!--        <col width="7%"/>-->
-      <!--        <col width="7%"/>-->
-      <!--        <col width="5%"/>-->
-      <!--        <col width="7%"/>-->
-      <!--        <col width="7%"/>-->
-      <!--        <col width="8%"/>-->
-      <!--        <col width="7%"/>-->
-      <!--        <col width="7%"/>-->
-      <!--      </colgroup>-->
+      <colgroup>
+        <col width="7%"/>
+        <col width="9%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="5%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="8%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+      </colgroup>
       <thead>
       <tr>
         <template v-for="awardNames in competitionSettingList">
@@ -27,9 +27,9 @@
       </tr>
       </thead>
       <tbody>
-      <template v-for="(awardNames, i) in competitionSettingList">
+      <template v-for="(awardNames, j) in competitionSettingList">
         <template v-if="isUpdatable">
-          <td :key="`${awardNames.gubun}${i}`"
+          <td :key="`${awardNames.gubun}${j}`"
               v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
             <input v-if="isUpdatable"
                    class="update_rank_input"
@@ -111,25 +111,24 @@ export default {
     competitionSettingList() {
       return this.selectedRoundGroupCompetitionSettingList.competitionSettingList.filter((award) => award.checkYn === 'Y')
     },
-    ...
-      mapGetters("admin/", {
-        selectedRoundGroup: "getSelectedRoundGroup",
-        selectedRoundGroupCompetitionSettingList: 'getSelectedRoundGroupCompetitionSettingList',
-        isCheckedLong: 'getIsCheckedLong',
-        isCheckedNear: 'getIsCheckedNear',
-        isCheckedBuddy: 'getIsCheckedBuddy',
-        isCheckedPar: 'getIsCheckedPar',
-        isCheckedOneOver: 'getIsCheckedOneOver',
-        isCheckedTwoOver: 'getIsCheckedTwoOver',
-        isCheckedThreeOver: 'getIsCheckedThreeOver',
-        isCheckedDoublePar: 'getIsCheckedDoublePar',
-        isCheckedFirstSecondGap: 'getIsCheckedFirstSecondGap',
-        isCheckedLucky: 'getIsCheckedLucky',
-        isCheckedNewPerio: 'getIsCheckedNewPerio',
-        isCheckedFirstSecond: 'getIsCheckedFirstSecond',
-        isCheckedStrokeHandy: 'getIsCheckedStrokeHandy',
-        isCheckedHonest: 'getIsCheckedHonest',
-      })
+    ...mapGetters("admin/", {
+      selectedRoundGroup: "getSelectedRoundGroup",
+      selectedRoundGroupCompetitionSettingList: 'getSelectedRoundGroupCompetitionSettingList',
+      isCheckedLong: 'getIsCheckedLong',
+      isCheckedNear: 'getIsCheckedNear',
+      isCheckedBuddy: 'getIsCheckedBuddy',
+      isCheckedPar: 'getIsCheckedPar',
+      isCheckedOneOver: 'getIsCheckedOneOver',
+      isCheckedTwoOver: 'getIsCheckedTwoOver',
+      isCheckedThreeOver: 'getIsCheckedThreeOver',
+      isCheckedDoublePar: 'getIsCheckedDoublePar',
+      isCheckedFirstSecondGap: 'getIsCheckedFirstSecondGap',
+      isCheckedLucky: 'getIsCheckedLucky',
+      isCheckedNewPerio: 'getIsCheckedNewPerio',
+      isCheckedFirstSecond: 'getIsCheckedFirstSecond',
+      isCheckedStrokeHandy: 'getIsCheckedStrokeHandy',
+      isCheckedHonest: 'getIsCheckedHonest',
+    })
   }
 }
 ;
@@ -158,4 +157,5 @@ table td {
   border: none;
   border-bottom: 1px solid var(--primary);
 }
+
 </style>

@@ -19,6 +19,7 @@
       :roundRuleInfo="roundRuleSettingInfo"
       :hasSelectedRoundGroup="hasSelectedRoundGroup"
       :isUpdatable="isUpdatable"
+      @handleGoBackListClick="handleGoBackListClick"
     />
   </article>
 </template>
@@ -37,7 +38,7 @@ export default {
   data() {
     return {
       isUpdatable: false,
-      isDeleted: false
+      isStayingBeforePage: false
     }
   },
 
@@ -152,7 +153,7 @@ export default {
      * 취소버튼 눌렀을 시.
      */
     handleCancelClick() {
-      this.isDeleted = true;
+      this.isStayingBeforePage = true;
       this.$refs.apiRequest.handleCancelClick();
 
     },
@@ -166,7 +167,7 @@ export default {
      * 목록으로 버튼 눌렀을 시
      */
     handleGoBackListClick() {
-      this.isDeleted = true;
+      this.isStayingBeforePage = true;
       this.updateContentView({title: "round", subtitle: 2})
     },
 
@@ -187,7 +188,7 @@ export default {
 
   beforeDestroy() {
     this.clearStore();
-    if (!this.isDeleted) {
+    if (!this.isStayingBeforePage) {
       this.updateSelectedRoundGroupName();
       this.updateSelectedRoundGroupVisitDt();
     }
