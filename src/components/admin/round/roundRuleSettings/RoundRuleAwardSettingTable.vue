@@ -161,7 +161,7 @@ table td {
 }
 
 .update_input {
-  width: 45%;
+  width: 70%;
   background-color: transparent;
   color: var(--secondary);
   text-align: center;

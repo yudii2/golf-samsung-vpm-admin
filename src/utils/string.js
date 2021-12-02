@@ -289,6 +289,33 @@ export function nameToMasking(name) {
 }
 
 /**
+ * 전체라운드 내장객 이름 마스킹 처리
+ * 기준일(오늘날짜) 로부터 3일 이상 -> 풀네임 마스킹처리.
+ * @param name
+ * @returns {*}
+ */
+export function fullNameToMasking(name) {
+  const maskingStr = name.replace(/(?<=.{0})./gi, "*");
+  return maskingStr;
+}
+
+/**
+ * 날짜 포맷팅.
+ * input : 2021-09-14
+ * output : 20210914
+ *
+ * input : 2021.09.14
+ * output : 20210914
+ * @param visitDt
+ * @param char
+ * @returns {*|string}
+ */
+export function parsedVisitDtIncludesChar(visitDt, char){
+  return visitDt.replaceAll(char, "");
+}
+
+
+/**
  * ### 인풋 태그 관련 훅.
  */
 export const useInput = (maxLength = 10) => {

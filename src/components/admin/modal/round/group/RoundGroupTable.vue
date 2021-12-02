@@ -71,7 +71,7 @@
             랭킹
           </button>
         </td>
-        <td v-else>-</td>
+        <td v-else></td>
       </tr>
       </tbody>
       <tbody v-else>
@@ -108,9 +108,9 @@ export default {
       type: Array,
       require: true,
     },
-    searchParams:{
-      type : Object,
-      require:  false
+    searchParams: {
+      type: Object,
+      require: false
     }
   },
 
@@ -147,10 +147,14 @@ export default {
         }
       }
 
+      const paramGroupNm = this.searchParams.groupNm;
+      const paramVisitDt = this.searchParams.visitDt;
+      const parsedVisitDt = DateUtil.stringDateToFormattedByYearMonthDayWithChar(visitDt);
+
       // 스토어 설정.
       this.setSelectedRoundGroup(clickedRoundGroup);
-      this.setSelectedRoundGroupName(this.searchParams.groupNm);
-      this.setSelectedRoundGroupVisitDt(this.searchParams.visitDt);
+      this.setSelectedRoundGroupName(paramGroupNm);
+      this.setSelectedRoundGroupVisitDt(paramVisitDt ? paramVisitDt : parsedVisitDt);
       // 탭 이동.
       this.updateContentView({title: "round", subtitle: 3});
     },

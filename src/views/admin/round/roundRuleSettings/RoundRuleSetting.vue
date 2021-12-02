@@ -155,7 +155,6 @@ export default {
     handleCancelClick() {
       this.isStayingBeforePage = true;
       this.$refs.apiRequest.handleCancelClick();
-
     },
     /**
      * 수정하기 버튼 눌렀을 시.
@@ -192,7 +191,6 @@ export default {
       this.updateSelectedRoundGroupName();
       this.updateSelectedRoundGroupVisitDt();
     }
-
   },
 };
 </script>

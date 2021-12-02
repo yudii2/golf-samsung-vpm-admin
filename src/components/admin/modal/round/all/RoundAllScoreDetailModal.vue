@@ -49,7 +49,7 @@
               v-for="(player, idx) in selectedRound.roundTeamPlayerList"
               :key="idx"
             >
-              <td>{{ maskedPlayerName(player.name) }}</td>
+              <td>{{ maskedPlayerName(player.name, selectedRound.visitDt) }}</td>
               <td>{{ player.scoreTotal }}</td>
               <td>{{ player.putterTotal }}</td>
               <td>{{ player.fairWaySafe }}</td>
@@ -150,7 +150,7 @@
               v-for="(player, i, j) in selectedRound.roundTeamPlayerList"
             >
               <tr :key="`${selectedRound.roundId}${i}`">
-                <td rowspan="2">{{ maskedPlayerName(player.name) }}</td>
+                <td rowspan="2">{{ maskedPlayerName(player.name, selectedRound.visitDt) }}</td>
                 <td>스코어</td>
                 <template v-if="player.roundPlayerScoreStrokeList !== null">
                   <td
@@ -281,9 +281,10 @@ import TimeUtil from "@/utils/datetime/TimeUtil";
 import CloseButton from "@/components/shared/CloseButton.vue";
 import RoundAllScorePrint from "@/components/admin/round/roundAll/RoundAllScorePrint.vue";
 import {print} from "@/composables/usePrinter";
-import {nameToMasking} from "@/utils/string";
+import {fullNameToMasking, nameToMasking, parsedVisitDtIncludesChar} from "@/utils/string";
 import useRound from "@/api/v1/admin/round/useRound";
 import {NO_REQUIRED_DATA} from "@/utils/constants";
+import DateUtil from "@/utils/datetime/DateUtil";
 
 const {updateRoundScore, getRoundDetail} = useRound()
 export default {
@@ -318,8 +319,14 @@ export default {
      * @returns {function(*=): string}
      */
     maskedPlayerName() {
-      return (playerName) => {
-        return nameToMasking(playerName);
+      return (playerName, visitDt) => {
+        const parsedVisitDt = parsedVisitDtIncludesChar(visitDt, '-');
+        const elapsedDay = DateUtil.calculateElapsedDate(parsedVisitDt)
+        if (elapsedDay > 3) {
+          return fullNameToMasking(playerName);
+        } else {
+          return nameToMasking(playerName);
+        }
       };
     },
 
@@ -433,6 +440,7 @@ export default {
     parsedVisitDt(visitDt) {
       return visitDt.replaceAll("-", ".");
     },
+
     /**
      * 스코어, 퍼팅수 수정 API 호출 후 , 스코어카드 재조회.
      * @returns {Promise<void>}

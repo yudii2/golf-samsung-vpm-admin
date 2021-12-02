@@ -107,6 +107,7 @@ export default {
     init() {
       const visitDt = this.selectedRoundGroupVisitDt
       const groupNm = this.selectedRoundGroupName
+      console.log('visitDt from RoundGroup', visitDt)
       if (visitDt || groupNm) {
         this.visitDt = visitDt;
         this.refreshGroups({visitDt, groupNm})

@@ -38,7 +38,7 @@
           <thead>
           <tr>
             <th rowspan="2" style="width: 70px">순위</th>
-            <template v-if="this.isCheckedNewPerio && this.isCheckedFirstSecond">
+            <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && this.isCheckedFirstSecond">
               <th colspan="6" style="width: 450px">Score</th>
             </template>
             <template v-else-if="!this.isCheckedNewPerio && this.isCheckedFirstSecond">
@@ -89,7 +89,7 @@
             </th>
           </tr>
           <tr>
-            <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
+            <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
               <th>이름</th>
               <th>전반</th>
               <th>후반</th>
@@ -97,6 +97,7 @@
               <th>Hcp</th>
               <th>Net</th>
             </template>
+
             <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
               <th>이름</th>
               <th>전반</th>
@@ -113,6 +114,7 @@
               <th>이름</th>
               <th>Total</th>
             </template>
+
 
             <template v-if="isCheckedLong">
               <th>이름</th>
@@ -168,7 +170,7 @@
           <tbody>
           <tr v-for="i in selectedRoundGroupRank.playerCount" :key="i">
             <td>{{ i }}</td>
-            <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
+            <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
               <td>
                 {{
                   getScorePlayerInfo(
@@ -364,6 +366,86 @@
                     "totalScore"
                   )
                 }}
+              </td>
+            </template>
+
+            <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "playerNm"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "firstScore"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "secondScore"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "totScoreByNewPerio"
+                  )
+                }}
+              </td>
+              <td>
+                {{
+                  getScorePlayerInfo(
+                    i - 1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                    "handyValue"
+                  )
+                }}
+              </td>
+              <td>
+                <input
+                  v-if="isUpdatable"
+                  type="number"
+                  :value="
+                      getScorePlayerInfo(
+                        i - 1,
+                        selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                        'netScore'
+                      )
+                    "
+                  class="update_input"
+                  @change="
+                      getOriginalNetValue(
+                        getScorePlayerInfo(
+                          i - 1,
+                          selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList
+                        )
+                      )
+                    "
+                  @input="updateNetValue"
+                />
+                <span v-else>
+                    {{
+                    getScorePlayerInfo(
+                      i - 1,
+                      selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                      "netScore"
+                    )
+                  }}</span
+                >
               </td>
             </template>
 
