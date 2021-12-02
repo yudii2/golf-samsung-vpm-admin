@@ -1,5 +1,9 @@
 <template>
   <article id="progress_time_live__container">
+    <header>
+
+    </header>
+
     <section>
       <ProgressTimeLiveTable :rows="rows"/>
     </section>
