@@ -89,7 +89,7 @@
                   {{ player.secondCourse }}
                 </td>
                 <td rowspan="2">{{ parsedBookgTime(selectedRound.round.lastTeamTime) }}</td>
-                <td rowspan="2">{{ player.name }}</td>
+                <td rowspan="2">{{ maskedPlayerName(player.name, selectedRound.visitDt) }}</td>
                 <td>스코어</td>
                 <td
                   v-for="(score, idx) in player.roundPlayerScoreStrokeList.slice(0,9)"
@@ -164,6 +164,8 @@ import CloseButton from "@/components/shared/CloseButton.vue";
 import RoundGroupScorePrint from "@/components/admin/round/roundGroup/prints/score/RoundGroupScorePrint.vue";
 import {print} from "@/composables/usePrinter";
 import TimeUtil from "@/utils/datetime/TimeUtil";
+import {parsedVisitDtIncludesChar} from "@/utils/string";
+import DateUtil from "@/utils/datetime/DateUtil";
 
 export default {
   name: "RoundGroupScoreDetailModal",
@@ -205,13 +207,23 @@ export default {
         return TimeUtil.timeFormatWithChar(bookgTime);
       };
     },
+    maskedPlayerName(){
+      return (playerName, visitDt) => {
+        const parsedVisitDt = parsedVisitDtIncludesChar(visitDt, '-');
+        const elapsedDay = DateUtil.calculateElapsedDate(parsedVisitDt)
+        if (elapsedDay > 3) {
+          return null;
+        } else {
+          return playerName;
+        }
+      };
+    }
   },
   methods: {
     handleClickClose() {
       this.close(false);
     },
     handleClickPrint() {
-      // this.toastPreparing({title: '스코어카드 인쇄'})
       const layout = this.$refs.roundGroupScorePrint.$el;
       print({
         targetElement: layout,

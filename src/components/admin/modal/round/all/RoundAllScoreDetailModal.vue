@@ -109,7 +109,7 @@
               </th>
               <th></th>
               <th></th>
-              <th rowspan="2">SMS</th>
+              <th rowspan="2" v-if="isShowingSMSModal(selectedRound.visitDt)">SMS</th>
             </tr>
             <tr>
               <th>Par</th>
@@ -200,13 +200,14 @@
                 <td>
                   {{ player.scoreTotal }}
                 </td>
-                <td rowspan="2">
+                <td rowspan="2" v-if="isShowingSMSModal(selectedRound.visitDt)">
                   <button
                     class="button-dark"
                     @click="handleClickSMS(player, selectedRound)"
                   >
                     SMS전송
-                  </button>
+                  </button
+                    >
                 </td>
               </tr>
               <tr :key="`${selectedRound.roundId}${i}${j}`">
@@ -281,7 +282,7 @@ import TimeUtil from "@/utils/datetime/TimeUtil";
 import CloseButton from "@/components/shared/CloseButton.vue";
 import RoundAllScorePrint from "@/components/admin/round/roundAll/RoundAllScorePrint.vue";
 import {print} from "@/composables/usePrinter";
-import {fullNameToMasking, parsedVisitDtIncludesChar} from "@/utils/string";
+import {parsedVisitDtIncludesChar} from "@/utils/string";
 import useRound from "@/api/v1/admin/round/useRound";
 import {NO_REQUIRED_DATA} from "@/utils/constants";
 import DateUtil from "@/utils/datetime/DateUtil";
@@ -323,7 +324,7 @@ export default {
         const parsedVisitDt = parsedVisitDtIncludesChar(visitDt, '-');
         const elapsedDay = DateUtil.calculateElapsedDate(parsedVisitDt)
         if (elapsedDay > 3) {
-          return fullNameToMasking(playerName);
+          return null;
         } else {
           return playerName;
         }
@@ -354,6 +355,17 @@ export default {
           return originScore - this.selectedRound.roundTeamParList[index].par;
         }
       };
+    },
+    isShowingSMSModal() {
+      return (visitDt) => {
+        const parsedVisitDt = parsedVisitDtIncludesChar(visitDt, '-');
+        const elapsedDay = DateUtil.calculateElapsedDate(parsedVisitDt)
+        if (elapsedDay > 3) {
+          return false;
+        }else{
+          return true;
+        }
+      }
     },
     ...mapGetters("admin/", {
       selectedRound: "getSelectedRoundAll",
