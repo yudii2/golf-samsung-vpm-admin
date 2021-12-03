@@ -48,7 +48,7 @@
     <section class="mt">
       <table id="second_table__wrapper">
         <colgroup>
-          <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
+          <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
             <col width="4%"/>
 
             <col width="5%"/>
@@ -134,7 +134,7 @@
         <thead>
         <tr>
           <th rowspan="2">순위</th>
-          <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
+          <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
             <th colspan="6">Score</th>
           </template>
           <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
@@ -160,7 +160,7 @@
           <th colspan="2" v-if="isCheckedFirstSecondGap">전후반차</th>
           <th colspan="2" v-if="isCheckedLucky">행운상</th>
         </tr>
-        <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
+        <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
           <th class="second-head-column">이름</th>
           <th class="second-head-column">전반</th>
           <th class="second-head-column">후반</th>
@@ -238,7 +238,7 @@
         <tbody>
         <tr v-for="i in selectedRoundGroupRank.playerCount" :key="i">
           <td>{{ i }}</td>
-          <template v-if="isCheckedNewPerio && isCheckedFirstSecond">
+          <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
             <td>
               {{
                 getScorePlayerInfo(

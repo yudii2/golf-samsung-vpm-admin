@@ -74,7 +74,7 @@
         <td>
           <div class="players" v-if="row.roundPlayerList.length">
               <span v-for="(player, idx) in row.roundPlayerList" :key="idx">
-                {{ maskedPlayerName(player.name, row.visitDt) }}
+                {{ player.name }}
               </span>
           </div>
         </td>
@@ -133,7 +133,7 @@
 <script>
 import TimeUtil from "@/utils/datetime/TimeUtil";
 import {mapActions, mapGetters} from "vuex";
-import {fullNameToMasking, nameToMasking} from "@/utils/string";
+import {fullNameToMasking} from "@/utils/string";
 import useRound from "@/api/v1/admin/round/useRound";
 import DateUtil from "@/utils/datetime/DateUtil";
 
@@ -175,7 +175,7 @@ export default {
         if (elapsedDay > 3) {
           return fullNameToMasking(playerName);
         } else {
-          return nameToMasking(playerName);
+          return playerName;
         }
       };
     },
@@ -303,8 +303,9 @@ export default {
 }
 
 table {
-  width: 100%;
+  width: 120%;
   border: 1px solid var(--primary);
+  word-break: keep-all;
 }
 
 table tbody tr:hover {

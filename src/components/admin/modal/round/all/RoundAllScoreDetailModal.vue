@@ -281,7 +281,7 @@ import TimeUtil from "@/utils/datetime/TimeUtil";
 import CloseButton from "@/components/shared/CloseButton.vue";
 import RoundAllScorePrint from "@/components/admin/round/roundAll/RoundAllScorePrint.vue";
 import {print} from "@/composables/usePrinter";
-import {fullNameToMasking, nameToMasking, parsedVisitDtIncludesChar} from "@/utils/string";
+import {fullNameToMasking, parsedVisitDtIncludesChar} from "@/utils/string";
 import useRound from "@/api/v1/admin/round/useRound";
 import {NO_REQUIRED_DATA} from "@/utils/constants";
 import DateUtil from "@/utils/datetime/DateUtil";
@@ -325,7 +325,7 @@ export default {
         if (elapsedDay > 3) {
           return fullNameToMasking(playerName);
         } else {
-          return nameToMasking(playerName);
+          return playerName;
         }
       };
     },

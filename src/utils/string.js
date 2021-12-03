@@ -295,8 +295,10 @@ export function nameToMasking(name) {
  * @returns {*}
  */
 export function fullNameToMasking(name) {
-  const maskingStr = name.replace(/(?<=.{0})./gi, "*");
-  return maskingStr;
+  if (name !== "" || name !== null) {
+    const maskingStr = name?.replace(/(?<=.{0})./gi, "*");
+    return maskingStr;
+  }
 }
 
 /**
@@ -310,7 +312,7 @@ export function fullNameToMasking(name) {
  * @param char
  * @returns {*|string}
  */
-export function parsedVisitDtIncludesChar(visitDt, char){
+export function parsedVisitDtIncludesChar(visitDt, char) {
   return visitDt.replaceAll(char, "");
 }
 

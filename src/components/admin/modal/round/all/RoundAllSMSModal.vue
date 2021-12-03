@@ -314,4 +314,12 @@ export default {
   margin-top: 30px;
   font-size: 20px;
 }
+
+@media screen and (height: 1080px) {
+  #score_sms__container .mobile_no__wrapper {
+    text-align: center;
+    font-size: 22px;
+    margin-top: 17%;
+  }
+}
 </style>

@@ -84,7 +84,7 @@ export default {
       visitDt: "",
       groupNm: "",
       groupNmPlaceholder: "단체 이름",
-      searchParams: {}
+      searchParams: {},
     };
   },
 
@@ -107,7 +107,6 @@ export default {
     init() {
       const visitDt = this.selectedRoundGroupVisitDt
       const groupNm = this.selectedRoundGroupName
-      console.log('visitDt from RoundGroup', visitDt)
       if (visitDt || groupNm) {
         this.visitDt = visitDt;
         this.refreshGroups({visitDt, groupNm})
@@ -132,24 +131,21 @@ export default {
      * ### Search 버튼 클릭 이벤트 핸들러.
      */
     handleClickSearch() {
-      const hasVisitDt = this.visitDt.length !== 0;
+        const hasVisitDt = this.visitDt.length !== 0;
 
-      this.searchParams = {
-        visitDt: this.visitDt,
-        groupNm: this.groupNm,
-      }
+        this.searchParams = {
+          visitDt: this.visitDt,
+          groupNm: this.groupNm,
+        }
 
-      if (hasVisitDt) {
-        this.refreshGroups(this.searchParams);
-      } else {
-        this.dateInvalidMessage(NO_REQUIRED_VISIT_DATE);
+        if (hasVisitDt) {
+          this.refreshGroups(this.searchParams);
+        } else {
+          this.dateInvalidMessage(NO_REQUIRED_VISIT_DATE);
 
-        this.clearSearchData();
-        this.$refs.inputName.focus();
-      }
-
-      // this.updateSelectedRoundGroupName(this.groupNm);
-      // this.updateSelectedRoundGroupVisitDt(this.visitDt);
+          this.clearSearchData();
+          this.$refs.inputName.focus();
+        }
     },
     /**
      * 단체팀명 초기화.
@@ -257,11 +253,10 @@ export default {
       updateSelectedRoundGroupName: "dispatchSetSelectedRoundGroupName",
       updateSelectedRoundGroupVisitDt: "dispatchSetSelectedRoundGroupVisitDt",
       clearRoundGroupTeamList: "updateRoundGroupTeamList"
-
     }),
   },
 
-  async mounted() {
+  mounted() {
     this.init();
   },
   destroyed() {
@@ -300,9 +295,9 @@ export default {
   align-items: center;
 }
 
-#round_group__container .search__box > div:first-child {
-  margin-right: 20px;
-}
+/*#round_group__container .search__box > div:first-child {*/
+/*  margin-right: 20px;*/
+/*}*/
 
 #round_group__container .search__box .button-dark {
   margin-right: 10px;
@@ -322,5 +317,9 @@ export default {
 
 #search__lookup_date__input {
   width: 180px;
+}
+
+.refresh_icon__container {
+  transform: scale(0.8);
 }
 </style>

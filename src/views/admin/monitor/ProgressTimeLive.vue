@@ -1,7 +1,9 @@
 <template>
   <article id="progress_time_live__container">
     <header>
-
+      <ProgressTimeLiveSearch
+        @sendSelectedCourse="handleReceiveSelectedCourse"
+      />
     </header>
 
     <section>
@@ -28,12 +30,14 @@ import ProgressTimeLiveTable from "@/components/admin/monitor/live/ProgressTimeL
 import Pages from "@/components/shared/Pages.vue";
 import useTimeLive from "@/api/v1/admin/monitor/useTimeLive";
 import {Pager} from "@/utils/usePage";
+import ProgressTimeLiveSearch from "@/components/admin/monitor/live/ProgressTimeLiveSearch";
 
 const {getRoundPlayRealTime} = useTimeLive()
 export default {
   name: "ProgressTimeLive",
 
   components: {
+    ProgressTimeLiveSearch,
     ProgressTimeLiveTable,
     Pages,
   },
@@ -43,7 +47,8 @@ export default {
       rows: [],
       currentPage: 1,
       pages: [],
-      pager: null
+      pager: null,
+      originalRows: []
     };
   },
 
@@ -78,6 +83,12 @@ export default {
       this.currentPage = res.currentPage;
     },
     /* paging methods end */
+    handleReceiveSelectedCourse(course) {
+      const {courseCd} = course;
+
+      this.rows = this.originalRows.filter((row) => row.firstCourseCd === courseCd);
+      this.updatePager(this.rows)
+    },
   },
   /**
    * 진행시간 실시간 정보조회 API 호출.
@@ -93,6 +104,7 @@ export default {
     const {data: {playRealTimeVOList}} = res;
 
     this.updatePager(playRealTimeVOList)
+    this.originalRows = playRealTimeVOList;
   },
 
   watch: {

@@ -3,53 +3,53 @@
     <section class="inputs">
       <div class="search-lookup-date">
         <label
-          >조회일<input
-            class="input-dark ml"
-            id="search-lookup-date__input"
-            type="date"
-            v-model="searchLookUpDate"
-            autocomplete="off"
-            @keypress.enter="handleSubmitSearch"
-            ref="inputDate"
+        >조회일<input
+          class="input-dark ml"
+          id="search-lookup-date__input"
+          type="date"
+          v-model="searchLookUpDate"
+          autocomplete="off"
+          @keypress.enter="handleSubmitSearch"
+          ref="inputDate"
         /></label>
       </div>
 
       <div class="search__companion ml">
         <label
-          >내장객<input
-            class="input-dark ml"
-            id="search__companion__input"
-            type="text"
-            placeholder="내장객"
-            v-model="searchCompanion"
-            autocomplete="off"
-            @keypress.enter="handleSubmitSearch"
+        >내장객<input
+          class="input-dark ml"
+          id="search__companion__input"
+          type="text"
+          placeholder="내장객"
+          v-model="searchCompanion"
+          autocomplete="off"
+          @keypress.enter="handleSubmitSearch"
         /></label>
       </div>
 
       <div class="search__caddie_name ml">
         <label
-          >캐디명<input
-            class="input-dark ml"
-            id="search__caddie_name__input"
-            type="text"
-            placeholder="캐디명"
-            v-model="searchCaddieName"
-            autocomplete="off"
-            @keypress.enter="handleSubmitSearch"
+        >캐디명<input
+          class="input-dark ml"
+          id="search__caddie_name__input"
+          type="text"
+          placeholder="캐디명"
+          v-model="searchCaddieName"
+          autocomplete="off"
+          @keypress.enter="handleSubmitSearch"
         /></label>
       </div>
 
       <div class="search__group ml">
         <label
-          >단체팀<input
-            class="input-dark ml"
-            id="search__group__input"
-            type="text"
-            placeholder="단체팀"
-            v-model="searchGroup"
-            autocomplete="off"
-            @keypress.enter="handleSubmitSearch"
+        >단체팀<input
+          class="input-dark ml"
+          id="search__group__input"
+          type="text"
+          placeholder="단체팀"
+          v-model="searchGroup"
+          autocomplete="off"
+          @keypress.enter="handleSubmitSearch"
         /></label>
       </div>
       <div class="button__container ml">
@@ -60,16 +60,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import DateUtil from "@/utils/datetime/DateUtil";
 import {
-  INVALID_TOAST_TITLE_FORMAT,
-  INVALID_TOAST_MESSAGE_FORMAT,
   NO_REQUIRED_VISIT_DATE,
 } from "@/utils/constants";
 
 const now = new Date();
-const { year, month, day } = DateUtil.dateDivider(now);
+const {year, month, day} = DateUtil.dateDivider(now);
 const visitDt = year + month + day;
 
 export default {
@@ -81,7 +79,6 @@ export default {
       searchCompanion: "",
       searchCaddieName: "",
       searchGroup: "",
-      testDate: "",
     };
   },
 
@@ -102,7 +99,7 @@ export default {
 
     initLookUpDate() {
       const now = new Date();
-      const { year, month, day } = DateUtil.dateDivider(now);
+      const {year, month, day} = DateUtil.dateDivider(now);
       this.searchLookUpDate = `${year}-${month}-${day}`;
     },
 
@@ -111,7 +108,7 @@ export default {
      * emit 으로 submit 이벤트를 발생시킴.
      * @param e
      */
-    handleSubmitSearch(e) {
+    handleSubmitSearch() {
       const searchLookupDateIsEmpty = this.searchLookUpDate.length === 0;
 
       if (searchLookupDateIsEmpty) {
@@ -143,11 +140,12 @@ export default {
       this.searchGroup = "";
     },
     dateInvalidMessage(title, message) {
-      this.toast({ title, message });
+      this.toast({title, message});
     },
     ...mapActions({
       toast: "toast",
     }),
+
   },
 
   mounted() {
@@ -179,6 +177,13 @@ export default {
 #search-lookup-date__input {
   width: 180px;
 }
+
+.refresh_icon__container {
+  top: 10px;
+  right: 10px;
+  transform: scale(0.8);
+}
+
 
 /* search end */
 </style>

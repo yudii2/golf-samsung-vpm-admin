@@ -207,6 +207,7 @@ export default {
   height: 725px;
   overflow-y: scroll;
   text-align: center;
+  word-break: keep-all;
 }
 
 table {

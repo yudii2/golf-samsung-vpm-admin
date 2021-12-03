@@ -1,11 +1,11 @@
 <template>
   <article id="round_all__container">
     <header class="search__container">
-      <RoundAllSearch @submit="handleSubmit" />
+      <RoundAllSearch @submit="handleSubmit"/>
     </header>
 
     <body>
-      <RoundAllTable :rows="rows" />
+    <RoundAllTable :rows="rows"/>
     </body>
 
     <footer>
@@ -24,18 +24,18 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import Pages from "@/components/shared/Pages.vue";
 import RoundAllSearch from "@/components/admin/round/roundAll/RoundAllSearch.vue";
 import RoundAllTable from "@/components/admin/round/roundAll/RoundAllTable.vue";
 import useRound from "@/api/v1/admin/round/useRound";
-import { Pager } from "@/utils/usePage";
+import {Pager} from "@/utils/usePage";
 import DateUtil from "@/utils/datetime/DateUtil";
 
-const { getRound } = useRound();
+const {getRound} = useRound();
 
 const now = new Date();
-const { year, month, day } = DateUtil.dateDivider(now);
+const {year, month, day} = DateUtil.dateDivider(now);
 const visitDt = year + month + day;
 
 export default {
@@ -61,7 +61,7 @@ export default {
      * search 버튼이벤트.
      * 하위컴포넌트에서 전달받아, 해당이벤트를 실행.
      * */
-    handleSubmit({ caddieNm, groupNm, playerNames, visitDt }) {
+    handleSubmit({caddieNm, groupNm, playerNames, visitDt}) {
       if (visitDt) {
         this.requestRounds({
           visitDt,
@@ -126,7 +126,7 @@ export default {
      * @param groupNm
      * @returns {Promise<*>}
      */
-    async requestRounds({ visitDt, playerNames, caddieNm, groupNm }) {
+    async requestRounds({visitDt, playerNames, caddieNm, groupNm}) {
       const res = await getRound({
         visitDt,
         groupNm,
@@ -134,11 +134,11 @@ export default {
         caddieNm,
       });
 
-      const { status } = res;
+      const {status} = res;
       if (status !== "OK") return;
 
       const {
-        data: { roundTeamList },
+        data: {roundTeamList},
       } = res;
 
       this.setRoundAllRows(roundTeamList);
@@ -182,6 +182,7 @@ export default {
     originalAllRows(rows) {
       this.stayPage(rows);
     },
+
   },
 };
 </script>

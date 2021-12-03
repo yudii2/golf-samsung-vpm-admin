@@ -30,30 +30,31 @@
                 <col width="5%"/>
                 <col width="5%"/>
                 <col width="5%"/>
-                <col width="7%"/>
+                <col width="9%"/>
                 <col width="9%"/>
 
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="4%"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="5%"/>
 
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="3%"/>
-                <col width="4%"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+                <col width="*"/>
+
+                <col width="5%"/>
                 <col width="5%"/>
 
               </colgroup>
@@ -161,28 +162,17 @@
 import {mapGetters, mapActions} from "vuex";
 import CloseButton from "@/components/shared/CloseButton.vue";
 import RoundGroupScorePrint from "@/components/admin/round/roundGroup/prints/score/RoundGroupScorePrint.vue";
-import DateUtil from "@/utils/datetime/DateUtil";
 import {print} from "@/composables/usePrinter";
-import {getListByPage, Pager} from "@/utils/usePage";
 import TimeUtil from "@/utils/datetime/TimeUtil";
-import Pages from "@/components/shared/Pages";
 
 export default {
   name: "RoundGroupScoreDetailModal",
-  components: {Pages, CloseButton, RoundGroupScorePrint},
+  components: {CloseButton, RoundGroupScorePrint},
   data() {
     return {
       isSeeTotalScore: true,
-
-      currentPage: 1,
-      pager: null,
-      pages: [],
-      rows: []
     };
   },
-  // mounted() {
-  //   this.updatePager(this.selectedRound);
-  // },
   destroyed() {
     this.clearGroup();
   },
@@ -263,11 +253,6 @@ export default {
       toastPreparing: "toastPreparing",
     }),
   },
-  watch: {
-    currentPage(newPage) {
-      this.rows = this.pager.getPageRowsByPage(newPage);
-    }
-  }
 };
 </script>
 
@@ -275,6 +260,10 @@ export default {
 /* content positions start */
 #round_group_score_detail_modal__container header {
   grid-row: 1/2;
+}
+
+.modal__container {
+  width: 90% !important;
 }
 
 #round_group_score_detail_modal__container article {
@@ -300,7 +289,7 @@ export default {
 
 #round_group_score_detail_modal__container article section:last-child > div {
   overflow-y: scroll;
-  height: 550px;
+  height: 660px;
   margin-top: 15px;
 
 }

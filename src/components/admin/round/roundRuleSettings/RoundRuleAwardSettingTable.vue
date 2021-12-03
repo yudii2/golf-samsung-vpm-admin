@@ -133,6 +133,7 @@ export default {
 
 table {
   width: 99%;
+  height: 100px;
 }
 
 table .table_th {
@@ -141,14 +142,21 @@ table .table_th {
   height: 10px;
 }
 
+.table_tr td:first-child {
+  width: 55px;
+}
+
 table td {
   border: 1px solid var(--soft-green);
   padding: 8px;
 }
 
 .table-dark .ranks_li__wrapper {
-  display: inline-block;
+  /*display: inline-block;*/
+  width: 20px;
+  height: 20px;
   text-align: center;
+  margin-left: 9px;
 }
 
 .table-dark .checkbox__wrapper {
