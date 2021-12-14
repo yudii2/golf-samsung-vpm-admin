@@ -55,6 +55,9 @@
       <div class="button__container ml">
         <button class="button-dark" @click="handleSubmitSearch">Search</button>
       </div>
+      <div v-if="isLoading" class="loading">
+        <div></div>
+      </div>
     </section>
   </article>
 </template>
@@ -72,6 +75,13 @@ const visitDt = year + month + day;
 
 export default {
   name: "RoundAllSearch",
+
+  props: {
+    isLoading: {
+      type: Boolean,
+    }
+  },
+
   data() {
     return {
       visitDt,
@@ -178,12 +188,23 @@ export default {
   width: 180px;
 }
 
-.refresh_icon__container {
-  top: 10px;
-  right: 10px;
-  transform: scale(0.8);
+.loading {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
 }
 
+.loading div {
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  border: 3px solid transparent;
+  border-left-width: 2px;
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: spinnerOne 2s infinite linear;
+  margin-left: 15px;
+}
 
 /* search end */
 </style>

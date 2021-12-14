@@ -28,6 +28,9 @@
           <button class="button-dark ml" @click="handleClickSearch">
             Search
           </button>
+          <div v-if="isLoading" class="loading">
+            <div></div>
+          </div>
         </div>
       </div>
     </header>
@@ -85,6 +88,8 @@ export default {
       groupNm: "",
       groupNmPlaceholder: "단체 이름",
       searchParams: {},
+
+      isLoading: false,
     };
   },
 
@@ -131,21 +136,22 @@ export default {
      * ### Search 버튼 클릭 이벤트 핸들러.
      */
     handleClickSearch() {
-        const hasVisitDt = this.visitDt.length !== 0;
+      const hasVisitDt = this.visitDt.length !== 0;
 
-        this.searchParams = {
-          visitDt: this.visitDt,
-          groupNm: this.groupNm,
-        }
+      this.searchParams = {
+        visitDt: this.visitDt,
+        groupNm: this.groupNm,
+      }
 
-        if (hasVisitDt) {
-          this.refreshGroups(this.searchParams);
-        } else {
-          this.dateInvalidMessage(NO_REQUIRED_VISIT_DATE);
+      if (hasVisitDt) {
+        this.isLoading = true;
+        this.refreshGroups(this.searchParams);
+      } else {
+        this.dateInvalidMessage(NO_REQUIRED_VISIT_DATE);
 
-          this.clearSearchData();
-          this.$refs.inputName.focus();
-        }
+        this.clearSearchData();
+        this.$refs.inputName.focus();
+      }
     },
     /**
      * 단체팀명 초기화.
@@ -189,6 +195,7 @@ export default {
         groupNm,
       });
 
+
       this.updatePager(list);
       this.setRoundGroupTeamList(list);
 
@@ -202,6 +209,7 @@ export default {
     async requestGroups({visitDt, groupNm}) {
       const res = await getGroup({visitDt, groupNm});
       const {status} = res;
+      this.isLoading = false;
       if (status !== "OK") return;
 
       const {
@@ -258,6 +266,7 @@ export default {
 
   mounted() {
     this.init();
+    this.isLoading = true;
   },
   destroyed() {
     this.clearRoundGroupTeamList();
@@ -321,5 +330,24 @@ export default {
 
 .refresh_icon__container {
   transform: scale(0.8);
+}
+
+.loading {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.loading div {
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  border: 3px solid transparent;
+  border-left-width: 2px;
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: spinnerOne 2s infinite linear;
+  margin-left: 10px;
 }
 </style>

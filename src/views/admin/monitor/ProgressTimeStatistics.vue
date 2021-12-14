@@ -20,6 +20,9 @@
         required
       />
       <button class="button-dark ml" @click="handleClickLookup">Search</button>
+      <div v-if="isLoading" class="loading">
+        <div></div>
+      </div>
     </header>
 
     <body>
@@ -70,6 +73,8 @@ export default {
       visitFromDt: "",
       visitToDt: "",
       visitDt,
+
+      isLoading : false,
     };
   },
 
@@ -84,6 +89,7 @@ export default {
       const res = await getStatistics({ visitFromDt, visitToDt });
 
       const { status } = res;
+      this.isLoading = false;
       if (status !== "OK") return;
 
       const {
@@ -101,6 +107,7 @@ export default {
       if (oldVisitToDt.length === 0 || oldVisitToDt.length === 0) {
         this.dateInvalidMessage(NO_REQUIRED_VISIT_DATE);
       } else {
+        this.isLoading = true;
         const visitFromDt = oldVisitFromDt.split("-").join("");
         const visitToDt = oldVisitToDt.split("-").join("");
         this.requestGetStatistics({ visitFromDt, visitToDt });
@@ -150,6 +157,7 @@ export default {
     this.currentPage = 1;
     const visitFromDt = this.visitDt;
     const visitToDt = this.visitDt;
+    this.isLoading = true;
     this.requestGetStatistics({ visitFromDt, visitToDt });
   },
 };
@@ -176,6 +184,23 @@ footer {
   left: 50%;
   transform: translateX(-50%);
 }
+.loading {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
 
+.loading div {
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  border: 3px solid transparent;
+  border-left-width: 2px;
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: spinnerOne 2s infinite linear;
+  margin-left: 15px;
+}
 /* footer end */
 </style>

@@ -249,7 +249,7 @@ export default {
       tab_text += "<table>"
       const temp = document.getElementById('excelTable').innerHTML
       tab_text += temp
-      tab_text += '</table></body></html>'
+      tab_text += '</table></body></svgs>'
       const fileName = `${title}.xls`
       const a_tag = document.createElement('a')
       const blob = new Blob([tab_text], {type: 'application/vnd.ms-excel;charset=utf-8;'})

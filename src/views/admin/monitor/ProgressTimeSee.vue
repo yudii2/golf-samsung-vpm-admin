@@ -20,10 +20,13 @@
         required
       />
       <button class="button-dark ml" @click="handleClickLookup">Search</button>
+      <div v-if="isLoading" class="loading">
+        <div></div>
+      </div>
     </header>
 
     <section>
-      <ProgressTimeLookupTable :rows="rows" />
+      <ProgressTimeLookupTable :rows="rows"/>
     </section>
 
     <footer>
@@ -42,21 +45,21 @@
 </template>
 
 <script>
-import { Pager } from "@/utils/usePage.js";
+import {Pager} from "@/utils/usePage.js";
 import Pages from "@/components/shared/Pages.vue";
 import ProgressTimeLookupTable from "@/components/admin/monitor/lookup/ProgressTimeLookupTable.vue";
 import useStandardSetting from "@/api/v1/admin/monitor/useStandardSetting";
 import DateUtil from "@/utils/datetime/DateUtil";
-import { mapActions } from "vuex";
-import { NO_REQUIRED_VISIT_DATE } from "@/utils/constants";
+import {mapActions} from "vuex";
+import {NO_REQUIRED_VISIT_DATE} from "@/utils/constants";
 
-const { getPlayingTime } = useStandardSetting();
+const {getPlayingTime} = useStandardSetting();
 const now = new Date();
-const { year, month, day } = DateUtil.dateDivider(now);
+const {year, month, day} = DateUtil.dateDivider(now);
 const visitDt = year + month + day;
 export default {
   name: "ProgressTimeLookup",
-  components: { ProgressTimeLookupTable, Pages },
+  components: {ProgressTimeLookupTable, Pages},
   data() {
     return {
       currentPage: 1,
@@ -66,6 +69,8 @@ export default {
       visitFromDt: "",
       visitToDt: "",
       visitDt,
+
+      isLoading: true,
     };
   },
   mounted() {
@@ -73,7 +78,9 @@ export default {
 
     const visitFromDt = this.visitDt;
     const visitToDt = this.visitDt;
-    this.requestGetPlayingTime({ visitFromDt, visitToDt });
+
+    this.isLoading = true;
+    this.requestGetPlayingTime({visitFromDt, visitToDt});
   },
   methods: {
     handleClickLookup() {
@@ -83,24 +90,26 @@ export default {
       if (oldVisitToDt.length === 0 || oldVisitToDt.length === 0) {
         this.dateInvalidMessage(NO_REQUIRED_VISIT_DATE);
       } else {
+        this.isLoading = true;
         const visitFromDt = oldVisitFromDt.split("-").join("");
         const visitToDt = oldVisitToDt.split("-").join("");
-        this.requestGetPlayingTime({ visitFromDt, visitToDt });
+        this.requestGetPlayingTime({visitFromDt, visitToDt});
       }
     },
-    async requestGetPlayingTime({ visitFromDt, visitToDt }) {
-      const res = await getPlayingTime({ visitFromDt, visitToDt });
+    async requestGetPlayingTime({visitFromDt, visitToDt}) {
+      const res = await getPlayingTime({visitFromDt, visitToDt});
 
-      const { status } = res;
+      const {status} = res;
+      this.isLoading = false;
       if (status !== "OK") return;
 
       const {
-        data: { playFromToTimeVOList },
+        data: {playFromToTimeVOList},
       } = res;
       this.updatePager(playFromToTimeVOList);
     },
     dateInvalidMessage(title, message) {
-      this.toast({ title, message });
+      this.toast({title, message});
     },
     updatePage(page) {
       this.currentPage = page;
@@ -160,6 +169,26 @@ footer {
   left: 50%;
   transform: translateX(-50%);
 }
+
+.loading {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.loading div {
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  border: 3px solid transparent;
+  border-left-width: 2px;
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: spinnerOne 2s infinite linear;
+  margin-left: 10px;
+}
+
 
 /* footer end */
 </style>

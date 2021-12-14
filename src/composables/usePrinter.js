@@ -15,8 +15,8 @@ export const print = async ({
   );
 
   var win = window.open("", "");
-  win.document.write("<html><body>");
-  win.document.write("</body></html>");
+  win.document.write("<svgs><body>");
+  win.document.write("</body></svgs>");
   styleSheets.forEach((style) =>
     win.document.querySelector("head").append(style.cloneNode(true))
   );

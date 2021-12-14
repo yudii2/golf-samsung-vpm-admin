@@ -12,6 +12,9 @@
           @keypress.enter="handleClickLookup"
         />
         <button class="button-dark" @click="handleClickLookup">Search</button>
+        <div v-if="isLoading" class="loading">
+          <div></div>
+        </div>
       </div>
     </header>
 
@@ -59,6 +62,8 @@ export default {
       rows: [],
       pages: [],
       pager: null,
+
+      isLoading : false,
     };
   },
   methods: {
@@ -91,6 +96,7 @@ export default {
       const res = await getCertification({ recordDt });
 
       const { status } = res;
+      this.isLoading = false;
       if (status !== "OK") return;
 
       const {
@@ -121,6 +127,7 @@ export default {
           `${INVALID_TOAST_MESSAGE_FORMAT}(yyyyMMdd).`
         );
       } else {
+        this.isLoading = true;
         this.refreshCertifications();
       }
     },
@@ -180,6 +187,7 @@ export default {
    */
   async mounted() {
     this.init();
+    this.isLoading = true;
   },
 
   watch: {
@@ -224,5 +232,23 @@ export default {
   bottom: 3rem;
   left: 50%;
   transform: translateX(-50%);
+}
+.loading {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.loading div {
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  border: 3px solid transparent;
+  border-left-width: 2px;
+  border-top-color: var(--secondary);
+  border-radius: 50%;
+  animation: spinnerOne 2s infinite linear;
+  margin-left: 10px;
 }
 </style>

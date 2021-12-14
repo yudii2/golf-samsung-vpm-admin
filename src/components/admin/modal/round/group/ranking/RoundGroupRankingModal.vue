@@ -1383,7 +1383,7 @@ export default {
      * 엑셀다운로드 메소드.
      */
     handleExcelDownload(title) {
-      let tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+      let tab_text = '<svgs xmlns:x="urn:schemas-microsoft-com:office:excel">';
       tab_text +=
         '<head><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
       tab_text += "<xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>";
@@ -1396,7 +1396,7 @@ export default {
       const temp2 = document.getElementById("excel__rank__table").innerHTML;
       tab_text += temp;
       tab_text += temp2;
-      tab_text += "</table></body></html>";
+      tab_text += "</table></body></svgs>";
       const fileName = `${title}.xls`;
       const a_tag = document.createElement("a");
       const blob = new Blob([tab_text], {

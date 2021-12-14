@@ -207,7 +207,7 @@
                   >
                     SMS전송
                   </button
-                    >
+                  >
                 </td>
               </tr>
               <tr :key="`${selectedRound.roundId}${i}${j}`">
@@ -362,7 +362,7 @@ export default {
         const elapsedDay = DateUtil.calculateElapsedDate(parsedVisitDt)
         if (elapsedDay > 3) {
           return false;
-        }else{
+        } else {
           return true;
         }
       }

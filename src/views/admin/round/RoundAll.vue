@@ -1,7 +1,9 @@
 <template>
   <article id="round_all__container">
     <header class="search__container">
-      <RoundAllSearch @submit="handleSubmit"/>
+      <RoundAllSearch @submit="handleSubmit"
+                      :isLoading="isLoading"
+      />
     </header>
 
     <body>
@@ -53,6 +55,8 @@ export default {
       pager: null,
       visitDt,
       startIndex: 0,
+
+      isLoading: false,
     };
   },
 
@@ -63,6 +67,7 @@ export default {
      * */
     handleSubmit({caddieNm, groupNm, playerNames, visitDt}) {
       if (visitDt) {
+        this.isLoading = true;
         this.requestRounds({
           visitDt,
           playerNames,
@@ -135,11 +140,13 @@ export default {
       });
 
       const {status} = res;
+      this.isLoading = false;
       if (status !== "OK") return;
 
       const {
         data: {roundTeamList},
       } = res;
+
 
       this.setRoundAllRows(roundTeamList);
       this.updatePager(this.originalAllRows);
@@ -167,6 +174,7 @@ export default {
     const caddieNm = "";
     const groupNm = "";
 
+    this.isLoading = true;
     await this.requestRounds({
       visitDt,
       playerNames,
