@@ -342,4 +342,4 @@
 
 ##### 1.38.0
 - 전체라운드, 단체라운드, 증명서 발급, 진행시간 조회, 진행시간 통계 Loading indicator 추가.
-- fontawesome cdn 방식 제거, 다운로드 방식 적용.
+- fontawesome cdn 방식 제거, 다운로드 방식 적용.(all.css -> fontawesome.css 파일이름변경.)

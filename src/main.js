@@ -27,7 +27,7 @@ import "@/assets/css/module.css";
 import "@/assets/css/normalize.css";
 import "@/assets/css/template.css";
 import "@/assets/css/courseMap.css";
-import "@/assets/css/all.css"
+import "@/assets/css/fontawesome.css"
 
 // JS
 import "@/assets/js/common.js";
