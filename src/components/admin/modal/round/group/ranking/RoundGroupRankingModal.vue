@@ -15,19 +15,10 @@
       <!-- 시상 -->
       <section>
         <RoundGroupRankingAwardTable
+          ref="roundGroupRankinAwardTable"
           :isUpdatable="isUpdatable"
-          @updateAwardPlayerName="updateAwardPlayerName"
-          :updatedTotRankPlayerNm="updatedTotRankPlayerNm"
-          :updatedScoreRankPlayerNm="updatedScoreRankPlayerNm"
-          :updatedLongestPlayerNm="updatedLongestPlayerNm"
-          :updatedNearestPlayerNm="updatedNearestPlayerNm"
-          :updatedBuddyPlayerNm="updatedBuddyPlayerNm"
-          :updatedParPlayerNm="updatedParPlayerNm"
-          :updatedOneOverPlayerNm="updatedOneOverPlayerNm"
-          :updatedTwoOverPlayerNm="updatedTwoOverPlayerNm"
-          :updatedThreeOverPlayerNm="updatedThreeOverPlayerNm"
-          :updatedDoubleParPlayerNm="updatedDoubleParPlayerNm"
-          :updatedFirstSecondGapPlayerNm="updatedFirstSecondGapPlayerNm"
+          @updatePlayerNames="updatePlayerNames"
+
         />
       </section>
 
@@ -44,7 +35,7 @@
             <template v-else-if="!this.isCheckedNewPerio && this.isCheckedFirstSecond">
               <th colspan="4" style="width: 280px">Score</th>
             </template>
-            <template v-else-if="this.isCheckedNewPerio && !this.isCheckedFirstSecond">
+            <template v-else-if="(this.isCheckedNewPerio || this.isCheckedStrokeHandy) && !this.isCheckedFirstSecond">
               <th colspan="4" style="width: 280px">Score</th>
             </template>
             <template v-else>
@@ -104,12 +95,13 @@
               <th>후반</th>
               <th>Total</th>
             </template>
-            <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+            <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
               <th>이름</th>
               <th>Total</th>
               <th>Hcp</th>
               <th>Net</th>
             </template>
+
             <template v-else>
               <th>이름</th>
               <th>Total</th>
@@ -287,7 +279,7 @@
                 }}
               </td>
             </template>
-            <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+            <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
               <td>
                 {{
                   getScorePlayerInfo(
@@ -664,17 +656,6 @@
     <RoundGroupRankingPrint
       ref="roundGroupRankingPrint"
       :selectedRoundGroupRank="selectedRoundGroupRank"
-      :medalist="this.medalist"
-      :newPerioWinner="this.newPerioWinner"
-      :longestWinner="this.longestWinner"
-      :nearestWinner="this.nearestWinner"
-      :buddyWinner="this.buddyWinner"
-      :parWinner="this.parWinner"
-      :oneOverWinner="this.oneOverWinner"
-      :twoOverWinner="this.twoOverWinner"
-      :threeOverWinner="this.threeOverWinner"
-      :doubleParWinner="this.doubleParWinner"
-      :firstSecondGapWinner="this.firstSecondGapWinner"
       :medalistPlayerNm="
             getScorePlayerInfo(
               0,
@@ -752,17 +733,16 @@
               'playerNm'
             )
           "
-      :updatedTotRankPlayerNm="updatedTotRankPlayerNm"
-      :updatedScoreRankPlayerNm="updatedScoreRankPlayerNm"
-      :updatedLongestPlayerNm="updatedLongestPlayerNm"
-      :updatedNearestPlayerNm="updatedNearestPlayerNm"
-      :updatedBuddyPlayerNm="updatedBuddyPlayerNm"
-      :updatedParPlayerNm="updatedParPlayerNm"
-      :updatedOneOverPlayerNm="updatedOneOverPlayerNm"
-      :updatedTwoOverPlayerNm="updatedTwoOverPlayerNm"
-      :updatedThreeOverPlayerNm="updatedThreeOverPlayerNm"
-      :updatedDoubleParPlayerNm="updatedDoubleParPlayerNm"
-      :updatedFirstSecondGapPlayerNm="updatedFirstSecondGapPlayerNm"
+      :secondClassPlayerNm="getScorePlayerInfo(
+              1,
+              selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+              'playerNm'
+            )"
+      :thirdClassPlayerNm="getScorePlayerInfo(
+              2,
+              selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+              'playerNm'
+            )"
     />
   </div>
 </template>
@@ -819,29 +799,8 @@ export default {
       roundGroupPlayerNearRankVOList: [],
       updatedNearScore: "",
 
-      updatedTotRankPlayerNm: "",
-      updatedScoreRankPlayerNm: "",
-      updatedLongestPlayerNm: "",
-      updatedNearestPlayerNm: "",
-      updatedBuddyPlayerNm: "",
-      updatedParPlayerNm: "",
-      updatedOneOverPlayerNm: "",
-      updatedTwoOverPlayerNm: "",
-      updatedThreeOverPlayerNm: "",
-      updatedDoubleParPlayerNm: "",
-      updatedFirstSecondGapPlayerNm: "",
+      playerNameList: [],
 
-      medalist: "",
-      newPerioWinner: "",
-      longestWinner: "",
-      nearestWinner: "",
-      buddyWinner: "",
-      parWinner: "",
-      oneOverWinner: "",
-      twoOverWinner: "",
-      threeOverWinner: "",
-      doubleParWinner: "",
-      firstSecondGapWinner: "",
     };
   },
   computed: {
@@ -929,32 +888,7 @@ export default {
       this.updatedNearScore = "";
       this.roundGroupPlayerLuckyYnRankVOList = [];
       this.luckyPlayerList = [];
-    },
-    rankNameInit() {
-      this.medalist = "메달리스트";
-      this.newPerioWinner = "신페리오 우승";
-      this.longestWinner = "롱기스트";
-      this.nearestWinner = "니어리스트";
-      this.buddyWinner = "버디";
-      this.parWinner = "파";
-      this.oneOverWinner = "보기";
-      this.twoOverWinner = "더블보기";
-      this.threeOverWinner = "트리플보기";
-      this.doubleParWinner = "더블파";
-      this.firstSecondGapWinner = "전후반";
-    },
-    rankPlayerNameInit() {
-      this.updatedTotRankPlayerNm = "";
-      this.updatedScoreRankPlayerNm = "";
-      this.updatedLongestPlayerNm = "";
-      this.updatedNearestPlayerNm = "";
-      this.updatedBuddyPlayerNm = "";
-      this.updatedParPlayerNm = "";
-      this.updatedOneOverPlayerNm = "";
-      this.updatedTwoOverPlayerNm = "";
-      this.updatedThreeOverPlayerNm = "";
-      this.updatedDoubleParPlayerNm = "";
-      this.updatedFirstSecondGapPlayerNm = "";
+      this.playerNameList = [];
     },
 
     /**
@@ -981,8 +915,6 @@ export default {
         ...data,
         round,
       };
-      await this.rankPlayerNameInit();
-      await this.rankNameInit();
       await this.updateRoundGroup(selectedRound);
     },
 
@@ -1289,6 +1221,7 @@ export default {
         if (status !== "OK") return;
 
         await this.updateReqInit();
+        await this.$refs.roundGroupRankinAwardTable.init();
 
         const {data} = res;
         const round = this.selectedRoundGroup.round;
@@ -1366,6 +1299,11 @@ export default {
     updateNearValue(e) {
       this.updatedNearScore = e.target.value;
     },
+    updatePlayerNames(playerNameList) {
+      this.playerNameList = playerNameList;
+
+      this.setPlayerGroupScoreRankReq();
+    },
 
     /**
      * 최종 update req 보낼객체 만드는 메소드.
@@ -1376,6 +1314,7 @@ export default {
         roundGroupPlayerLongRankVOList: this.roundGroupPlayerLongRankVOList,
         roundGroupPlayerNearRankVOList: this.roundGroupPlayerNearRankVOList,
         roundGroupPlayerLuckyYnRankVOList: this.luckyPlayerList,
+        playerNameList: this.playerNameList
       };
     },
 
@@ -1406,116 +1345,6 @@ export default {
       a_tag.download = fileName;
       a_tag.click();
     },
-    /**
-     * 시상자 이름변경 메소드
-     * @param e
-     */
-    //////////////////////
-    updateAwardPlayerName(e, {awardNames}) {
-      const {gubun} = awardNames;
-      switch (gubun) {
-        case '10':
-          return this.updatedTotRankPlayerNm = e.target.value;
-        case '11': //신페리오
-          return this.updatedScoreRankPlayerNm = e.target.value;
-        case '12': //롱
-          return this.updatedLongestPlayerNm = e.target.value;
-        case '13': //니어
-          return this.updatedNearestPlayerNm = e.target.value;
-        case '14': //버디
-          return this.updatedBuddyPlayerNm = e.target.value;
-        case '15': //파
-          return this.updatedParPlayerNm = e.target.value;
-        case '16': //보기
-          return this.updatedOneOverPlayerNm = e.target.value;
-        case '17': //더블보기
-          return this.updatedTwoOverPlayerNm = e.target.value;
-        case '18' :  //트리플보기
-          return this.updatedThreeOverPlayerNm = e.target.value;
-        case '19': // 더블파
-          return this.updatedDoubleParPlayerNm = e.target.value;
-        case '20' : //  전,후반차
-          return this.updatedFirstSecondGapPlayerNm = e.target.value;
-        case '22' : //스트로크 핸디
-          return '스트로크핸디'
-      }
-    },
-    updateTotRankPlayerNm(e) {
-      this.updatedTotRankPlayerNm = e.target.value;
-    },
-    updateScoreRankPlayerNm(e) {
-      this.updatedScoreRankPlayerNm = e.target.value;
-    },
-    updateLongestPlayerNm(e) {
-      this.updatedLongestPlayerNm = e.target.value;
-    },
-    updateNearestPlayerNm(e) {
-      this.updatedNearestPlayerNm = e.target.value;
-    },
-    updateBuddyPlayerNm(e) {
-      this.updatedBuddyPlayerNm = e.target.value;
-    },
-    updateParPlayerNm(e) {
-      this.updatedParPlayerNm = e.target.value;
-    },
-    updateOneOverPlayerNm(e) {
-      this.updatedOneOverPlayerNm = e.target.value;
-    },
-    updateTwoOverPlayerNm(e) {
-      this.updatedTwoOverPlayerNm = e.target.value;
-    },
-    updateThreeOverPlayerNm(e) {
-      this.updatedThreeOverPlayerNm = e.target.value;
-    },
-    updateDoubleParPlayerNm(e) {
-      this.updatedDoubleParPlayerNm = e.target.value;
-    },
-    updateFirstSecondGapPlayerNm(e) {
-      this.updatedFirstSecondGapPlayerNm = e.target.value;
-    },
-    //////////////////////
-    /**
-     * 시상 이름 변경 메소드.
-     * @param e
-     */
-    //////////////////////
-    updateMedallistNm(e) {
-      this.medalist = e.target.value;
-    },
-    updateNewPerioWinner(e) {
-      this.newPerioWinner = e.target.value;
-    },
-    updateLongestWinner(e) {
-      this.longestWinner = e.target.value;
-    },
-    updateNearestWinner(e) {
-      this.nearestWinner = e.target.value;
-    },
-    updateBuddyWinner(e) {
-      this.buddyWinner = e.target.value;
-    },
-    updateParWinner(e) {
-      this.parWinner = e.target.value;
-    },
-    updateOneOverWinner(e) {
-      this.oneOverWinner = e.target.value;
-    },
-    updateTwoOverWinner(e) {
-      this.twoOverWinner = e.target.value;
-    },
-    updateThreeOverWinner(e) {
-      this.threeOverWinner = e.target.value;
-    },
-    updateDoubleParWinner(e) {
-      this.doubleParWinner = e.target.value;
-    },
-    updateFirstSecondGapWinner(e) {
-      this.firstSecondGapWinner = e.target.value;
-    },
-    invalidDataMessage(title, message) {
-      this.toast({title, message});
-    },
-    //////////////////////
     ...mapActions("admin/", {
       updateRoundGroup: "dispatchUpdateSelectedRoundGroup",
     }),

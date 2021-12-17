@@ -36,11 +36,11 @@
     </header>
 
     <body>
-    <RoundGroupTable
-      :roundGroups="roundGroups"
-      @clearSearchData="clearSearchData"
-      :searchParams="searchParams"
-    />
+      <RoundGroupTable
+        :roundGroups="roundGroups"
+        @clearSearchData="clearSearchData"
+        :searchParams="searchParams"
+      />
     </body>
 
     <footer class="pages">

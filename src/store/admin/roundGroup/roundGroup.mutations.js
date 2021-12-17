@@ -67,6 +67,12 @@ export default {
   setIsCheckedHonest(state, checkYn) { //어니스트
     state.isCheckedHonest = checkYn
   },
+  setIsCheckedSecondClass(state, checkYn) {
+    state.isCheckedSecondClass = checkYn
+  },
+  setIsCheckedThirdClass(state, checkYn) {
+    state.isCheckedThirdClass = checkYn
+  },
 
   //roundGroup selectedRoundGroup(시상설정 전페이지)
   setSelectedRoundGroupName(state, groupName) {

@@ -8,11 +8,11 @@ export default {
 
 
   // roundGroup Award competitionSettingList
-  selectedRoundGroupCompetitionSettingList : [],
+  selectedRoundGroupCompetitionSettingList: [],
 
   //roundGroup ranking checkYn
   isCheckedLong: Boolean, //롱
-  isCheckedNear : Boolean, //니어
+  isCheckedNear: Boolean, //니어
   isCheckedBuddy: Boolean, //버디
   isCheckedPar: Boolean, //파
   isCheckedOneOver: Boolean, //보기
@@ -23,12 +23,14 @@ export default {
   isCheckedLucky: Boolean, //행운상
   isCheckedNewPerio: Boolean, //신페리오
   isCheckedFirstSecond: Boolean, //전,후반
-  isCheckedStrokeHandy : Boolean, //스트로크핸디
-  isCheckedHonest : Boolean, //어니스트
+  isCheckedStrokeHandy: Boolean, //스트로크핸디
+  isCheckedHonest: Boolean, //어니스트
+  isCheckedSecondClass: Boolean,
+  isCheckedThirdClass: Boolean,
 
   //roundGroup selectedRoundGroup(시상설정 전페이지)
-  selectedRoundGroupName : '',
-  selectedRoundGroupVisitDt : '',
+  selectedRoundGroupName: '',
+  selectedRoundGroupVisitDt: '',
 
 
 };

@@ -216,20 +216,22 @@ export default {
       this.setSelectedRoundGroupCompetitionSettingList(data);
 
       if (data.competitionSettingList.length > 0) {
-        this.setIsCheckedNewPerio(data.competitionSettingList[1].checkYn)
-        this.setIsCheckedLong(data.competitionSettingList[2].checkYn)
-        this.setIsCheckedNear(data.competitionSettingList[3].checkYn)
-        this.setIsCheckedBuddy(data.competitionSettingList[4].checkYn)
-        this.setIsCheckedPar(data.competitionSettingList[5].checkYn)
-        this.setIsCheckedOneOver(data.competitionSettingList[6].checkYn)
-        this.setIsCheckedTwoOver(data.competitionSettingList[7].checkYn)
-        this.setIsCheckedThreeOver(data.competitionSettingList[8].checkYn)
-        this.setIsCheckedDoublePar(data.competitionSettingList[9].checkYn)
-        this.setIsCheckedFirstSecondGap(data.competitionSettingList[10].checkYn)
-        this.setIsCheckedLucky(data.competitionSettingList[11].checkYn)
-        this.setIsCheckedStrokeHandy(data.competitionSettingList[12].checkYn)
-        this.setIsCheckedHonest(data.competitionSettingList[13].checkYn)
-        this.setIsCheckedFirstSecond(data.competitionSettingList[14].checkYn)
+        this.setIsCheckedNewPerio(data.competitionSettingList.find((gubun) => gubun.gubun === '11').checkYn)
+        this.setIsCheckedLong(data.competitionSettingList.find((gubun) => gubun.gubun === '12').checkYn)
+        this.setIsCheckedNear(data.competitionSettingList.find((gubun) => gubun.gubun === '13').checkYn)
+        this.setIsCheckedBuddy(data.competitionSettingList.find((gubun) => gubun.gubun === '14').checkYn)
+        this.setIsCheckedPar(data.competitionSettingList.find((gubun) => gubun.gubun === '15').checkYn)
+        this.setIsCheckedOneOver(data.competitionSettingList.find((gubun) => gubun.gubun === '16').checkYn)
+        this.setIsCheckedTwoOver(data.competitionSettingList.find((gubun) => gubun.gubun === '17').checkYn)
+        this.setIsCheckedThreeOver(data.competitionSettingList.find((gubun) => gubun.gubun === '18').checkYn)
+        this.setIsCheckedDoublePar(data.competitionSettingList.find((gubun) => gubun.gubun === '19').checkYn)
+        this.setIsCheckedFirstSecondGap(data.competitionSettingList.find((gubun) => gubun.gubun === '20').checkYn)
+        this.setIsCheckedLucky(data.competitionSettingList.find((gubun) => gubun.gubun === '21').checkYn)
+        this.setIsCheckedStrokeHandy(data.competitionSettingList.find((gubun) => gubun.gubun === '22').checkYn)
+        this.setIsCheckedHonest(data.competitionSettingList.find((gubun) => gubun.gubun === '23').checkYn)
+        this.setIsCheckedFirstSecond(data.competitionSettingList.find((gubun) => gubun.gubun === '24').checkYn)
+        this.setIsCheckedSecondClass(data.competitionSettingList.find((gubun) => gubun.gubun === '25').checkYn)
+        this.setIsCheckedThirdClass(data.competitionSettingList.find((gubun) => gubun.gubun === '26').checkYn)
       }
     },
 
@@ -272,6 +274,8 @@ export default {
       setIsCheckedNewPerio: 'dispatchSetIsCheckedNewPerio',
       setIsCheckedFirstSecond: 'dispatchSetIsCheckedFirstSecond',
       setIsCheckedStrokeHandy: 'dispatchSetIsCheckedStrokeHandy',
+      setIsCheckedSecondClass: 'dispatchSetIsCheckedSecondClass',
+      setIsCheckedThirdClass: 'dispatchSetIsCheckedThirdClass',
       setIsCheckedHonest: 'dispatchSetIsCheckedHonest',
       setSelectedRoundGroupName: 'dispatchSetSelectedRoundGroupName',
       setSelectedRoundGroupVisitDt: 'dispatchSetSelectedRoundGroupVisitDt',

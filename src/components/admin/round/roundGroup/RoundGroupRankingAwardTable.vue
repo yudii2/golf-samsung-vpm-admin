@@ -2,17 +2,17 @@
   <section class="round-group-ranking-award-table__container">
     <table id="excel__medal__table">
       <colgroup>
-        <col width="7%"/>
+        <col width="10%"/>
         <col width="9%"/>
-        <col width="7%"/>
-        <col width="7%"/>
-        <col width="7%"/>
-        <col width="5%"/>
-        <col width="7%"/>
-        <col width="7%"/>
-        <col width="8%"/>
-        <col width="7%"/>
-        <col width="7%"/>
+        <col width="9%"/>
+        <col width="9%"/>
+        <col width="9%"/>
+        <col width="9%"/>
+        <col width="9%"/>
+        <col width="9%"/>
+        <col width="9%"/>
+        <col width="9%"/>
+        <col width="9%"/>
       </colgroup>
       <thead>
       <tr>
@@ -35,7 +35,7 @@
                    class="update_rank_input"
                    type="text"
                    :value="getFirstAwardee(awardNames.gubun)"
-                   @change="$emit('updateAwardPlayerName' , $event, {awardNames})"
+                   @change="updatePlayerName($event, awardNames, getPlayerId(awardNames.gubun))"
             >
           </td>
         </template>
@@ -63,46 +63,88 @@ export default {
       type: Boolean,
       required: false,
     },
-    updatedTotRankPlayerNm: {type: String, required: false},
-    updatedScoreRankPlayerNm: {type: String, required: false},
-    updatedLongestPlayerNm: {type: String, required: false},
-    updatedNearestPlayerNm: {type: String, required: false},
-    updatedBuddyPlayerNm: {type: String, required: false},
-    updatedParPlayerNm: {type: String, required: false},
-    updatedOneOverPlayerNm: {type: String, required: false},
-    updatedTwoOverPlayerNm: {type: String, required: false},
-    updatedThreeOverPlayerNm: {type: String, required: false},
-    updatedDoubleParPlayerNm: {type: String, required: false},
-    updatedFirstSecondGapPlayerNm: {type: String, required: false},
+  },
+
+  data() {
+    return {
+      playerNameList: []
+    }
   },
 
   methods: {
+    init() {
+      this.playerNameList = [];
+    },
+    updatePlayerName(e, awardName, player) {
+      this.playerNameList.push({
+        'name': e.target.value,
+        'playerId': player.playerId
+      })
+      this.$emit('updatePlayerNames', this.playerNameList)
+    },
     getFirstAwardee(gubun) {
       switch (gubun) {
         case '10':
-          return this.updatedTotRankPlayerNm ? this.updatedTotRankPlayerNm : this.selectedRoundGroup.roundGroupPlayerScoreRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerScoreRankVOList[0].playerNm;
         case '11': //신페리오
-          return this.updatedScoreRankPlayerNm ? this.updatedScoreRankPlayerNm : this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm;
         case '12': //롱
-          return this.updatedLongestPlayerNm ? this.updatedLongestPlayerNm : this.selectedRoundGroup.roundGroupPlayerLongRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerLongRankVOList[0].playerNm;
         case '13': //니어
-          return this.updatedNearestPlayerNm ? this.updatedNearestPlayerNm : this.selectedRoundGroup.roundGroupPlayerNearRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerNearRankVOList[0].playerNm;
         case '14': //버디
-          return this.updatedBuddyPlayerNm ? this.updatedBuddyPlayerNm : this.selectedRoundGroup.roundGroupPlayerBuddyRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerBuddyRankVOList[0].playerNm;
         case '15': //파
-          return this.updatedParPlayerNm ? this.updatedParPlayerNm : this.selectedRoundGroup.roundGroupPlayerParRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerParRankVOList[0].playerNm;
         case '16': //보기
-          return this.updatedOneOverPlayerNm ? this.updatedOneOverPlayerNm : this.selectedRoundGroup.roundGroupPlayerOneOverRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerOneOverRankVOList[0].playerNm;
         case '17': //더블보기
-          return this.updatedTwoOverPlayerNm ? this.updatedTwoOverPlayerNm : this.selectedRoundGroup.roundGroupPlayerTwoOverRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerTwoOverRankVOList[0].playerNm;
         case '18' :  //트리플보기
-          return this.updatedThreeOverPlayerNm ? this.updatedThreeOverPlayerNm : this.selectedRoundGroup.roundGroupPlayerThreeOverRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerThreeOverRankVOList[0].playerNm;
         case '19': // 더블파
-          return this.updatedDoubleParPlayerNm ? this.updatedDoubleParPlayerNm : this.selectedRoundGroup.roundGroupPlayerDoubleParRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerDoubleParRankVOList[0].playerNm;
         case '20' : //  전,후반차
-          return this.updatedFirstSecondGapPlayerNm ? this.updatedFirstSecondGapPlayerNm : this.selectedRoundGroup.roundGroupPlayerFirstSecondGapRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerFirstSecondGapRankVOList[0].playerNm;
         case '22' : //스트로크 핸디
-          return '스트로크핸디'
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm;
+        case '25' : //준우승
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[1].playerNm;
+        case '26' : //3등
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[2].playerNm;
+      }
+    },
+    getPlayerId(gubun) {
+
+      switch (gubun) {
+        case '10':
+          return this.selectedRoundGroup.roundGroupPlayerScoreRankVOList[0];
+        case '11': //신페리오
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0];
+        case '12': //롱
+          return this.selectedRoundGroup.roundGroupPlayerLongRankVOList[0];
+        case '13': //니어
+          return this.selectedRoundGroup.roundGroupPlayerNearRankVOList[0];
+        case '14': //버디
+          return this.selectedRoundGroup.roundGroupPlayerBuddyRankVOList[0];
+        case '15': //파
+          return this.selectedRoundGroup.roundGroupPlayerParRankVOList[0];
+        case '16': //보기
+          return this.selectedRoundGroup.roundGroupPlayerOneOverRankVOList[0];
+        case '17': //더블보기
+          return this.selectedRoundGroup.roundGroupPlayerTwoOverRankVOList[0];
+        case '18' :  //트리플보기
+          return this.selectedRoundGroup.roundGroupPlayerThreeOverRankVOList[0];
+        case '19': // 더블파
+          return this.selectedRoundGroup.roundGroupPlayerDoubleParRankVOList[0];
+        case '20' : //  전,후반차
+          return this.selectedRoundGroup.roundGroupPlayerFirstSecondGapRankVOList[0];
+        case '22' : //스트로크 핸디
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0];
+        case '25' : //준우승
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[1];
+        case '26' : //3등
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[2];
       }
     }
   },
@@ -128,6 +170,8 @@ export default {
       isCheckedFirstSecond: 'getIsCheckedFirstSecond',
       isCheckedStrokeHandy: 'getIsCheckedStrokeHandy',
       isCheckedHonest: 'getIsCheckedHonest',
+      isCheckedSecondClass: 'getIsCheckedSecondClass',
+      isCheckedThirdClass: 'getIsCheckedThirdClass',
     })
   }
 }

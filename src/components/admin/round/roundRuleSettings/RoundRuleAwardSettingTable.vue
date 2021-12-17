@@ -48,6 +48,7 @@ export default {
   data() {
     return {
       colGroups: 3,
+      maxCheckBoxCount: 5
     }
   },
 
@@ -69,15 +70,26 @@ export default {
     },
     competitionSettingLists() {
       const settingList = [];
-      settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '10' || obj.gubun === '11' || obj.gubun === '22' || obj.gubun === '24')));
+      settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '10' || obj.gubun === '11' || obj.gubun === '22' || obj.gubun === '24' || obj.gubun === '25' || obj.gubun === '26')));
       settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '12' || obj.gubun === '13' || obj.gubun === '20' || obj.gubun === '21' || obj.gubun === '23')));
       settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '14' || obj.gubun === '15' || obj.gubun === '16' || obj.gubun === '17' || obj.gubun === '18' || obj.gubun === '19')))
 
       return settingList
     },
+
+
   },
 
   methods: {
+    countCheckBox() {
+      let count = 0;
+      this.roundCompetitionSettingInfoList.forEach((checkYn) => {
+        if (checkYn.checkYn === 'Y') {
+          count += 1;
+        }
+      })
+      return count;
+    },
     checkedAwardBox(competition) {
       const foundCompetitionSetting = this.roundCompetitionSettingInfoList.find((targetCompetition) => targetCompetition.gubun === competition.gubun);
 
@@ -88,23 +100,29 @@ export default {
 
       if (foundCompetitionSetting.gubun === '11' && foundCompetitionSetting.checkYn === 'N') {
         if (findWStrokeHandyCheckValue.checkYn === 'Y') {
-          this.toastMessage();
+          this.toastNoticeMessage();
           findWStrokeHandyCheckValue.checkYn = 'N';
         }
       }
 
       if (foundCompetitionSetting.gubun === '22' && foundCompetitionSetting.checkYn === 'N') {
         if (findNewPerioCheckValue.checkYn === 'Y') {
-          this.toastMessage();
+          this.toastNoticeMessage();
           findNewPerioCheckValue.checkYn = 'N';
         }
       }
 
       if (foundCompetitionSetting.checkYn === 'N') {
-        foundCompetitionSetting.checkYn = 'Y'
+        if (this.countCheckBox() > this.maxCheckBoxCount) {
+          this.maxCountNoticeMessage();
+        } else {
+          foundCompetitionSetting.checkYn = 'Y'
+        }
       } else {
         foundCompetitionSetting.checkYn = 'N'
       }
+
+
     },
     updateCompetitionName(e, competition) {
       const copiedCompetition = {...competition}
@@ -116,9 +134,13 @@ export default {
     slicedCompetitionSettingInfoList(idx) {
       return this.roundCompetitionSettingInfoList.slice((idx - 1) * this.colGroups, idx * this.colGroups);
     },
-    toastMessage() {
+    toastNoticeMessage() {
       this.toast({title: "알림", message: "신페리오와 스트로크핸디 중 하나만 선택하실 수 있습니다."})
     },
+    maxCountNoticeMessage() {
+      this.toast({title: '라운드 룰 설정', message: '최대 6개까지 가능합니다.'})
+    },
+
     ...mapActions({
       toast: "toast",
     }),

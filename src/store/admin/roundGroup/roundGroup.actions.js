@@ -91,6 +91,16 @@ export default {
       commit('setIsCheckedHonest', true) :
       commit('setIsCheckedHonest', false)
   },
+  dispatchSetIsCheckedSecondClass({commit}, checkYn) {
+    checkYn === 'Y' ?
+      commit('setIsCheckedSecondClass', true) :
+      commit('setIsCheckedSecondClass', false)
+  },
+  dispatchSetIsCheckedThirdClass({commit}, checkYn) {
+    checkYn === 'Y' ?
+      commit('setIsCheckedThirdClass', true) :
+      commit('setIsCheckedThirdClass', false)
+  },
   dispatchSetSelectedRoundGroupName({commit}, groupName) {
     groupName ?
       commit('setSelectedRoundGroupName', groupName)

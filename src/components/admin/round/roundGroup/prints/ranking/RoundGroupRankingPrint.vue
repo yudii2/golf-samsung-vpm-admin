@@ -66,7 +66,7 @@
             <col width="4%"/>
             <col width="4%"/>
           </template>
-          <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+          <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
             <col width="4%"/>
 
             <col width="5%"/>
@@ -140,7 +140,7 @@
           <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
             <th colspan="4">Score</th>
           </template>
-          <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+          <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
             <th colspan="4">Score</th>
           </template>
           <template v-else>
@@ -174,7 +174,7 @@
           <th class="second-head-column">후반</th>
           <th class="second-head-column">Total</th>
         </template>
-        <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+        <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
           <th class="second-head-column">이름</th>
           <th class="second-head-column">Total</th>
           <th class="second-head-column">Hcp</th>
@@ -332,7 +332,7 @@
               }}
             </td>
           </template>
-          <template v-else-if="isCheckedNewPerio && !isCheckedFirstSecond">
+          <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
             <td>
               {{
                 getScorePlayerInfo(
@@ -630,39 +630,6 @@ export default {
   name: "RoundGroupRankingPrint",
   props: {
     selectedRoundGroupRank: {type: Object, require: true},
-    medalist: {type: String, required: false},
-    newPerioWinner: {type: String, required: false},
-    longestWinner: {type: String, required: false},
-    nearestWinner: {type: String, required: false},
-    buddyWinner: {type: String, required: false},
-    parWinner: {type: String, required: false},
-    oneOverWinner: {type: String, required: false},
-    twoOverWinner: {type: String, required: false},
-    threeOverWinner: {type: String, required: false},
-    doubleParWinner: {type: String, required: false},
-    firstSecondGapWinner: {type: String, required: false},
-    medalistPlayerNm: {type: String, required: false},
-    newPerioWinnerPlayerNm: {type: String, required: false},
-    longestPlayerNm: {type: String, required: true},
-    nearestPlayerNm: {type: String, required: true},
-    buddyPlayerNm: {type: String, required: true},
-    parPlayerNm: {type: String, required: true},
-    oneOverPlayerNm: {type: String, required: true},
-    twoOverPlayerNm: {type: String, required: true},
-    threeOverPlayerNm: {type: String, required: true},
-    doubleParPlayerNm: {type: String, required: true},
-    firstSecondGapPlayerNm: {type: String, required: true},
-    updatedTotRankPlayerNm: {type: String, required: false},
-    updatedScoreRankPlayerNm: {type: String, required: false},
-    updatedLongestPlayerNm: {type: String, required: false},
-    updatedNearestPlayerNm: {type: String, required: false},
-    updatedBuddyPlayerNm: {type: String, required: false},
-    updatedParPlayerNm: {type: String, required: false},
-    updatedOneOverPlayerNm: {type: String, required: false},
-    updatedTwoOverPlayerNm: {type: String, required: false},
-    updatedThreeOverPlayerNm: {type: String, required: false},
-    updatedDoubleParPlayerNm: {type: String, required: false},
-    updatedFirstSecondGapPlayerNm: {type: String, required: false},
   },
   computed: {
     /**
@@ -696,6 +663,8 @@ export default {
       isCheckedFirstSecond: 'getIsCheckedFirstSecond',
       isCheckedStrokeHandy: 'getIsCheckedStrokeHandy',
       isCheckedHonest: 'getIsCheckedHonest',
+      isCheckedSecondClass: 'getIsCheckedSecondClass',
+      isCheckedThirdClass: 'getIsCheckedThirdClass'
     })
   },
   methods: {
@@ -904,31 +873,35 @@ export default {
     getFirstAwardee(gubun) {
       switch (gubun) {
         case '10':
-          return this.updatedTotRankPlayerNm ? this.updatedTotRankPlayerNm : this.selectedRoundGroup.roundGroupPlayerScoreRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerScoreRankVOList[0].playerNm;
         case '11': //신페리오
-          return this.updatedScoreRankPlayerNm ? this.updatedScoreRankPlayerNm : this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm;
         case '12': //롱
-          return this.updatedLongestPlayerNm ? this.updatedLongestPlayerNm : this.selectedRoundGroup.roundGroupPlayerLongRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerLongRankVOList[0].playerNm;
         case '13': //니어
-          return this.updatedNearestPlayerNm ? this.updatedNearestPlayerNm : this.selectedRoundGroup.roundGroupPlayerNearRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerNearRankVOList[0].playerNm;
         case '14': //버디
-          return this.updatedBuddyPlayerNm ? this.updatedBuddyPlayerNm : this.selectedRoundGroup.roundGroupPlayerBuddyRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerBuddyRankVOList[0].playerNm;
         case '15': //파
-          return this.updatedParPlayerNm ? this.updatedParPlayerNm : this.selectedRoundGroup.roundGroupPlayerParRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerParRankVOList[0].playerNm;
         case '16': //보기
-          return this.updatedOneOverPlayerNm ? this.updatedOneOverPlayerNm : this.selectedRoundGroup.roundGroupPlayerOneOverRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerOneOverRankVOList[0].playerNm;
         case '17': //더블보기
-          return this.updatedTwoOverPlayerNm ? this.updatedTwoOverPlayerNm : this.selectedRoundGroup.roundGroupPlayerTwoOverRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerTwoOverRankVOList[0].playerNm;
         case '18' :  //트리플보기
-          return this.updatedThreeOverPlayerNm ? this.updatedThreeOverPlayerNm : this.selectedRoundGroup.roundGroupPlayerThreeOverRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerThreeOverRankVOList[0].playerNm;
         case '19': // 더블파
-          return this.updatedDoubleParPlayerNm ? this.updatedDoubleParPlayerNm : this.selectedRoundGroup.roundGroupPlayerDoubleParRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerDoubleParRankVOList[0].playerNm;
         case '20' : //  전,후반차
-          return this.updatedFirstSecondGapPlayerNm ? this.updatedFirstSecondGapPlayerNm : this.selectedRoundGroup.roundGroupPlayerFirstSecondGapRankVOList[0].playerNm;
+          return this.selectedRoundGroup.roundGroupPlayerFirstSecondGapRankVOList[0].playerNm;
         case '22' : //스트로크 핸디
-          return '스트로크핸디'
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm;
+        case '25' : //준우승
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[1].playerNm;
+        case '26' : //3등
+          return this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[2].playerNm;
       }
-    }
+    },
   },
 };
 </script>
