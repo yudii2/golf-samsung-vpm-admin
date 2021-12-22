@@ -66,9 +66,11 @@ export default {
       selectedRoundGroup: "getSelectedRoundGroup",
       roundRuleSettingInfo: "getRoundRuleSettingInfo",
 
+
     }),
     ...mapGetters("control/", {
       getCompanyName: "getCompanyName",
+
     }),
   },
 
@@ -133,7 +135,13 @@ export default {
     },
 
     handleSaveClick() {
-      this.setNeedFetch();
+      if (this.selectedRoundGroup !== null) {
+        if (confirm('기존 스코어랭킹정보가 초기화 됩니다.\n초기화 하시겠습니까?')) {
+          this.setNeedFetch();
+        }
+      } else {
+        this.setNeedFetch();
+      }
       this.isUpdatable = false;
     },
 

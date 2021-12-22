@@ -216,6 +216,8 @@ export default {
       return newRoundRuleInfo
     },
     async getRankingDetailByGroupCd() {
+      if (this.selectedRoundGroup === null) return;
+
       const round = this.selectedRoundGroup
       const groupCd = round.groupCd;
       const visitDt = round.visitDt;

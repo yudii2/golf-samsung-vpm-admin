@@ -70,8 +70,7 @@
       <span class="window_size">{{ windowSize }}</span>
       <span class="ml-1/2">Refresh : {{ isRefresh }}</span>
       <span class="ml-1/2" v-if="selectedCaddieName"
-      >Caddie : {{ selectedCaddieName }}</span
-      >
+      >Caddie : {{ selectedCaddieName }}</span>
     </div>
   </div>
 </template>

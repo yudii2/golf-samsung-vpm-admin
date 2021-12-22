@@ -200,17 +200,37 @@
                 }}
               </td>
               <td>
-                {{
-                  getScorePlayerInfo(
-                    i - 1,
-                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
-                    "handyValue"
-                  )
-                }}
+                <input
+                  v-if="isCheckedStrokeHandy && !isCheckedNewPerio && isUpdatable"
+                  type="number"
+                  :value="
+                      getScorePlayerInfo(
+                        i - 1,
+                        selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                        'handyValue'
+                      )
+                    "
+                  class="update_input"
+                  @change="getOriginHandyValue(
+                    getScorePlayerInfo(
+                      i-1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList
+                    )
+                  )"
+                  @input="updateHandyScore"
+                />
+                <span v-else>
+                     {{
+                    getScorePlayerInfo(
+                      i - 1,
+                      selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                      "handyValue"
+                    )
+                  }}</span>
               </td>
               <td>
                 <input
-                  v-if="isUpdatable"
+                  v-if="!isCheckedStrokeHandy && isCheckedNewPerio && isUpdatable"
                   type="number"
                   :value="
                       getScorePlayerInfo(
@@ -299,17 +319,38 @@
                 }}
               </td>
               <td>
-                {{
-                  getScorePlayerInfo(
-                    i - 1,
-                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
-                    "handyValue"
-                  )
-                }}
+                <input
+                  v-if="isCheckedStrokeHandy && !isCheckedNewPerio && isUpdatable"
+                  type="number"
+                  :value="
+                      getScorePlayerInfo(
+                        i - 1,
+                        selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                        'handyValue'
+                      )
+                    "
+                  class="update_input"
+                  @change="getOriginHandyValue(
+                    getScorePlayerInfo(
+                      i-1,
+                    selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList
+                    )
+                  )"
+                  @input="updateHandyScore"
+                />
+                <span v-else>
+                    {{
+                    getScorePlayerInfo(
+                      i - 1,
+                      selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
+                      "handyValue"
+                    )
+                  }}</span
+                >
               </td>
               <td>
                 <input
-                  v-if="isUpdatable"
+                  v-if="!isCheckedStrokeHandy && isCheckedNewPerio && isUpdatable"
                   type="number"
                   :value="
                       getScorePlayerInfo(
@@ -755,11 +796,10 @@ import RoundGroupRankingPrint from "@/components/admin/round/roundGroup/prints/r
 import TimeUtil from "@/utils/datetime/TimeUtil";
 import useAdminGroup from "@/api/v1/admin/round/useAdminGroup";
 import {NO_REQUIRED_DATA} from "@/utils/constants";
-// import RoundGroupRankingCheckBoxes from "@/components/admin/round/roundGroup/RoundGroupRankingCheckBoxes";
 import RoundGroupRankingHeader from "@/components/admin/round/roundGroup/RoundGroupRankingHeader";
 import RoundGroupRankingAwardTable from "@/components/admin/round/roundGroup/RoundGroupRankingAwardTable";
 
-const {resetRank, updateRank} = useAdminGroup();
+const {resetRank, updateRank, getAwardInfo} = useAdminGroup();
 
 export default {
   name: "RoundGroupRankingModal",
@@ -767,7 +807,6 @@ export default {
   components: {
     RoundGroupRankingAwardTable,
     RoundGroupRankingHeader,
-    // RoundGroupRankingCheckBoxes,
     CloseButton,
     RoundGroupRankingPrint,
   },
@@ -792,6 +831,7 @@ export default {
 
       roundGroupPlayerScoreRankVOList: [],
       updatedNetScore: "",
+      updatedHandyScore: "",
 
       roundGroupPlayerLongRankVOList: [],
       updatedLongScore: "",
@@ -799,7 +839,7 @@ export default {
       roundGroupPlayerNearRankVOList: [],
       updatedNearScore: "",
 
-      playerNameList: [],
+      competitionSettingListReq: [],
 
     };
   },
@@ -874,21 +914,18 @@ export default {
         });
       }, 100);
     },
-    getCheckFlagValue(gubun) {
-      const findFlagValue = this.competitionSettingList.forEach((award) => award.gubun === gubun);
-      console.log(findFlagValue)
-    },
     updateReqInit() {
       this.playerGroupScoreRankReq = [];
       this.roundGroupPlayerScoreRankVOList = [];
       this.updatedNetScore = "";
+      this.updatedHandyScore = "";
       this.roundGroupPlayerLongRankVOList = [];
       this.updatedLongScore = "";
       this.roundGroupPlayerNearRankVOList = [];
       this.updatedNearScore = "";
       this.roundGroupPlayerLuckyYnRankVOList = [];
       this.luckyPlayerList = [];
-      this.playerNameList = [];
+      this.competitionSettingListReq = [];
     },
 
     /**
@@ -1104,71 +1141,6 @@ export default {
     },
 
     /**
-     * ### 롱/니어, 버디, 파, 보기, 더블보기, 트리플보기, 더블파, 전후반차 체크박스 값 화면에 표기.
-     * @param {String} type > 선택된 체크박스 타입.
-     * @param {Boolean} status > 선택된 체크박스의 상태 값.
-     */
-    // handleCheckBoxClick({type, status}) {
-    //   // 체크박스 최대 선택 수 초과 여부 확인.
-    //   if (
-    //     this.currentSelectedCheckBox?.length >
-    //     this.CHECKBOX_MAX_SELECT_COUNT - 1 &&
-    //     !status
-    //   ) {
-    //     this.toast({
-    //       title: "체크박스",
-    //       message: `체크박스는 최대 ${this.CHECKBOX_MAX_SELECT_COUNT}개까지 선택할 수 있습니다.`,
-    //     });
-    //     return;
-    //   }
-    //
-    //   // 현재 선택된 체크박스 리스트 변수에 적용.
-    //   if (!status) {
-    //     this.currentSelectedCheckBox.push(type);
-    //   } else {
-    //     this.currentSelectedCheckBox = this.currentSelectedCheckBox.filter(
-    //       (box) => box !== type
-    //     );
-    //   }
-    //
-    //   switch (type) {
-    //     case "longAndNear":
-    //       this.isCheckedLongAndNear = !this.isCheckedLongAndNear;
-    //       break;
-    //     case "buddy":
-    //       this.isCheckedBuddy = !this.isCheckedBuddy;
-    //       break;
-    //     case "par":
-    //       this.isCheckedPar = !this.isCheckedPar;
-    //       break;
-    //     case "oneOver":
-    //       this.isCheckedOneOver = !this.isCheckedOneOver;
-    //       break;
-    //     case "twoOver":
-    //       this.isCheckedTwoOver = !this.isCheckedTwoOver;
-    //       break;
-    //     case "threeOver":
-    //       this.isCheckedThreeOver = !this.isCheckedThreeOver;
-    //       break;
-    //     case "doublePar":
-    //       this.isCheckedDoublePar = !this.isCheckedDoublePar;
-    //       break;
-    //     case "firstSecondGap":
-    //       this.isCheckedFirstSecondGap = !this.isCheckedFirstSecondGap;
-    //       break;
-    //     case "lucky":
-    //       this.isCheckedLucky = !this.isCheckedLucky;
-    //       break;
-    //     case "newPerio":
-    //       this.isCheckedNewPerio = !this.isCheckedNewPerio;
-    //       break;
-    //     case "firstSecond":
-    //       this.isCheckedFirstSecond = !this.isCheckedFirstSecond;
-    //       break;
-    //   }
-    // },
-
-    /**
      * 행운상 체크박스 체크/해제.
      * @param i
      */
@@ -1222,6 +1194,7 @@ export default {
 
         await this.updateReqInit();
         await this.$refs.roundGroupRankinAwardTable.init();
+        await this.getRoundGroupAwardInfo({groupCd, visitDt})
 
         const {data} = res;
         const round = this.selectedRoundGroup.round;
@@ -1234,7 +1207,34 @@ export default {
         this.updateRoundGroup(selectedRound);
       }
     },
+    async getRoundGroupAwardInfo({groupCd, visitDt}) {
+      const res = await getAwardInfo({groupCd, visitDt})
+      const {status} = res;
 
+      if (status !== "OK") return;
+
+      const {data} = res;
+      this.setSelectedRoundGroupCompetitionSettingList(data);
+
+      if (data.competitionSettingList.length > 0) {
+        this.setIsCheckedNewPerio(data.competitionSettingList?.find((gubun) => gubun.gubun === '11')?.checkYn)
+        this.setIsCheckedLong(data.competitionSettingList?.find((gubun) => gubun.gubun === '12')?.checkYn)
+        this.setIsCheckedNear(data.competitionSettingList?.find((gubun) => gubun.gubun === '13')?.checkYn)
+        this.setIsCheckedBuddy(data.competitionSettingList?.find((gubun) => gubun.gubun === '14')?.checkYn)
+        this.setIsCheckedPar(data.competitionSettingList?.find((gubun) => gubun.gubun === '15')?.checkYn)
+        this.setIsCheckedOneOver(data.competitionSettingList?.find((gubun) => gubun.gubun === '16')?.checkYn)
+        this.setIsCheckedTwoOver(data.competitionSettingList?.find((gubun) => gubun.gubun === '17')?.checkYn)
+        this.setIsCheckedThreeOver(data.competitionSettingList?.find((gubun) => gubun.gubun === '18')?.checkYn)
+        this.setIsCheckedDoublePar(data.competitionSettingList?.find((gubun) => gubun.gubun === '19')?.checkYn)
+        this.setIsCheckedFirstSecondGap(data.competitionSettingList?.find((gubun) => gubun.gubun === '20')?.checkYn)
+        this.setIsCheckedLucky(data.competitionSettingList?.find((gubun) => gubun.gubun === '21')?.checkYn)
+        this.setIsCheckedStrokeHandy(data.competitionSettingList?.find((gubun) => gubun.gubun === '22')?.checkYn)
+        this.setIsCheckedHonest(data.competitionSettingList?.find((gubun) => gubun.gubun === '23')?.checkYn)
+        this.setIsCheckedFirstSecond(data.competitionSettingList?.find((gubun) => gubun.gubun === '24')?.checkYn)
+        this.setIsCheckedSecondClass(data.competitionSettingList?.find((gubun) => gubun.gubun === '25')?.checkYn)
+        this.setIsCheckedThirdClass(data.competitionSettingList?.find((gubun) => gubun.gubun === '26')?.checkYn)
+      }
+    },
     /**
      * 변경할 score 값 가져오는 메소드.
      * */
@@ -1257,6 +1257,30 @@ export default {
      * */
     updateNetValue(e) {
       this.updatedNetScore = e.target.value;
+    },
+
+    /**
+     * 변경할 handyScore 값 가져오는 메소드.
+     */
+    getOriginHandyValue(value) {
+      const {totScore} = value
+      if (this.updatedHandyScore.length === 0) {
+        return this.invalidDataMessage(NO_REQUIRED_DATA)
+      }
+
+      const updatedHandyValue = {
+        playerId: value.playerId,
+        netScore: totScore - this.updatedHandyScore
+      }
+      this.roundGroupPlayerScoreRankVOList.push(updatedHandyValue);
+
+      this.setPlayerGroupScoreRankReq();
+    },
+    /**
+     * 변경한 handyScore 데이터.
+     */
+    updateHandyScore(e) {
+      this.updatedHandyScore = e.target.value;
     },
 
     /**
@@ -1299,8 +1323,12 @@ export default {
     updateNearValue(e) {
       this.updatedNearScore = e.target.value;
     },
+    /**
+     * 내장객 이름 변경
+     * @param playerNameList
+     */
     updatePlayerNames(playerNameList) {
-      this.playerNameList = playerNameList;
+      this.competitionSettingListReq = playerNameList;
 
       this.setPlayerGroupScoreRankReq();
     },
@@ -1314,7 +1342,7 @@ export default {
         roundGroupPlayerLongRankVOList: this.roundGroupPlayerLongRankVOList,
         roundGroupPlayerNearRankVOList: this.roundGroupPlayerNearRankVOList,
         roundGroupPlayerLuckyYnRankVOList: this.luckyPlayerList,
-        playerNameList: this.playerNameList
+        competitionSettingList: this.competitionSettingListReq
       };
     },
 
@@ -1347,6 +1375,23 @@ export default {
     },
     ...mapActions("admin/", {
       updateRoundGroup: "dispatchUpdateSelectedRoundGroup",
+      setSelectedRoundGroupCompetitionSettingList: "dispatchSetSelectedRoundGroupCompetitionSettingList",
+      setIsCheckedLong: 'dispatchSetIsCheckedLong',
+      setIsCheckedNear: 'dispatchSetIsCheckedNear',
+      setIsCheckedBuddy: 'dispatchSetIsCheckedBuddy',
+      setIsCheckedPar: 'dispatchSetIsCheckedPar',
+      setIsCheckedOneOver: 'dispatchSetIsCheckedOneOver',
+      setIsCheckedTwoOver: 'dispatchSetIsCheckedTwoOver',
+      setIsCheckedThreeOver: 'dispatchSetIsCheckedThreeOver',
+      setIsCheckedDoublePar: 'dispatchSetIsCheckedDoublePar',
+      setIsCheckedFirstSecondGap: 'dispatchSetIsCheckedFirstSecondGap',
+      setIsCheckedLucky: 'dispatchSetIsCheckedLucky',
+      setIsCheckedNewPerio: 'dispatchSetIsCheckedNewPerio',
+      setIsCheckedFirstSecond: 'dispatchSetIsCheckedFirstSecond',
+      setIsCheckedStrokeHandy: 'dispatchSetIsCheckedStrokeHandy',
+      setIsCheckedSecondClass: 'dispatchSetIsCheckedSecondClass',
+      setIsCheckedThirdClass: 'dispatchSetIsCheckedThirdClass',
+      setIsCheckedHonest: 'dispatchSetIsCheckedHonest',
     }),
     ...mapActions({
       toastPreparing: "toastPreparing",

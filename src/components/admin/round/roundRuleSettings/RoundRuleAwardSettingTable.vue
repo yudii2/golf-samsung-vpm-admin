@@ -70,9 +70,9 @@ export default {
     },
     competitionSettingLists() {
       const settingList = [];
-      settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '10' || obj.gubun === '11' || obj.gubun === '22' || obj.gubun === '24' || obj.gubun === '25' || obj.gubun === '26')));
-      settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '12' || obj.gubun === '13' || obj.gubun === '20' || obj.gubun === '21' || obj.gubun === '23')));
-      settingList.push(this.roundCompetitionSettingInfoList.filter(obj => (obj.gubun === '14' || obj.gubun === '15' || obj.gubun === '16' || obj.gubun === '17' || obj.gubun === '18' || obj.gubun === '19')))
+      settingList.push(this.roundCompetitionSettingInfoList?.filter(obj => (obj.gubun === '10' || obj.gubun === '11' || obj.gubun === '22' || obj.gubun === '24' || obj.gubun === '25' || obj.gubun === '26')));
+      settingList.push(this.roundCompetitionSettingInfoList?.filter(obj => (obj.gubun === '12' || obj.gubun === '13' || obj.gubun === '20' || obj.gubun === '21' || obj.gubun === '23')));
+      settingList.push(this.roundCompetitionSettingInfoList?.filter(obj => (obj.gubun === '14' || obj.gubun === '15' || obj.gubun === '16' || obj.gubun === '17' || obj.gubun === '18' || obj.gubun === '19')))
 
       return settingList
     },
