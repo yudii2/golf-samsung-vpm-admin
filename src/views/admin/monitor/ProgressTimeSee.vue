@@ -20,13 +20,23 @@
         required
       />
       <button class="button-dark ml" @click="handleClickLookup">Search</button>
+      <button
+        class="button-dark ml"
+        @click="handleExcelDownload">
+        엑셀다운로드
+      </button>
       <div v-if="isLoading" class="loading">
         <div></div>
       </div>
+
     </header>
 
     <section>
-      <ProgressTimeLookupTable :rows="rows"/>
+      <ProgressTimeLookupTable
+        :rows="rows"
+        :allRows="allRows"
+        ref="lookupTable"
+      />
     </section>
 
     <footer>
@@ -71,6 +81,7 @@ export default {
       visitDt,
 
       isLoading: true,
+      allRows: [],
     };
   },
   mounted() {
@@ -113,20 +124,25 @@ export default {
       copiedList.forEach((list) => {
         sortedList.push({
           ...list,
-          visitDate : `${list.visitYear}${this.removeDash(list.visitMonth)}${list.startTime}`
+          visitDate: `${list.visitYear}${this.removeDash(list.visitMonth)}${list.startTime}`
         })
       })
 
-      sortedList.sort((a,b) =>{
+      sortedList.sort((a, b) => {
         return a.visitDate > b.visitDate ? -1 : a.visitDate < b.visitDate ? 1 : 0;
       })
 
+      this.allRows = sortedList
+
       this.updatePager(sortedList);
     },
-    removeDash(visitMonth){
-      if(visitMonth.includes('-')){
+    removeDash(visitMonth) {
+      if (visitMonth.includes('-')) {
         return visitMonth.replaceAll("-", "");
       }
+    },
+    handleExcelDownload() {
+      this.$refs.lookupTable.excelDownloadFunc();
     },
     dateInvalidMessage(title, message) {
       this.toast({title, message});
