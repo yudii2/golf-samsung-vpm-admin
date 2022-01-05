@@ -106,7 +106,27 @@ export default {
       const {
         data: {playFromToTimeVOList},
       } = res;
-      this.updatePager(playFromToTimeVOList);
+
+      const copiedList = [...playFromToTimeVOList];
+
+      let sortedList = [];
+      copiedList.forEach((list) => {
+        sortedList.push({
+          ...list,
+          visitDate : `${list.visitYear}${this.removeDash(list.visitMonth)}${list.startTime}`
+        })
+      })
+
+      sortedList.sort((a,b) =>{
+        return a.visitDate > b.visitDate ? -1 : a.visitDate < b.visitDate ? 1 : 0;
+      })
+
+      this.updatePager(sortedList);
+    },
+    removeDash(visitMonth){
+      if(visitMonth.includes('-')){
+        return visitMonth.replaceAll("-", "");
+      }
     },
     dateInvalidMessage(title, message) {
       this.toast({title, message});

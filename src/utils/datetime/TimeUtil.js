@@ -169,6 +169,9 @@ class TimeUtil {
    * @returns {string} > 입력 데이터 사이에 특정 구분자가 추가되어짐.
    */
   static timeFormatWithChar(stringTime, char = ":") {
+    if(stringTime === null) {
+      return;
+    }
     if (stringTime?.length !== 4) {
       console.error("[timeFormatWithChar] stringTime is must be 4 digits.");
       return null;

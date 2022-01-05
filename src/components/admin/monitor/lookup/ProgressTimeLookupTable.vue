@@ -103,7 +103,7 @@
 
         <tr>
           <td>{{ parsedVisitMonth(row.visitMonth) }}</td>
-          <td>{{ row.endTime }}</td>
+          <td>{{ parsedBookgTime(row.endTime) }}</td>
           <td>{{ row.cartNo }}</td>
           <td>{{ row.firstTime }}</td>
           <td>{{ row.secondTime }}</td>
