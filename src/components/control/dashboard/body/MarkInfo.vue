@@ -33,11 +33,11 @@
         <MarkInfoItem iconName="state_first.png" label="첫팀" />
       </section>
       <section>
-        <MarkInfoItem iconName="state_team1.png" label="던체1팀" />
-        <MarkInfoItem iconName="state_team2.png" label="던체2팀" />
-        <MarkInfoItem iconName="state_team3.png" label="던체3팀" />
-        <MarkInfoItem iconName="state_team4.png" label="던체4팀" />
-        <MarkInfoItem iconName="state_team5.png" label="던체5팀" />
+        <MarkInfoItem iconName="state_team1.png" label="단체1팀" />
+        <MarkInfoItem iconName="state_team2.png" label="단체2팀" />
+        <MarkInfoItem iconName="state_team3.png" label="단체3팀" />
+        <MarkInfoItem iconName="state_team4.png" label="단체4팀" />
+        <MarkInfoItem iconName="state_team5.png" label="단체5팀" />
       </section>
     </article>
   </main>
