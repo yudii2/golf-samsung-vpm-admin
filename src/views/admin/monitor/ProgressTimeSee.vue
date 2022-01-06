@@ -62,6 +62,7 @@ import useStandardSetting from "@/api/v1/admin/monitor/useStandardSetting";
 import DateUtil from "@/utils/datetime/DateUtil";
 import {mapActions} from "vuex";
 import {NO_REQUIRED_VISIT_DATE} from "@/utils/constants";
+import _ from "lodash"
 
 const {getPlayingTime} = useStandardSetting();
 const now = new Date();
@@ -128,10 +129,7 @@ export default {
         })
       })
 
-      sortedList.sort((a, b) => {
-        return a.visitDate > b.visitDate ? -1 : a.visitDate < b.visitDate ? 1 : 0;
-      })
-
+      sortedList = _.orderBy(sortedList, "visitDate", ['desc'])
       this.allRows = sortedList
 
       this.updatePager(sortedList);
