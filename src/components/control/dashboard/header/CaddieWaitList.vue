@@ -17,6 +17,7 @@
               'i-am-here': isSearched(caddie.caddieName),
               'first-team': isFirstTeam(caddie.mark1),
               'last-team': isLastTeam(caddie.mark1),
+              'has-order': hasOrder(caddie),
             }"
             v-for="caddie in course.caddies"
             :key="caddie.caddieUniqNo"
@@ -171,9 +172,22 @@ export default {
       };
     },
 
+    hasOrder() {
+      return (caddie) => {
+        const { caddieUniqNo } = caddie;
+        const selectedOrder = this.getOrder(caddieUniqNo);
+        if (selectedOrder) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+    },
+
     ...mapGetters("control/", {
       caddieViewType: "currentCaddieViewType",
       lookUpCaddies: "getLookUpCaddies",
+      getOrder: "getOrderList",
     }),
   },
 
@@ -230,6 +244,7 @@ export default {
   align-items: center;
   padding: 0 10px;
 }
+
 .caddie-wait-item:nth-child(odd) {
   background-color: var(--dark);
 }
@@ -246,15 +261,23 @@ export default {
 .caddie-name {
   transition: all 0.3s ease;
 }
+
 .caddie-name.first-team {
   color: tomato;
 }
+
 .caddie-name.last-team {
   color: dodgerblue;
 }
+
 .caddie-name:hover {
   color: gold;
 }
+
+.has-order {
+  color: #ebb87c;
+}
+
 /* caddie names end */
 
 @media screen and (min-width: 1080px) {
@@ -262,6 +285,7 @@ export default {
     font-size: 1.1rem;
   }
 }
+
 @media screen and (min-width: 1920px) {
   .course-name {
     font-size: 1.2rem;

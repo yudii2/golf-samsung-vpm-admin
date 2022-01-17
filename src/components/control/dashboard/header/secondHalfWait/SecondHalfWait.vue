@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import {
   CADDIE_PLAY_STEP_ABNORMAL,
   CADDIE_PLAY_STEP_SECOND_WAIT,
