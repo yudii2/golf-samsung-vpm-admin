@@ -76,6 +76,11 @@ export default {
       ? commit("SHOWING_PLAYING_CADDIE_INFO_MODAL")
       : commit("CLEAR_PLAYING_CADDIE_INFO_MODAL");
   },
+  updateIsShowingOrderInfoModal({commit}, status) {
+    status
+      ? commit("SHOWING_ORDER_INFO_MODAL")
+      : commit("CLEAR_ORDER_INFO_MODAL");
+  },
 
   /**
    * ### 화면 가운데 캐디 명 입력 폼 모달 가시성(On/Off) 처리.

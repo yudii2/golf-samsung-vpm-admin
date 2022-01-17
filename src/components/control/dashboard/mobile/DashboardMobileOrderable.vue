@@ -2,11 +2,11 @@
   <main id="dashboard_mobile__container" @click="handleContainerClick">
     <header class="header">
       <!-- 10T 대기 캐디 명단 -->
-      <SecondHalfWaitHorizontal />
+      <SecondHalfWaitHorizontal/>
     </header>
 
     <!-- dashboard -->
-    <Dashboard class="_dashboard__container" />
+    <Dashboard class="_dashboard__container"/>
 
     <!-- side navigation layout -->
     <DashboardMobileSideNavigation
@@ -37,27 +37,27 @@
       icon="orders"
     />
 
-    <CaddieViewTypeButton class="caddie-view-type-button" />
+    <CaddieViewTypeButton class="caddie-view-type-button"/>
   </main>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import CircleFav from "@/components/shared/CircleFav.vue";
 import Dashboard from "@/components/control/dashboard/body/Dashboard.vue";
 import DashboardMobileSideNavigation from "@/components/control/dashboard/mobile/DashboardMobileSideNavigation.vue";
 import useRestaurant from "@/api/v1/monitor/useRestaurant.js";
 import useCaddie from "@/api/v1/monitor/useCaddie";
-import { DEVELOPMENT } from "@/utils/constants";
+import {DEVELOPMENT} from "@/utils/constants";
 import useAuth from "@/api/v1/auth/useAuth";
 import TimeUtil from "@/utils/datetime/TimeUtil";
 import SecondHalfWaitHorizontal from "./SecondHalfWaitHorizontal.vue";
 import CaddieViewTypeButton from "../modal/CaddieViewTypeButton.vue";
 
-const { getStoreGroup } = useRestaurant();
-const { getCaddies } = useCaddie();
-const { authenticationIsValid } = useAuth();
-
+const {getStoreGroup} = useRestaurant();
+const {getCaddies} = useCaddie();
+const {authenticationIsValid} = useAuth();
+const {getOrderInfo} = useRestaurant();
 export default {
   name: "DashboardMobileOrderable",
   components: {
@@ -165,14 +165,17 @@ export default {
       const isValid = await authenticationIsValid(beforeMove);
       if (isValid) {
         // 매장 그룹군 목록 조회.
-        const { storeList } = await getStoreGroup();
+        const {storeList} = await getStoreGroup();
         this.storeGroups = storeList;
 
         // 새로운 주문 갯수 조회.
         const {
-          data: { newOrderCnt },
+          data: {newOrderCnt},
         } = await getCaddies(this.selectedStoreType);
+
+        const data = await getOrderInfo(this.selectedStoreType)
         this.newOrderCount = newOrderCnt;
+        this.setOrderList(data);
       }
     },
 
@@ -281,6 +284,7 @@ export default {
       toggleAutoRefreshMode: "toggleAutoRefreshMode",
       setSelectedStoreType: "updateSelectedStoreType",
       updateIsRefreshing: "updateIsRefreshing",
+      setOrderList: "setOrderList",
     }),
   },
   watch: {
@@ -345,6 +349,7 @@ export default {
   display: flex;
   align-items: center;
 }
+
 /* header start */
 
 ._dashboard__container {
@@ -374,6 +379,7 @@ export default {
 .second-half-wait-horizontal__container {
   background-color: tomato;
 }
+
 /* second half wait end */
 
 /* caddie view type button start */
@@ -381,5 +387,6 @@ export default {
   bottom: 120px;
   left: 20px;
 }
+
 /* caddie view type button end */
 </style>

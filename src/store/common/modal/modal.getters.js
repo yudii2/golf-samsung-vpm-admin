@@ -17,6 +17,8 @@ export default {
   getIsShowingChipBoxModal: (state) => state.isShowingChipBoxModal,
   getIsShowingPlayingCaddieInfoModal: (state) =>
     state.isShowingPlayingCaddieInfoModal,
+  getIsShowingOrderInfoModal:(state) =>
+    state.isShowingOrderInfoModal,
   getChipBoxTitle: (state) => state.chipBoxTitle,
   getChipBoxItems: (state) => state.chipBoxItems,
   getChipBoxItemClickable: (state) => state.chipBoxItemClickable,

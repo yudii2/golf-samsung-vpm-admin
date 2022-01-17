@@ -54,12 +54,18 @@
         :src="require('@/assets/images/control/dashboard/state_food.png')"
         alt="food"
         :key="caddie.mark2"
+        @mousemove="showModal(caddie)"
+        @mouseleave="closeModal"
+        :class="{'order_icon' : addClass}"
+
       />
     </transition>
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "CaddieMark",
 
@@ -70,11 +76,45 @@ export default {
     },
   },
 
+  data() {
+    return {
+      addClass: false
+    }
+  },
   computed: {
     hasMark() {
       return this.caddie.mark2 !== null;
     },
+    ...mapGetters("control/", {
+      getOrder: "getOrderList",
+    })
   },
+
+  methods: {
+    showModal(caddie) {
+      const isOrderableMode = this.$parent?.$parent?.isOrderableMode
+
+      if (isOrderableMode) {
+        const {caddieUniqNo} = caddie;
+        const selectedOrder = this.getOrder(caddieUniqNo)
+
+        if (selectedOrder) {
+          this.addClass = true;
+          this.setSelectedOrder(selectedOrder);
+          this.updateIsShowingOrderInfoModal(true);
+        }
+      }
+    },
+    closeModal() {
+      this.updateIsShowingOrderInfoModal(false);
+    },
+    ...mapActions({
+      updateIsShowingOrderInfoModal: "updateIsShowingOrderInfoModal"
+    }),
+    ...mapActions('control/', {
+      setSelectedOrder: "setSelectedOrder",
+    })
+  }
 };
 </script>
 
@@ -88,6 +128,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 #caddie_mark img {
   width: 22px;
   height: 22px;
@@ -100,54 +141,73 @@ export default {
     height: 32px;
     transform: translate(-50%, -32px);
   }
+
   #caddie_mark img {
     width: 25px;
     height: 25px;
   }
 }
+
 /* laptops */
 @media screen and (min-width: 720px) {
   #caddie_mark {
     height: 34px;
     transform: translate(-50%, -34px);
   }
+
   #caddie_mark img {
     width: 28px;
     height: 28px;
   }
 }
+
 /* laptops lg */
 @media screen and (min-width: 900px) {
   #caddie_mark {
     height: 34px;
     transform: translate(-50%, -34px);
   }
+
   #caddie_mark img {
     width: 31px;
     height: 31px;
   }
 }
+
 /* desktop */
 @media screen and (min-width: 1080px) {
   #caddie_mark {
     height: 36px;
     transform: translate(-50%, -32px);
   }
+
   #caddie_mark img {
     width: 34px;
     height: 34px;
   }
+
+  #caddie_mark .order_icon:hover{
+    height: 36px;
+    width: 36px;
+  }
 }
+
 /* desktop lg */
 @media screen and (min-width: 1920px) {
   #caddie_mark {
     height: 45px;
     transform: translate(-50%, -35px);
   }
+
   #caddie_mark img {
     width: 37px;
     height: 37px;
   }
+  #caddie_mark .order_icon:hover{
+    height: 39px;
+    width: 39px;
+  }
 }
+
 /* media end */
 </style>

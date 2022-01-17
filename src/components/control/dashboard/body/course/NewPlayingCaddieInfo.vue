@@ -45,7 +45,7 @@ export default {
   methods: {
     handleMouseEvent(e) {
       try {
-        const { innerWidth, innerHeight } = window;
+        const { innerWidth } = window;
         const moveX =
           e.x > innerWidth - 400
             ? -1 * (innerWidth / 10 / 2) - 80
@@ -65,8 +65,6 @@ export default {
         "updateIsShowingPlayingCaddieInfoModal",
     }),
   },
-
-  mounted() {},
 
   destroyed() {
     window.removeEventListener("mousemove", this.handleMouseEvent, true);
@@ -144,7 +142,7 @@ export default {
 }
 
 /* media start */
-@media screen and (min-width: 1080px) {
+@media screen and (width: 1280px) {
   #new-playing-caddie-info__container {
     padding: 7px;
   }

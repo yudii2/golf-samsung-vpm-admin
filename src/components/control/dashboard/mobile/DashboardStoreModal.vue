@@ -205,12 +205,10 @@ import useRestaurant from "@/api/v1/monitor/useRestaurant";
 import TimeUtil from "@/utils/datetime/TimeUtil";
 import { useInput } from "@/utils/string";
 import useDate from "@/composables/useDate";
-import useCopy from "@/composables/useCopy";
 
 const { getOrderInfo, orderAccept, orderReject } = useRestaurant();
 const { lengthIsInvalid, getValidText } = useInput(4);
 const { fourDigitTimeToDate } = useDate();
-const { objectCopier } = useCopy();
 
 export default {
   name: "DashboardStoreModal",
@@ -650,12 +648,12 @@ export default {
 #dashboard_store_modal__container {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 40%;
   transform: translate(-50%, -50%);
   z-index: 3;
 
   min-height: 80%;
-  min-width: 90%;
+  min-width: 70%;
   background-color: var(--deep-green);
   border-radius: 15px;
   padding: 10px;

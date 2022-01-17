@@ -6,4 +6,10 @@ export default {
   updateSelectedStoreType({ commit }, storeType) {
     commit("UPDATE_SELECTED_STORE_TYPE", storeType);
   },
+  setOrderList({commit}, orderList){
+    commit('SET_ORDER_LIST', orderList);
+  },
+  setSelectedOrder({commit}, selectedOrder){
+    commit('SET_SELECTED_ORDER', selectedOrder)
+  }
 };

@@ -7,6 +7,7 @@ export default {
   isShowingRoundGroupScoreDetailModal: false,
   isShowingRoundGroupRankingModal: false,
   isShowingPlayingCaddieInfoModal: false,
+  isShowingOrderInfoModal: false,
   // chip box start
   isShowingChipBoxModal: false,
   chipBoxTitle: "",

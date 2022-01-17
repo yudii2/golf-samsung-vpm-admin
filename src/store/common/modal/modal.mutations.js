@@ -84,6 +84,14 @@ export default {
     state.isShowingPlayingCaddieInfoModal = false;
   },
 
+  //isShowingOrderInfoModal
+  SHOWING_ORDER_INFO_MODAL(state){
+    state.isShowingOrderInfoModal= true;
+  },
+  CLEAR_ORDER_INFO_MODAL(state){
+    state.isShowingOrderInfoModal = false
+  },
+
   // isShowingCaddieSearchModal
   SHOWING_CADDIE_SEARCH_MODAL(state) {
     state.isShowingCaddieSearchModal = true;

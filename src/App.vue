@@ -52,6 +52,9 @@
       <transition name="fade">
         <NewPlayingCaddieInfo/>
       </transition>
+      <transition name="fade">
+        <OrderInfo/>
+      </transition>
     </div>
 
     <div id="messages">
@@ -102,10 +105,12 @@ import GroupNameUpdateModal from "./components/control/dashboard/modal/groups/Gr
 import CompetitionCreateModal from "./components/appSettings/competitions/CompetitionCreateModal.vue";
 import ClubThingsModal from "@/components/admin/modal/round/all/ClubThingsModal";
 import RoundAllMemoModal from "@/components/admin/modal/round/all/RoundAllMemoModal";
+import OrderInfo from "@/components/control/dashboard/body/course/OrderInfo";
 
 export default {
   name: "App",
   components: {
+    OrderInfo,
     RoundAllMemoModal,
     ClubThingsModal,
     RoundAllSMSModal,
