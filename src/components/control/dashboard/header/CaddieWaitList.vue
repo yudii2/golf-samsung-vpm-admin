@@ -43,9 +43,10 @@ import {
 } from "@/utils/constants";
 import useCopy from "@/composables/useCopy";
 import TimeUtil from "@/utils/datetime/TimeUtil";
+import useRestaurant from "@/api/v1/monitor/useRestaurant";
 
 const { objectCopier } = useCopy();
-
+const { getOrderInfo } = useRestaurant();
 export default {
   name: "CaddieWaitList",
 
@@ -63,6 +64,11 @@ export default {
       CADDIE_VIEW_TYPE_CART_NUMBER,
       CADDIE_VIEW_TYPE_PLAY_TIME,
     };
+  },
+
+  async mounted() {
+    const data = await getOrderInfo(this.selectedStoreType);
+    this.setOrderList(data);
   },
 
   computed: {
@@ -188,6 +194,7 @@ export default {
       caddieViewType: "currentCaddieViewType",
       lookUpCaddies: "getLookUpCaddies",
       getOrder: "getOrderList",
+      selectedStoreType: "getSelectedStoreType",
     }),
   },
 
@@ -220,6 +227,7 @@ export default {
     ...mapActions("control/", {
       updateHoveredCaddie: "updateHoveredCaddie",
       selectCaddie: "addSelectedCaddie",
+      setOrderList: "setOrderList",
     }),
   },
 };
@@ -276,6 +284,7 @@ export default {
 
 .has-order {
   color: #ebb87c;
+  font-weight: 600;
 }
 
 /* caddie names end */

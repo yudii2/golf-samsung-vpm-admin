@@ -13,7 +13,8 @@
       <div class="order-info-row">
         <template v-for="(order, i) in orderingList">
           <div :key="`${order.itemCd}${i}`">
-            {{ order.itemDisplayNm }}
+            - {{ order.itemDisplayNm }}
+            {{ order.menuCount }}
             <!--            <div-->
             <!--              v-for="option in order.simpleSubOrderingVOList"-->
             <!--              :key="option.itemCd"-->
@@ -35,8 +36,23 @@ export default {
   name: "OrderInfo",
   computed: {
     orderingList() {
-      return this.selectedOrder?.simpleOrderingVOList || [];
+      const computedOrderList = [];
+      this.selectedOrder?.simpleOrderingVOList.forEach((menu) => {
+        const isSameMenu = computedOrderList.find(
+          (_menu) => _menu.itemCd === menu.itemCd
+        );
+        if (isSameMenu) {
+          isSameMenu.menuCount += 1;
+        } else {
+          computedOrderList.push({
+            ...menu,
+            menuCount: 1,
+          });
+        }
+      });
+      return computedOrderList;
     },
+
     ...mapGetters({
       isOrderModalShown: "getIsShowingOrderInfoModal",
     }),

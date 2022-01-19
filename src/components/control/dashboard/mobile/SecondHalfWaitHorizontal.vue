@@ -23,6 +23,7 @@
         >
           <span
             class="caddie-name pointer"
+            :class="{ 'has-order': hasOrder(caddie) }"
             @mouseover="handleCaddieNameMouseOver(caddie)"
             @mouseleave="handleCaddieNameMouseLeave"
             >{{ prettyCaddieText(caddie) }}</span
@@ -127,12 +128,25 @@ export default {
       };
     },
 
+    hasOrder() {
+      return (caddie) => {
+        const { caddieUniqNo } = caddie;
+        const selectedOrder = this.getOrder(caddieUniqNo);
+        if (selectedOrder) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+    },
+
     ...mapGetters("control/", {
       company: "getCompany",
       currentCaddies: "currentCaddies",
       companyCourses: "getCompanyCourses",
       tempCourses: "currentTempCourses",
       caddieViewType: "currentCaddieViewType",
+      getOrder: "getOrderList",
     }),
   },
 
@@ -283,6 +297,10 @@ export default {
 }
 .course-caddies .caddie-name:hover {
   color: gold;
+}
+.has-order {
+  color: #ebb87c;
+  font-weight: 600;
 }
 /* second half wait list start */
 

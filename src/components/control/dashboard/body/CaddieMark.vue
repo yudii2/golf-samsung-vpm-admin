@@ -54,17 +54,17 @@
         :src="require('@/assets/images/control/dashboard/state_food.png')"
         alt="food"
         :key="caddie.mark2"
+        @click="showModal(caddie)"
         @mousemove="showModal(caddie)"
         @mouseleave="closeModal"
-        :class="{'order_icon' : addClass}"
-
+        :class="{ order_icon: addClass }"
       />
     </transition>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "CaddieMark",
@@ -78,8 +78,8 @@ export default {
 
   data() {
     return {
-      addClass: false
-    }
+      addClass: false,
+    };
   },
   computed: {
     hasMark() {
@@ -87,16 +87,16 @@ export default {
     },
     ...mapGetters("control/", {
       getOrder: "getOrderList",
-    })
+    }),
   },
 
   methods: {
     showModal(caddie) {
-      const isOrderableMode = this.$parent?.$parent?.isOrderableMode
+      const isOrderableMode = this.$parent?.$parent?.isOrderableMode;
 
       if (isOrderableMode) {
-        const {caddieUniqNo} = caddie;
-        const selectedOrder = this.getOrder(caddieUniqNo)
+        const { caddieUniqNo } = caddie;
+        const selectedOrder = this.getOrder(caddieUniqNo);
 
         if (selectedOrder) {
           this.addClass = true;
@@ -109,12 +109,12 @@ export default {
       this.updateIsShowingOrderInfoModal(false);
     },
     ...mapActions({
-      updateIsShowingOrderInfoModal: "updateIsShowingOrderInfoModal"
+      updateIsShowingOrderInfoModal: "updateIsShowingOrderInfoModal",
     }),
-    ...mapActions('control/', {
+    ...mapActions("control/", {
       setSelectedOrder: "setSelectedOrder",
-    })
-  }
+    }),
+  },
 };
 </script>
 
@@ -186,7 +186,7 @@ export default {
     height: 34px;
   }
 
-  #caddie_mark .order_icon:hover{
+  #caddie_mark .order_icon:hover {
     height: 36px;
     width: 36px;
   }
@@ -203,7 +203,7 @@ export default {
     width: 37px;
     height: 37px;
   }
-  #caddie_mark .order_icon:hover{
+  #caddie_mark .order_icon:hover {
     height: 39px;
     width: 39px;
   }
