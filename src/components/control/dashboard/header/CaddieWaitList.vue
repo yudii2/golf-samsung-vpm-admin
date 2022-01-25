@@ -283,8 +283,8 @@ export default {
 }
 
 .has-order {
-  color: #ebb87c;
-  font-weight: 600;
+  color: #ebb87c !important;
+  font-weight: 600 !important;
 }
 
 /* caddie names end */
