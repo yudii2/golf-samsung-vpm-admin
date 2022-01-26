@@ -39,12 +39,12 @@
             <col width="10%" />
             <col width="10%" />
             <col width="10%" />
-            <col width="20%" />
-            <col width="5%" />
+            <col width="18%" />
+            <col width="7%" />
             <col width="15%" />
             <col width="10%" />
-            <col width="10%" />
-            <col width="10%" />
+            <col width="12%" />
+            <col width="12%" />
           </colgroup>
 
           <!-- header -->
@@ -429,10 +429,10 @@ export default {
         switch (stateCode) {
           case 2:
           case "2":
-            return "승인완료";
+            return "승인";
           case 9:
           case "9":
-            return "거절완료";
+            return "거절";
         }
       };
     },
@@ -741,6 +741,7 @@ table td {
   justify-content: center;
   align-items: center;
 }
+
 /* orders table end */
 
 .buttons {
@@ -780,9 +781,6 @@ table td {
   justify-content: center;
 }
 
-.order-text {
-  font-size: 0.9rem;
-}
 .order-option-name {
   font-size: 0.9rem;
 }
@@ -801,6 +799,9 @@ table td {
   }
   table td {
     font-size: 1.1rem;
+  }
+  table td:nth-child(-n + 5) {
+    font-size: 1.4rem;
   }
   /* table end */
 }
