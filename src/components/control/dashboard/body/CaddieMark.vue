@@ -55,7 +55,7 @@
         alt="food"
         :key="caddie.mark2"
         @click="showModal(caddie)"
-        @mousemove="showModal(caddie)"
+        @mouseover="showModal(caddie)"
         @mouseleave="closeModal"
         :class="{ order_icon: addClass }"
       />
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "CaddieMark",
@@ -95,7 +95,7 @@ export default {
       const isOrderableMode = this.$parent?.$parent?.isOrderableMode;
 
       if (isOrderableMode) {
-        const { caddieUniqNo } = caddie;
+        const {caddieUniqNo} = caddie;
         const selectedOrder = this.getOrder(caddieUniqNo);
 
         if (selectedOrder) {
@@ -203,6 +203,7 @@ export default {
     width: 37px;
     height: 37px;
   }
+
   #caddie_mark .order_icon:hover {
     height: 39px;
     width: 39px;
