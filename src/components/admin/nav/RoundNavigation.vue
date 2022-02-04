@@ -69,6 +69,12 @@
         >
           <span>진행시간 통계</span>
         </li>
+        <li
+          @click="updateContentView({ title: 'monitor', subtitle: 5 })"
+          :class="{ clicked: isMe('monitor', 5) }"
+        >
+          <span>진행시간 평가</span>
+        </li>
       </ul>
     </div>
 

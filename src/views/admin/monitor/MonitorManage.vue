@@ -4,6 +4,7 @@
     <ProgressTimeLive v-else-if="getSelectedContentViewSubtitle === 2" />
     <ProgressTimeSee v-else-if="getSelectedContentViewSubtitle === 3" />
     <ProgressTimeStatistics v-else-if="getSelectedContentViewSubtitle === 4" />
+    <ProgressTimeReports v-else-if="getSelectedContentViewSubtitle === 5" />
   </main>
 </template>
 
@@ -13,10 +14,12 @@ import ProgressTimeStandardSetting from "@/views/admin/monitor/ProgressTimeStand
 import ProgressTimeLive from "@/views/admin/monitor/ProgressTimeLive.vue";
 import ProgressTimeStatistics from "@/views/admin/monitor/ProgressTimeStatistics.vue";
 import ProgressTimeSee from "@/views/admin/monitor/ProgressTimeSee.vue";
+import ProgressTimeReports from "@/views/admin/monitor/ProgressTimeReports";
 
 export default {
   name: "MonitorManage",
   components: {
+    ProgressTimeReports,
     ProgressTimeStandardSetting,
     ProgressTimeLive,
     ProgressTimeSee,
