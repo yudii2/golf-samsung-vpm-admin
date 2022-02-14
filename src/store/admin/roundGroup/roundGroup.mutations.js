@@ -73,6 +73,9 @@ export default {
   setIsCheckedThirdClass(state, checkYn) {
     state.isCheckedThirdClass = checkYn
   },
+  setIsCheckedHandyMode(state, checkYn){
+    state.isCheckedHandyMode = checkYn
+  },
 
   //roundGroup selectedRoundGroup(시상설정 전페이지)
   setSelectedRoundGroupName(state, groupName) {

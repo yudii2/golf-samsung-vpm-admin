@@ -5,12 +5,12 @@
   >
     <!-- courses -->
     <section class="course_info">
-      <CourseTitles :courses="courses" />
+      <CourseTitles :courses="courses"/>
     </section>
 
     <!-- holes -->
     <section class="hole_info">
-      <HoleTitles :courses="courses" />
+      <HoleTitles :courses="courses"/>
     </section>
 
     <!-- modal -->
@@ -23,13 +23,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import useData from "@/api/v1/monitor/useData";
 import CaddieSettingModal from "@/components/control/dashboard/modal/CaddieSettingModal.vue";
 import CourseTitles from "@/components/control/dashboard/body/CourseTitles.vue";
 import HoleTitles from "@/components/control/dashboard/body/HoleTitles.vue";
 
-const { init, initForDashboard } = useData();
+const {init, initForDashboard} = useData();
 
 export default {
   name: "Dashboard",
@@ -122,7 +122,7 @@ export default {
 
     handleFlagIconClick() {
       if (this.isMobileMode) {
-        this.$router.push({ name: "Home" });
+        this.$router.push({name: "Home"});
       }
     },
 
@@ -191,6 +191,7 @@ export default {
   padding-right: 37px;
   grid-column: 2/31;
 }
+
 /* grid position end */
 
 /* section header start */
@@ -200,18 +201,22 @@ export default {
   border-bottom: 2px solid var(--dark);
   background-color: var(--deep-green);
 }
+
 #dashboard__container > section > header span {
   font-size: 1.1rem;
   font-weight: 600;
 }
+
 #dashboard__container > .course_info > header {
   justify-content: center;
   align-items: center;
 }
+
 #dashboard__container > .hole_info > header {
   justify-content: space-around;
   align-items: center;
 }
+
 /* section header end */
 
 /* course start */
@@ -219,6 +224,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 /* course end */
 
 /* hole start */
@@ -226,6 +232,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 /* hole end */
 
 .dev_box {
@@ -236,9 +243,11 @@ export default {
   .window_size {
     background-color: gold;
   }
+
   #dashboard__container .course_info {
     grid-column: 1/2;
   }
+
   #dashboard__container .hole_info {
     grid-column: 2/31;
   }
@@ -248,15 +257,19 @@ export default {
   .window_size {
     background-color: tomato;
   }
+
   #dashboard__container .course_info {
     grid-column: 1/2;
   }
+
   #dashboard__container .hole_info {
     grid-column: 2/31;
   }
+
   #dashboard__container .course span {
     font-size: 1.2rem;
   }
 }
+
 /* media end */
 </style>

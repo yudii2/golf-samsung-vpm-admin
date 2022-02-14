@@ -101,6 +101,10 @@ export default {
       commit('setIsCheckedThirdClass', true) :
       commit('setIsCheckedThirdClass', false)
   },
+  //"checkYn": "2",    /* 1:스트로크, 2: 신페리오, 3:스트로크(핸디)
+  dispatchSetIsCheckedHandyMode({commit}, checkYn) {
+    commit('setIsCheckedHandyMode', checkYn);
+  },
   dispatchSetSelectedRoundGroupName({commit}, groupName) {
     groupName ?
       commit('setSelectedRoundGroupName', groupName)

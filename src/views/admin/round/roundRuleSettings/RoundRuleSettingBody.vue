@@ -1,10 +1,16 @@
 <template>
   <article class="round-rule-setting-body__container">
     <section class="round-setting-info__container">
+      <RoundRuleAwardOptionalSettingTable
+        v-if="selectedRoundGroup !== null"
+        :roundCompetitionSettingInfoList="competitionSettingInfo"
+        @onUpdateCompetitionHandyModeClick="handleUpdateHandyModeClick"
+      />
       <RoundRuleAwardSettingTable
         :roundCompetitionSettingInfoList="competitionSettingInfo"
         :isUpdatable="isUpdatable"
         @onUpdateCompetitionClick="handleUpdateCompetitionClick"
+        :checkedHandyMode="checkedHandyMode"
         v-if="selectedRoundGroup !== null"
       />
       <RoundRuleSettingTable
@@ -33,6 +39,8 @@ import RoundRuleSettingTable from "@/components/admin/round/roundRuleSettings/Ro
 import {mapActions, mapGetters} from "vuex";
 import useAdminGroup from "@/api/v1/admin/round/useAdminGroup";
 import RoundRuleAwardSettingTable from "@/components/admin/round/roundRuleSettings/RoundRuleAwardSettingTable";
+import RoundRuleAwardOptionalSettingTable
+  from "@/components/admin/round/roundRuleSettings/RoundRuleAwardOptionalSettingTable";
 
 const {updateAwardInfo, deleteAwardInfo, getRankList, getAwardInfo} = useAdminGroup();
 
@@ -40,6 +48,7 @@ export default {
   name: "RoundRuleSettingBody",
 
   components: {
+    RoundRuleAwardOptionalSettingTable,
     RoundRuleAwardSettingTable,
     RoundRuleSettingTable,
   },
@@ -66,6 +75,7 @@ export default {
       nearestInfo: [],
       newPerioInfo: [],
       competitionSettingInfo: [],
+      checkedHandyMode : {}
     };
   },
 
@@ -263,9 +273,12 @@ export default {
         this.setIsCheckedFirstSecond(data.competitionSettingList.find((gubun) => gubun.gubun === '24').checkYn)
         this.setIsCheckedSecondClass(data.competitionSettingList.find((gubun) => gubun.gubun === '25').checkYn)
         this.setIsCheckedThirdClass(data.competitionSettingList.find((gubun) => gubun.gubun === '26').checkYn)
+        this.setIsCheckedHandyMode(data.competitionSettingList.find((gubun) => gubun.gubun === '00').checkYn)
       }
     },
-
+    handleUpdateHandyModeClick(foundHandyMode) {
+      this.checkedHandyMode = foundHandyMode
+    },
     ...mapActions({
       toast: "toast",
       updateIsShowingRoundGroupRankingModal:
@@ -293,6 +306,7 @@ export default {
       setIsCheckedSecondClass: 'dispatchSetIsCheckedSecondClass',
       setIsCheckedThirdClass: 'dispatchSetIsCheckedThirdClass',
       setIsCheckedHonest: 'dispatchSetIsCheckedHonest',
+      setIsCheckedHandyMode: 'dispatchSetIsCheckedHandyMode',
     })
   },
 

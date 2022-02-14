@@ -2,33 +2,31 @@
   <main id="dashboard-mobile-common__container">
     <header class="header">
       <!-- 10T 대기 캐디 명단 -->
-      <SecondHalfWaitHorizontal />
+      <SecondHalfWaitHorizontal/>
     </header>
 
     <!-- 대시보드 -->
-    <Dashboard class="_dashboard__container" />
+    <Dashboard class="_dashboard__container"/>
   </main>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import Dashboard from "../body/Dashboard.vue";
-import CircleFav from "@/components/shared/CircleFav.vue";
-import TimeUtil from "@/utils/datetime/TimeUtil";
 import SecondHalfWaitHorizontal from "./SecondHalfWaitHorizontal.vue";
 
 export default {
   name: "DashboardMobileCommon",
   components: {
     Dashboard,
-    CircleFav,
     SecondHalfWaitHorizontal,
   },
   methods: {
     /**
      * ### 데이터 요청.
      */
-    requests() {},
+    requests() {
+    },
 
     handleFabClick() {
       this.$router.back();
@@ -87,7 +85,7 @@ export default {
 <style scoped>
 #dashboard-mobile-common__container {
   position: relative;
-  height: 100vh;
+  height: 100%;
   overflow: scroll;
 }
 
@@ -108,9 +106,11 @@ export default {
   padding: 10px;
   margin-right: 10px;
 }
+
 .header-title h2 {
   font-size: 1.3rem;
 }
+
 /* second half wait list title end */
 
 /* second half wait list start */
@@ -123,6 +123,7 @@ export default {
   border: 1px solid var(--primary);
   border-radius: 10px;
 }
+
 .courses__wrapper .course {
   display: flex;
   align-items: center;
@@ -131,6 +132,7 @@ export default {
   /* overflow: hidden; */
   text-overflow: ellipsis;
 }
+
 .course .course-name {
   font-size: 1.2rem;
   font-weight: 600;
@@ -140,6 +142,7 @@ export default {
   position: relative;
   margin-left: 10px;
 }
+
 .course-caddies .caddie-info {
   position: absolute;
   top: -10px;
@@ -156,14 +159,17 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 .caddie-info .caddie-info-row {
   margin: 5px;
   display: flex;
   align-items: center;
 }
+
 .caddie-info .caddie-info-row > span:last-child {
   margin-left: 5px;
 }
+
 .caddie-info-row .caddie-players {
   margin-left: 5px;
 }
@@ -172,6 +178,7 @@ export default {
   font-size: 1rem;
   margin-right: 5px;
 }
+
 /* second half wait list start */
 /* header start */
 
@@ -219,5 +226,6 @@ export default {
     height: calc(100vh - 140px) !important;
   }
 }
+
 /* media end */
 </style>
