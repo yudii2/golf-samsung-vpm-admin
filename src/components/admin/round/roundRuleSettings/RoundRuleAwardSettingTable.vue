@@ -103,7 +103,7 @@ export default {
 
       if (foundCompetitionSetting.gubun === '11' && foundCompetitionSetting.checkYn === 'N') {
         if (checkYn === '1' || checkYn === '3') {
-          alert('선택할 수 없음');
+          this.toastControlMessage();
           return;
         }
         if (findWStrokeHandyCheckValue.checkYn === 'Y') {
@@ -114,7 +114,7 @@ export default {
 
       if (foundCompetitionSetting.gubun === '22' && foundCompetitionSetting.checkYn === 'N') {
         if (checkYn === '1' || checkYn === '2') {
-          alert('선택할 수 없음');
+          this.toastControlMessage();
           return;
         }
         if (findNewPerioCheckValue.checkYn === 'Y') {
