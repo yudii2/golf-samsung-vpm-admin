@@ -973,7 +973,7 @@ export default {
         case "netScore":
           return score[i]?.netScore;
         case "totScoreByNewPerio":
-          return score[i].totScore;
+          return score[i]?.totScore;
         case "firstScore":
           return score[i]?.firstScore;
         case "secondScore":
@@ -999,7 +999,7 @@ export default {
         case "playerNearNm":
           return longOrNear[i]?.playerNm;
         case "nearValue":
-          return longOrNear[i].value;
+          return longOrNear[i]?.value;
         default:
           return longOrNear[i];
       }
@@ -1047,9 +1047,9 @@ export default {
     getDoubleParPlayerInfo(i, doublePar, type) {
       switch (type) {
         case "playerNm":
-          return doublePar[i].playerNm;
+          return doublePar[i]?.playerNm;
         case "doubleParValue":
-          return doublePar[i].value;
+          return doublePar[i]?.value;
       }
     },
 
@@ -1111,9 +1111,9 @@ export default {
     getFirstSecondGapPlayerInfo(i, gap, type) {
       switch (type) {
         case "playerNm":
-          return gap[i].playerNm;
+          return gap[i]?.playerNm;
         case "gapValue":
-          return gap[i].value;
+          return gap[i]?.value;
       }
     },
 
@@ -1127,9 +1127,9 @@ export default {
     getLuckyPlayerInfo(i, luckyYn, type) {
       switch (type) {
         case "playerNm":
-          return luckyYn[i].playerNm;
+          return luckyYn[i]?.playerNm;
         case "luckyValue":
-          return luckyYn[i].value;
+          return luckyYn[i]?.value;
       }
     },
 
@@ -1233,6 +1233,7 @@ export default {
         this.setIsCheckedFirstSecond(data.competitionSettingList?.find((gubun) => gubun.gubun === '24')?.checkYn)
         this.setIsCheckedSecondClass(data.competitionSettingList?.find((gubun) => gubun.gubun === '25')?.checkYn)
         this.setIsCheckedThirdClass(data.competitionSettingList?.find((gubun) => gubun.gubun === '26')?.checkYn)
+
       }
     },
     /**
