@@ -204,7 +204,7 @@ table {
   width: 100%;
 }
 
-table tbody tr:hover {
+table tbody:hover {
   background-color: var(--deep-green);
 }
 

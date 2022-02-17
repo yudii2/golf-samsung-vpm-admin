@@ -381,7 +381,7 @@ table {
   text-align: center;
 }
 
-table tbody tr:hover {
+table tbody:hover {
   background-color: var(--deep-green);
 }
 

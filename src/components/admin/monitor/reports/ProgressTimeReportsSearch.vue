@@ -19,17 +19,25 @@
     />
     <!-- 셀렉스 박스 -->
     <div class="select__container">
-      <div class="selector__wrapper round-md">
-        <span>코스구분</span>
-        <img :src="arrowUrl" alt="arrow" />
+      <div class="selector__wrapper round-md" @click="toggleOptionsShow">
+        <template v-if="!currentCourseName">
+          <span>전체</span>
+        </template>
+        <template v-else>
+          <span>{{ currentCourseName }}</span>
+        </template>
+        <img :src="arrowUrl" alt="arrow"/>
       </div>
 
       <transition name="fade">
         옵션 박스
         <DropDownOptions
           v-if="optionsShown"
-          :items="courses"
+          :items="getCourseName"
+          @onOptionClick="handleCourseClick"
           class="drop-down-course-options__container"
+          @focusout="onCourseOptionBoxFocusOut()"
+          name="course-option-box"
         />
       </transition>
     </div>
@@ -50,16 +58,41 @@
 
 <script>
 import DropDownOptions from "@/components/shared/DropDownOptions";
+import {mapGetters} from "vuex";
+
 export default {
   name: "ProgressTimeReportsSearch",
-  components: { DropDownOptions },
+  components: {DropDownOptions},
   data() {
     return {
       arrowUrl: require("@/assets/images/control/dashboard/ico_select2.png"),
-      courses: ["OUT", "IN"],
-      optionsShown: true,
+      optionsShown: false,
+      currentCourseName: '',
     };
   },
+  methods: {
+    handleCourseClick(courseName) {
+      //TODO [report] course 필터링
+      this.currentCourseName = courseName;
+      this.toggleOptionsShow();
+    },
+    toggleOptionsShow() {
+      this.optionsShown = !this.optionsShown;
+    },
+    onCourseOptionBoxFocusOut() {
+      //relatedTarget
+    }
+  },
+  computed: {
+    getCourseName() {
+      const companyCourseList = this.currentCompanyCourses?.map(({courseNm}) => courseNm)
+      companyCourseList.push('전체')
+      return companyCourseList
+    },
+    ...mapGetters("control/", {
+      currentCompanyCourses: "getCompanyCourses",
+    }),
+  }
 };
 </script>
 
@@ -67,10 +100,12 @@ export default {
 header {
   margin-bottom: 16px;
 }
+
 #search__report__input,
 #search__to_report__input {
   width: 180px;
 }
+
 /* selector start */
 .selector__wrapper {
   width: 125px;
@@ -87,11 +122,15 @@ header {
 .selector__wrapper > span {
   font-size: 17px;
   font-weight: bold;
+  position: relative;
 }
+
 .selector__wrapper > img {
   font-size: 17px;
   font-weight: bold;
-  margin: 0 0 0 9px;
+  position: absolute;
+  right: 11px;
+  top: 11px;
 }
 
 .select__container {
