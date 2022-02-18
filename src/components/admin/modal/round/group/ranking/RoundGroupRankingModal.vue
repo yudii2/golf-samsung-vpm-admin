@@ -13,29 +13,31 @@
       />
 
       <!-- 시상 -->
-      <section>
+      <section v-if="competitionSettingAwardeeList.length">
         <RoundGroupRankingAwardTable
           ref="roundGroupRankinAwardTable"
           :isUpdatable="isUpdatable"
+          :competitionSettingList="competitionSettingAwardeeList"
           @updatePlayerNames="updatePlayerNames"
-
         />
       </section>
 
       <!-- //시상 -->
       <!-- 표 -->
-      <section id="ranks__score__container">
+      <section id="ranks__score__container" :class="{'adjust' : !competitionSettingAwardeeList.length}">
         <table id="excel__rank__table">
           <thead>
           <tr>
             <th rowspan="2" style="width: 70px">순위</th>
-            <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && this.isCheckedFirstSecond">
+            <template
+              v-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && isCheckedFirstSecond">
               <th colspan="6" style="width: 450px">Score</th>
             </template>
-            <template v-else-if="!this.isCheckedNewPerio && this.isCheckedFirstSecond">
+            <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
               <th colspan="4" style="width: 280px">Score</th>
             </template>
-            <template v-else-if="(this.isCheckedNewPerio || this.isCheckedStrokeHandy) && !this.isCheckedFirstSecond">
+            <template
+              v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && !isCheckedFirstSecond">
               <th colspan="4" style="width: 280px">Score</th>
             </template>
             <template v-else>
@@ -80,7 +82,8 @@
             </th>
           </tr>
           <tr>
-            <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
+            <template
+              v-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && isCheckedFirstSecond">
               <th>이름</th>
               <th>전반</th>
               <th>후반</th>
@@ -95,7 +98,8 @@
               <th>후반</th>
               <th>Total</th>
             </template>
-            <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
+            <template
+              v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && !isCheckedFirstSecond">
               <th>이름</th>
               <th>Total</th>
               <th>Hcp</th>
@@ -162,7 +166,8 @@
           <tbody>
           <tr v-for="i in selectedRoundGroupRank.playerCount" :key="i">
             <td>{{ i }}</td>
-            <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
+            <template
+              v-if="(isCheckedNewPerio || isCheckedStrokeHandy|| isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && isCheckedFirstSecond">
               <td>
                 {{
                   getScorePlayerInfo(
@@ -299,7 +304,8 @@
                 }}
               </td>
             </template>
-            <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
+            <template
+              v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && !isCheckedFirstSecond">
               <td>
                 {{
                   getScorePlayerInfo(
@@ -868,7 +874,10 @@ export default {
       return selectedRoundGroupRank;
     },
     competitionSettingList() {
-      return this.selectedRoundGroupCompetitionSettingList.competitionSettingList;
+      return this.selectedRoundGroupCompetitionSettingList?.competitionSettingList;
+    },
+    competitionSettingAwardeeList() {
+      return this.selectedRoundGroupCompetitionSettingList?.competitionSettingList?.filter((award) => award.checkYn === 'Y' && award.gubun !== '23' && award.gubun !== '24' && award.gubun !== '21') || [];
     },
 
     ...mapGetters("admin/", {
@@ -888,6 +897,8 @@ export default {
       isCheckedFirstSecond: 'getIsCheckedFirstSecond',
       isCheckedStrokeHandy: 'getIsCheckedStrokeHandy',
       isCheckedHonest: 'getIsCheckedHonest',
+      isCheckedHandyMode: 'getIsCheckedHandyMode',
+
     }),
     ...mapGetters("control/", {
       company: "getCompany",
@@ -1500,6 +1511,10 @@ export default {
 #ranks__score__container {
   grid-row: 3/13;
   overflow: scroll;
+}
+
+.adjust {
+  grid-row: 2/13 !important
 }
 
 #ranks__score__container #excel__rank__table {

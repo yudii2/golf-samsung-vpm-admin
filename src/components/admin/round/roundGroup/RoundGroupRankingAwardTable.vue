@@ -18,9 +18,8 @@
       <tr>
         <template v-for="awardNames in competitionSettingList">
           <th
-            class="medal__table__th"
-            :key="awardNames.gubun"
-            v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+              class="medal__table__th"
+              :key="awardNames.gubun">
             {{ awardNames.displayName }}
           </th>
         </template>
@@ -29,8 +28,7 @@
       <tbody>
       <template v-for="(awardNames, j) in competitionSettingList">
         <template v-if="isUpdatable">
-          <td :key="`${awardNames.gubun}${j}`"
-              v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+          <td :key="`${awardNames.gubun}${j}`">
             <input v-if="isUpdatable"
                    class="update_rank_input"
                    type="text"
@@ -41,8 +39,8 @@
         </template>
         <template v-else>
           <td
-            :key="awardNames.gubun"
-            v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+              :key="awardNames.gubun"
+              v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
             {{ getFirstAwardee(awardNames) }}
           </td>
         </template>
@@ -63,6 +61,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    competitionSettingList: {
+      type: Array,
+      required: false
+    }
   },
 
   data() {
@@ -123,9 +125,6 @@ export default {
   },
 
   computed: {
-    competitionSettingList() {
-      return this.selectedRoundGroupCompetitionSettingList.competitionSettingList.filter((award) => award.checkYn === 'Y')
-    },
     ...mapGetters("admin/", {
       selectedRoundGroup: "getSelectedRoundGroup",
       selectedRoundGroupCompetitionSettingList: 'getSelectedRoundGroupCompetitionSettingList',

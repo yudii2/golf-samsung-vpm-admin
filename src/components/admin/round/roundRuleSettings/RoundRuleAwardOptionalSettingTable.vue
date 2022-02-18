@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     getHandyMode() {
-      return this.roundCompetitionSettingInfoList.find(({gubun}) => gubun === '00') || [];
+      return this.roundCompetitionSettingInfoList?.find(({gubun}) => gubun === '00') || [];
     },
   },
   methods: {
