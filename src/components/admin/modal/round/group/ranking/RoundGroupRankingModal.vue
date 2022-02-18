@@ -15,7 +15,7 @@
       <!-- 시상 -->
       <section v-if="competitionSettingAwardeeList.length">
         <RoundGroupRankingAwardTable
-          ref="roundGroupRankinAwardTable"
+          ref="roundGroupRankingAwardTable"
           :isUpdatable="isUpdatable"
           :competitionSettingList="competitionSettingAwardeeList"
           @updatePlayerNames="updatePlayerNames"
@@ -205,7 +205,7 @@
                 }}
               </td>
               <td>
-                <input
+               <input
                   v-if="isCheckedStrokeHandy && !isCheckedNewPerio && isUpdatable"
                   type="number"
                   :value="
@@ -225,7 +225,7 @@
                   @input="updateHandyScore"
                 />
                 <span v-else>
-                     {{
+                       {{
                     getScorePlayerInfo(
                       i - 1,
                       selectedRoundGroupRank.roundGroupPlayerNewPerioRankVOList,
@@ -233,7 +233,7 @@
                     )
                   }}</span>
               </td>
-              <td>
+              <td style="border: 1px solid red">
                 <input
                   v-if="!isCheckedStrokeHandy && isCheckedNewPerio && isUpdatable"
                   type="number"
@@ -326,7 +326,7 @@
               </td>
               <td>
                 <input
-                  v-if="isCheckedStrokeHandy && !isCheckedNewPerio && isUpdatable"
+                  v-if="(isCheckedStrokeHandy && !isCheckedNewPerio && isUpdatable) || isCheckedHandyMode === '3' && isUpdatable"
                   type="number"
                   :value="
                       getScorePlayerInfo(
@@ -356,7 +356,7 @@
               </td>
               <td>
                 <input
-                  v-if="!isCheckedStrokeHandy && isCheckedNewPerio && isUpdatable"
+                  v-if="(!isCheckedStrokeHandy && isCheckedNewPerio && isUpdatable) || isCheckedHandyMode ==='2' && isUpdatable"
                   type="number"
                   :value="
                       getScorePlayerInfo(
@@ -703,6 +703,7 @@
     <RoundGroupRankingPrint
       ref="roundGroupRankingPrint"
       :selectedRoundGroupRank="selectedRoundGroupRank"
+      :competitionSettingList="competitionSettingAwardeeList"
       :medalistPlayerNm="
             getScorePlayerInfo(
               0,
@@ -1204,7 +1205,7 @@ export default {
         if (status !== "OK") return;
 
         await this.updateReqInit();
-        await this.$refs.roundGroupRankinAwardTable.init();
+        await this.$refs.roundGroupRankingAwardTable?.init();
         await this.getRoundGroupAwardInfo({groupCd, visitDt})
 
         const {data} = res;
@@ -1371,8 +1372,8 @@ export default {
         "<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>";
       tab_text += "</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>";
       tab_text += "<table>";
-      const temp = document.getElementById("excel__medal__table").innerHTML;
-      const temp2 = document.getElementById("excel__rank__table").innerHTML;
+      const temp = document.getElementById("excel__medal__table")?.innerHTML || '';
+      const temp2 = document.getElementById("excel__rank__table")?.innerHTML || '';
       tab_text += temp;
       tab_text += temp2;
       tab_text += "</table></body></svgs>";

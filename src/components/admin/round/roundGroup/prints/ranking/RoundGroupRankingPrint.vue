@@ -27,7 +27,7 @@
             <th
               class="medal__table__th"
               :key="awardNames.gubun"
-              v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+            >
               {{ awardNames.displayName }}
             </th>
           </template>
@@ -36,7 +36,7 @@
         <tbody>
         <template v-for="awardNames in competitionSettingList">
           <td :key="awardNames.gubun"
-              v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+          >
             {{ getFirstAwardee(awardNames) }}
           </td>
         </template>
@@ -48,7 +48,8 @@
     <section class="mt">
       <table id="second_table__wrapper">
         <colgroup>
-          <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
+          <template
+            v-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && isCheckedFirstSecond">
             <col width="4%"/>
 
             <col width="5%"/>
@@ -66,7 +67,8 @@
             <col width="4%"/>
             <col width="4%"/>
           </template>
-          <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
+          <template
+            v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && !isCheckedFirstSecond">
             <col width="4%"/>
 
             <col width="5%"/>
@@ -134,13 +136,15 @@
         <thead>
         <tr>
           <th rowspan="2">순위</th>
-          <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
+          <template
+            v-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && isCheckedFirstSecond">
             <th colspan="6">Score</th>
           </template>
           <template v-else-if="!isCheckedNewPerio && isCheckedFirstSecond">
             <th colspan="4">Score</th>
           </template>
-          <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
+          <template
+            v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && !isCheckedFirstSecond">
             <th colspan="4">Score</th>
           </template>
           <template v-else>
@@ -160,7 +164,8 @@
           <th colspan="2" v-if="isCheckedFirstSecondGap">전후반차</th>
           <th colspan="2" v-if="isCheckedLucky">행운상</th>
         </tr>
-        <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
+        <template
+          v-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && isCheckedFirstSecond">
           <th class="second-head-column">이름</th>
           <th class="second-head-column">전반</th>
           <th class="second-head-column">후반</th>
@@ -174,7 +179,8 @@
           <th class="second-head-column">후반</th>
           <th class="second-head-column">Total</th>
         </template>
-        <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
+        <template
+          v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && !isCheckedFirstSecond">
           <th class="second-head-column">이름</th>
           <th class="second-head-column">Total</th>
           <th class="second-head-column">Hcp</th>
@@ -238,7 +244,8 @@
         <tbody>
         <tr v-for="i in selectedRoundGroupRank.playerCount" :key="i">
           <td>{{ i }}</td>
-          <template v-if="(isCheckedNewPerio || isCheckedStrokeHandy) && isCheckedFirstSecond">
+          <template
+            v-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && isCheckedFirstSecond">
             <td>
               {{
                 getScorePlayerInfo(
@@ -332,7 +339,8 @@
               }}
             </td>
           </template>
-          <template v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy) && !isCheckedFirstSecond">
+          <template
+            v-else-if="(isCheckedNewPerio || isCheckedStrokeHandy || isCheckedHandyMode === '2' || isCheckedHandyMode ==='3') && !isCheckedFirstSecond">
             <td>
               {{
                 getScorePlayerInfo(
@@ -629,7 +637,11 @@ import {mapGetters} from "vuex";
 export default {
   name: "RoundGroupRankingPrint",
   props: {
-    selectedRoundGroupRank: {type: Object, require: true},
+    selectedRoundGroupRank: {type: Object, required: true},
+    competitionSettingList: {
+      type: Array,
+      required: false,
+    }
   },
   computed: {
     /**
@@ -641,9 +653,6 @@ export default {
       return (bookgTime) => {
         return TimeUtil.timeFormatWithChar(bookgTime);
       };
-    },
-    competitionSettingList() {
-      return this.selectedRoundGroupCompetitionSettingList.competitionSettingList.filter((award) => award.checkYn === 'Y')
     },
 
     ...mapGetters("admin/", {
@@ -664,7 +673,8 @@ export default {
       isCheckedStrokeHandy: 'getIsCheckedStrokeHandy',
       isCheckedHonest: 'getIsCheckedHonest',
       isCheckedSecondClass: 'getIsCheckedSecondClass',
-      isCheckedThirdClass: 'getIsCheckedThirdClass'
+      isCheckedThirdClass: 'getIsCheckedThirdClass',
+      isCheckedHandyMode: 'getIsCheckedHandyMode',
     })
   },
   methods: {
@@ -871,36 +881,36 @@ export default {
       }
     },
     getFirstAwardee(award) {
-      const {gubun , playerName} = award
+      const {gubun, playerName} = award
       switch (gubun) {
         case '10':
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerScoreRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerScoreRankVOList[0]?.playerNm : playerName;
         case '11': //신페리오
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerNewPerioRankVOList[0]?.playerNm : playerName;
         case '12': //롱
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerLongRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerLongRankVOList[0]?.playerNm : playerName;
         case '13': //니어
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNearRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerNearRankVOList[0]?.playerNm : playerName;
         case '14': //버디
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerBuddyRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerBuddyRankVOList[0]?.playerNm : playerName;
         case '15': //파
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerParRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerParRankVOList[0]?.playerNm : playerName;
         case '16': //보기
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerOneOverRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerOneOverRankVOList[0]?.playerNm : playerName;
         case '17': //더블보기
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerTwoOverRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerTwoOverRankVOList[0]?.playerNm : playerName;
         case '18' :  //트리플보기
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerThreeOverRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerThreeOverRankVOList[0]?.playerNm : playerName;
         case '19': // 더블파
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerDoubleParRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerDoubleParRankVOList[0]?.playerNm : playerName;
         case '20' : //  전,후반차
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerFirstSecondGapRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerFirstSecondGapRankVOList[0]?.playerNm : playerName;
         case '22' : //스트로크 핸디
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerNewPerioRankVOList[0]?.playerNm : playerName;
         case '25' : //준우승
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[1].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerNewPerioRankVOList[1]?.playerNm : playerName;
         case '26' : //3등
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[2].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup?.roundGroupPlayerNewPerioRankVOList[2]?.playerNm : playerName;
       }
     },
   },

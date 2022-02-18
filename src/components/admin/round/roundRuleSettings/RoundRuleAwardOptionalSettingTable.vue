@@ -57,35 +57,33 @@
 </template>
 
 <script>
-
-import {mapActions} from "vuex";
-
 export default {
   name: "RoundRuleAwardOptionalSettingTable",
   props: {
     roundCompetitionSettingInfoList: {
       type: Array,
       required: false,
+    },
+    checkedHandyMode : {
+      type : Object,
+      required : true,
     }
   },
   computed: {
-    getHandyMode() {
-      return this.roundCompetitionSettingInfoList?.find(({gubun}) => gubun === '00') || [];
-    },
+    // getHandyMode() {
+    //   return this.roundCompetitionSettingInfoList?.find(({gubun}) => gubun === '00') || {}
+    // }
   },
   methods: {
     getCheckedHandyMode(modeNo) {
-      const {checkYn} = this.getHandyMode
+      const {checkYn} = this.checkedHandyMode
       return checkYn === modeNo
     },
     checkHandyMode(modeNo) {
-      const foundHandyMode = this.getHandyMode;
+      const foundHandyMode = this.checkedHandyMode;
       foundHandyMode.checkYn = modeNo;
       this.$emit('onUpdateCompetitionHandyModeClick', foundHandyMode)
     },
-    ...mapActions({
-      toast: "toast",
-    }),
   },
 }
 </script>

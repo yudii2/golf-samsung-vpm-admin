@@ -97,8 +97,8 @@ export default {
       const foundCompetitionSetting = this.roundCompetitionSettingInfoList.find((targetCompetition) => targetCompetition.gubun === competition.gubun);
 
       //신페리오 gubun 11, 스트로크핸디 22
-      const findNewPerioCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '11');
-      const findWStrokeHandyCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '22');
+      // const findNewPerioCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '11');
+      // const findWStrokeHandyCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '22');
       const {checkYn} = this.checkedHandyMode || [];
 
       if (foundCompetitionSetting.gubun === '11' && foundCompetitionSetting.checkYn === 'N') {
@@ -106,10 +106,10 @@ export default {
           this.toastControlMessage();
           return;
         }
-        if (findWStrokeHandyCheckValue.checkYn === 'Y') {
-          this.toastNoticeMessage();
-          findWStrokeHandyCheckValue.checkYn = 'N';
-        }
+        // if (findWStrokeHandyCheckValue.checkYn === 'Y') {
+        //   this.toastNoticeMessage();
+        //   findWStrokeHandyCheckValue.checkYn = 'N';
+        // }
       }
 
       if (foundCompetitionSetting.gubun === '22' && foundCompetitionSetting.checkYn === 'N') {
@@ -117,10 +117,10 @@ export default {
           this.toastControlMessage();
           return;
         }
-        if (findNewPerioCheckValue.checkYn === 'Y') {
-          this.toastNoticeMessage();
-          findNewPerioCheckValue.checkYn = 'N';
-        }
+        // if (findNewPerioCheckValue.checkYn === 'Y') {
+        //   this.toastNoticeMessage();
+        //   findNewPerioCheckValue.checkYn = 'N';
+        // }
       }
 
       if (foundCompetitionSetting.checkYn === 'N') {

@@ -39,8 +39,7 @@
         </template>
         <template v-else>
           <td
-              :key="awardNames.gubun"
-              v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+              :key="awardNames.gubun">
             {{ getFirstAwardee(awardNames) }}
           </td>
         </template>
