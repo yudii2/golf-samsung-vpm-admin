@@ -1,6 +1,6 @@
 <template>
   <article>
-    <div class="group-select__container">
+    <div class="group-select__container" @focusout="handleFocusOut" tabindex="3">
       <!-- 셀렉스 박스 -->
       <div class="selector__wrapper round-md" @click="toggleOptionsShow">
         <span>전반코스조회</span>
@@ -59,6 +59,12 @@ export default {
       const foundCourse = this.currentCompanyCourses.find((course) => course.courseNm === courseName)
       this.toggleOptionsShow();
       this.$emit('sendSelectedCourse', foundCourse)
+    },
+    handleFocusOut(event){
+      if(event.relatedTarget){
+        return;
+      }
+      this.optionsShown = false;
     }
   }
 }
