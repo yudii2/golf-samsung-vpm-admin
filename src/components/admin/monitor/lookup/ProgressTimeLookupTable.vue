@@ -212,7 +212,7 @@
         <th>홀간누적대기</th>
       </tr>
       </thead>
-      <tbody v-for="(row, i) in computedAllRows" :key="i">
+      <tbody v-for="(row, i) in allRows" :key="i">
       <tr>
         <td>{{ row.visitYear }}</td>
         <td>{{ parsedBookgTime(row.startTime) }}</td>
@@ -316,11 +316,6 @@ export default {
       return (bookgTime) => {
         return TimeUtil.timeFormatWithChar(bookgTime);
       };
-    },
-    computedAllRows(){
-      const computedAllRows = this.allRows;
-
-      return computedAllRows?.reverse() || [];
     },
     ...mapGetters("control/", {
       getCourseParInfoByCourseCode: "getCourseParInfoByCourseCode",

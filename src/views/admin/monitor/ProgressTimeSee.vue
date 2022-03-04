@@ -129,7 +129,7 @@ export default {
         })
       })
 
-      sortedList = _.orderBy(sortedList, "visitDate", ['desc'])
+      sortedList = _.orderBy(sortedList, "visitDate", ['asc'])
       this.allRows = sortedList
 
       this.updatePager(sortedList);

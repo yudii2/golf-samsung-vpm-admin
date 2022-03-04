@@ -62,7 +62,7 @@ export class Pager {
       for (let i = 0; i < Math.ceil(this.list.length / this.take); i++) {
         const temp = [];
         for (let j = 0; j < this.take; j++) {
-          const item = tempList.pop();
+          const item = tempList.shift();
           if (item) temp.push(item);
         }
         this.allPages.push(temp);
@@ -82,7 +82,7 @@ export class Pager {
         Math.ceil(tempAllPages.length / this.divideUnit)
       )
         .fill()
-        .map((_) => tempAllPages.splice(0, this.divideUnit));
+        .map(() => tempAllPages.splice(0, this.divideUnit));
     } catch (e) {
       console.error("_initDivide", e.message);
     }
@@ -201,8 +201,7 @@ export class Pager {
    * @returns {number} > 현제 페이지 목록의 마지막 페이지 번호.
    */
   getLastPageOfCurrentPages() {
-    // console.info("getLastPageOfCurrentPages");
-    const currentPagesCount = this.getCurrentPagesCount();
+    // const currentPagesCount = this.getCurrentPagesCount();
     // console.info(currentPagesCount);
     this.pagesList[this.pagesOrder - 1];
   }
