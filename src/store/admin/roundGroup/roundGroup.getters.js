@@ -21,6 +21,7 @@ export default {
   getIsCheckedHonest: (state) => state.isCheckedHonest,
   getIsCheckedSecondClass: (state) => state.isCheckedSecondClass,
   getIsCheckedThirdClass: (state) => state.isCheckedThirdClass,
+  getIsCheckedHandyMode: (state) => state.isCheckedHandyMode,
   getSelectedRoundGroupName: (state) => state.selectedRoundGroupName,
   getSelectedRoundGroupVisitDt: (state) => state.selectedRoundGroupVisitDt,
 };

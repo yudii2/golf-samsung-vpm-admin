@@ -27,7 +27,7 @@ export default {
   isCheckedHonest: Boolean, //어니스트
   isCheckedSecondClass: Boolean,
   isCheckedThirdClass: Boolean,
-
+  isCheckedHandyMode: '',
   //roundGroup selectedRoundGroup(시상설정 전페이지)
   selectedRoundGroupName: '',
   selectedRoundGroupVisitDt: '',

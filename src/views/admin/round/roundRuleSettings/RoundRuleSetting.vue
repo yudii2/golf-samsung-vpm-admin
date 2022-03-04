@@ -66,7 +66,6 @@ export default {
       selectedRoundGroup: "getSelectedRoundGroup",
       roundRuleSettingInfo: "getRoundRuleSettingInfo",
 
-
     }),
     ...mapGetters("control/", {
       getCompanyName: "getCompanyName",

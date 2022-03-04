@@ -1,10 +1,17 @@
 <template>
   <article class="round-rule-setting-body__container">
     <section class="round-setting-info__container">
+      <RoundRuleAwardOptionalSettingTable
+        v-if="selectedRoundGroup !== null"
+        :roundCompetitionSettingInfoList="competitionSettingInfo"
+        @onUpdateCompetitionHandyModeClick="handleUpdateHandyModeClick"
+        :checkedHandyMode="getHandyMode"
+      />
       <RoundRuleAwardSettingTable
         :roundCompetitionSettingInfoList="competitionSettingInfo"
         :isUpdatable="isUpdatable"
         @onUpdateCompetitionClick="handleUpdateCompetitionClick"
+        :checkedHandyMode="getHandyMode"
         v-if="selectedRoundGroup !== null"
       />
       <RoundRuleSettingTable
@@ -33,6 +40,8 @@ import RoundRuleSettingTable from "@/components/admin/round/roundRuleSettings/Ro
 import {mapActions, mapGetters} from "vuex";
 import useAdminGroup from "@/api/v1/admin/round/useAdminGroup";
 import RoundRuleAwardSettingTable from "@/components/admin/round/roundRuleSettings/RoundRuleAwardSettingTable";
+import RoundRuleAwardOptionalSettingTable
+  from "@/components/admin/round/roundRuleSettings/RoundRuleAwardOptionalSettingTable";
 
 const {updateAwardInfo, deleteAwardInfo, getRankList, getAwardInfo} = useAdminGroup();
 
@@ -40,6 +49,7 @@ export default {
   name: "RoundRuleSettingBody",
 
   components: {
+    RoundRuleAwardOptionalSettingTable,
     RoundRuleAwardSettingTable,
     RoundRuleSettingTable,
   },
@@ -47,11 +57,11 @@ export default {
   props: {
     roundRuleInfo: {
       type: Object,
-      require: true,
+      required: true,
     },
     hasSelectedRoundGroup: {
       type: Boolean,
-      require: true,
+      required: true,
     },
     isUpdatable: {
       type: Boolean,
@@ -66,10 +76,14 @@ export default {
       nearestInfo: [],
       newPerioInfo: [],
       competitionSettingInfo: [],
+      checkedHandyMode : {}
     };
   },
 
   computed: {
+    getHandyMode(){
+      return this.competitionSettingInfo?.find(({gubun}) => gubun === '00') || {}
+    },
     ...mapGetters("admin", {
       needFetch: "getNeedFetch",
       selectedRoundGroup: "getSelectedRoundGroup",
@@ -247,25 +261,28 @@ export default {
       this.setSelectedRoundGroupCompetitionSettingList(data);
 
       if (data.competitionSettingList.length > 0) {
-        this.setIsCheckedNewPerio(data.competitionSettingList.find((gubun) => gubun.gubun === '11').checkYn)
-        this.setIsCheckedLong(data.competitionSettingList.find((gubun) => gubun.gubun === '12').checkYn)
-        this.setIsCheckedNear(data.competitionSettingList.find((gubun) => gubun.gubun === '13').checkYn)
-        this.setIsCheckedBuddy(data.competitionSettingList.find((gubun) => gubun.gubun === '14').checkYn)
-        this.setIsCheckedPar(data.competitionSettingList.find((gubun) => gubun.gubun === '15').checkYn)
-        this.setIsCheckedOneOver(data.competitionSettingList.find((gubun) => gubun.gubun === '16').checkYn)
-        this.setIsCheckedTwoOver(data.competitionSettingList.find((gubun) => gubun.gubun === '17').checkYn)
-        this.setIsCheckedThreeOver(data.competitionSettingList.find((gubun) => gubun.gubun === '18').checkYn)
-        this.setIsCheckedDoublePar(data.competitionSettingList.find((gubun) => gubun.gubun === '19').checkYn)
-        this.setIsCheckedFirstSecondGap(data.competitionSettingList.find((gubun) => gubun.gubun === '20').checkYn)
-        this.setIsCheckedLucky(data.competitionSettingList.find((gubun) => gubun.gubun === '21').checkYn)
-        this.setIsCheckedStrokeHandy(data.competitionSettingList.find((gubun) => gubun.gubun === '22').checkYn)
-        this.setIsCheckedHonest(data.competitionSettingList.find((gubun) => gubun.gubun === '23').checkYn)
-        this.setIsCheckedFirstSecond(data.competitionSettingList.find((gubun) => gubun.gubun === '24').checkYn)
-        this.setIsCheckedSecondClass(data.competitionSettingList.find((gubun) => gubun.gubun === '25').checkYn)
-        this.setIsCheckedThirdClass(data.competitionSettingList.find((gubun) => gubun.gubun === '26').checkYn)
+        this.setIsCheckedNewPerio(data.competitionSettingList?.find((gubun) => gubun.gubun === '11')?.checkYn)
+        this.setIsCheckedLong(data.competitionSettingList?.find((gubun) => gubun.gubun === '12')?.checkYn)
+        this.setIsCheckedNear(data.competitionSettingList?.find((gubun) => gubun.gubun === '13')?.checkYn)
+        this.setIsCheckedBuddy(data.competitionSettingList?.find((gubun) => gubun.gubun === '14')?.checkYn)
+        this.setIsCheckedPar(data.competitionSettingList?.find((gubun) => gubun.gubun === '15')?.checkYn)
+        this.setIsCheckedOneOver(data.competitionSettingList?.find((gubun) => gubun.gubun === '16')?.checkYn)
+        this.setIsCheckedTwoOver(data.competitionSettingList?.find((gubun) => gubun.gubun === '17')?.checkYn)
+        this.setIsCheckedThreeOver(data.competitionSettingList?.find((gubun) => gubun.gubun === '18')?.checkYn)
+        this.setIsCheckedDoublePar(data.competitionSettingList?.find((gubun) => gubun.gubun === '19')?.checkYn)
+        this.setIsCheckedFirstSecondGap(data.competitionSettingList?.find((gubun) => gubun.gubun === '20')?.checkYn)
+        this.setIsCheckedLucky(data.competitionSettingList?.find((gubun) => gubun.gubun === '21')?.checkYn)
+        this.setIsCheckedStrokeHandy(data.competitionSettingList?.find((gubun) => gubun.gubun === '22')?.checkYn)
+        this.setIsCheckedHonest(data.competitionSettingList?.find((gubun) => gubun.gubun === '23')?.checkYn)
+        this.setIsCheckedFirstSecond(data.competitionSettingList?.find((gubun) => gubun.gubun === '24')?.checkYn)
+        this.setIsCheckedSecondClass(data.competitionSettingList?.find((gubun) => gubun.gubun === '25')?.checkYn)
+        this.setIsCheckedThirdClass(data.competitionSettingList?.find((gubun) => gubun.gubun === '26')?.checkYn)
+        this.setIsCheckedHandyMode(data.competitionSettingList?.find((gubun) => gubun.gubun === '00')?.checkYn)
       }
     },
-
+    handleUpdateHandyModeClick(foundHandyMode) {
+      this.checkedHandyMode = foundHandyMode
+    },
     ...mapActions({
       toast: "toast",
       updateIsShowingRoundGroupRankingModal:
@@ -293,6 +310,7 @@ export default {
       setIsCheckedSecondClass: 'dispatchSetIsCheckedSecondClass',
       setIsCheckedThirdClass: 'dispatchSetIsCheckedThirdClass',
       setIsCheckedHonest: 'dispatchSetIsCheckedHonest',
+      setIsCheckedHandyMode: 'dispatchSetIsCheckedHandyMode',
     })
   },
 

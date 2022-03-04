@@ -18,9 +18,8 @@
       <tr>
         <template v-for="awardNames in competitionSettingList">
           <th
-            class="medal__table__th"
-            :key="awardNames.gubun"
-            v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+              class="medal__table__th"
+              :key="awardNames.gubun">
             {{ awardNames.displayName }}
           </th>
         </template>
@@ -29,8 +28,7 @@
       <tbody>
       <template v-for="(awardNames, j) in competitionSettingList">
         <template v-if="isUpdatable">
-          <td :key="`${awardNames.gubun}${j}`"
-              v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+          <td :key="`${awardNames.gubun}${j}`">
             <input v-if="isUpdatable"
                    class="update_rank_input"
                    type="text"
@@ -41,8 +39,7 @@
         </template>
         <template v-else>
           <td
-            :key="awardNames.gubun"
-            v-if="awardNames.gubun !== '23' && awardNames.gubun !== '24' && awardNames.gubun !== '21'">
+              :key="awardNames.gubun">
             {{ getFirstAwardee(awardNames) }}
           </td>
         </template>
@@ -63,6 +60,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    competitionSettingList: {
+      type: Array,
+      required: false
+    }
   },
 
   data() {
@@ -91,41 +92,38 @@ export default {
       const {gubun, playerName} = award
       switch (gubun) {
         case '10':
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerScoreRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerScoreRankVOList[0]?.playerNm : playerName;
         case '11': //신페리오
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0]?.playerNm : playerName;
         case '12': //롱
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerLongRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerLongRankVOList[0]?.playerNm : playerName;
         case '13': //니어
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNearRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNearRankVOList[0]?.playerNm : playerName;
         case '14': //버디
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerBuddyRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerBuddyRankVOList[0]?.playerNm : playerName;
         case '15': //파
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerParRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerParRankVOList[0]?.playerNm : playerName;
         case '16': //보기
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerOneOverRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerOneOverRankVOList[0]?.playerNm : playerName;
         case '17': //더블보기
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerTwoOverRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerTwoOverRankVOList[0]?.playerNm : playerName;
         case '18' :  //트리플보기
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerThreeOverRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerThreeOverRankVOList[0]?.playerNm : playerName;
         case '19': // 더블파
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerDoubleParRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerDoubleParRankVOList[0]?.playerNm : playerName;
         case '20' : //  전,후반차
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerFirstSecondGapRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerFirstSecondGapRankVOList[0]?.playerNm : playerName;
         case '22' : //스트로크 핸디
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[0]?.playerNm : playerName;
         case '25' : //준우승
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[1].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[1]?.playerNm : playerName;
         case '26' : //3등
-          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[2].playerNm : playerName;
+          return playerName === 'X' ? this.selectedRoundGroup.roundGroupPlayerNewPerioRankVOList[2]?.playerNm : playerName;
       }
     },
   },
 
   computed: {
-    competitionSettingList() {
-      return this.selectedRoundGroupCompetitionSettingList.competitionSettingList.filter((award) => award.checkYn === 'Y')
-    },
     ...mapGetters("admin/", {
       selectedRoundGroup: "getSelectedRoundGroup",
       selectedRoundGroupCompetitionSettingList: 'getSelectedRoundGroupCompetitionSettingList',

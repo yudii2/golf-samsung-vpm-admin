@@ -59,14 +59,14 @@
         <td>{{ row.playingGubun === "Y" ? "경기중" : "라운딩 종료" }}</td>
 
         <!-- 단체 스코어 -->
-        <td>
+        <td v-if="row.groupScore === 'Y'">
           <button class="button-dark" @click="handleClickScorePrint(row)">
             스코어
           </button>
         </td>
 
         <!-- 시상 -->
-        <td v-if="row.groupRank === 'Y'">
+        <td v-if="row.groupRank ==='Y' && row.groupScore==='Y'">
           <button class="button-dark" @click="handleClickRankingDown(row)">
             랭킹
           </button>

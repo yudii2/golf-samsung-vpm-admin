@@ -48,18 +48,22 @@ export default {
   data() {
     return {
       colGroups: 3,
-      maxCheckBoxCount: 5
+      maxCheckBoxCount: 5,
     }
   },
 
   props: {
     roundCompetitionSettingInfoList: {
       type: Array,
-      require: true
+      required: true
     },
     isUpdatable: {
       type: Boolean,
-      require: true,
+      required: true,
+    },
+    checkedHandyMode: {
+      type: Object,
+      required: true
     }
   },
 
@@ -76,8 +80,6 @@ export default {
 
       return settingList
     },
-
-
   },
 
   methods: {
@@ -90,26 +92,35 @@ export default {
       })
       return count;
     },
+
     checkedAwardBox(competition) {
       const foundCompetitionSetting = this.roundCompetitionSettingInfoList.find((targetCompetition) => targetCompetition.gubun === competition.gubun);
 
       //신페리오 gubun 11, 스트로크핸디 22
-      const findNewPerioCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '11');
-      const findWStrokeHandyCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '22');
-
+      // const findNewPerioCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '11');
+      // const findWStrokeHandyCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '22');
+      const {checkYn} = this.checkedHandyMode || [];
 
       if (foundCompetitionSetting.gubun === '11' && foundCompetitionSetting.checkYn === 'N') {
-        if (findWStrokeHandyCheckValue.checkYn === 'Y') {
-          this.toastNoticeMessage();
-          findWStrokeHandyCheckValue.checkYn = 'N';
+        if (checkYn === '1' || checkYn === '3') {
+          this.toastControlMessage();
+          return;
         }
+        // if (findWStrokeHandyCheckValue.checkYn === 'Y') {
+        //   this.toastNoticeMessage();
+        //   findWStrokeHandyCheckValue.checkYn = 'N';
+        // }
       }
 
       if (foundCompetitionSetting.gubun === '22' && foundCompetitionSetting.checkYn === 'N') {
-        if (findNewPerioCheckValue.checkYn === 'Y') {
-          this.toastNoticeMessage();
-          findNewPerioCheckValue.checkYn = 'N';
+        if (checkYn === '1' || checkYn === '2') {
+          this.toastControlMessage();
+          return;
         }
+        // if (findNewPerioCheckValue.checkYn === 'Y') {
+        //   this.toastNoticeMessage();
+        //   findNewPerioCheckValue.checkYn = 'N';
+        // }
       }
 
       if (foundCompetitionSetting.checkYn === 'N') {
@@ -140,10 +151,33 @@ export default {
     maxCountNoticeMessage() {
       this.toast({title: '라운드 룰 설정', message: '최대 6개까지 가능합니다.'})
     },
+    toastControlMessage() {
+      this.toast({title: "알림", message: '해당 핸디모드에서는 선택할 수 없습니다.'})
+    },
 
     ...mapActions({
       toast: "toast",
     }),
+  },
+  watch: {
+    checkedHandyMode: {
+      handler(mode) {
+        //신페리오 gubun 11, 스트로크핸디 22
+        const findNewPerioCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '11');
+        const findWStrokeHandyCheckValue = this.roundCompetitionSettingInfoList.find((_targetCompetition) => _targetCompetition.gubun === '22');
+        if (mode.checkYn === '1') {
+          findNewPerioCheckValue.checkYn = 'N'
+          findWStrokeHandyCheckValue.checkYn = 'N'
+        }
+        if (mode.checkYn === '2') {
+          findWStrokeHandyCheckValue.checkYn = 'N'
+        }
+        if (mode.checkYn === '3') {
+          findNewPerioCheckValue.checkYn = 'N'
+        }
+      },
+      deep: true
+    }
   }
 }
 </script>
