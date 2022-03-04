@@ -125,6 +125,7 @@ export default {
       const companyCourseList = this.currentCompanyCourses?.map(
         ({courseNm}) => courseNm
       );
+      companyCourseList.unshift('전체')
       return companyCourseList;
     },
     parsedVisitFromDt: {

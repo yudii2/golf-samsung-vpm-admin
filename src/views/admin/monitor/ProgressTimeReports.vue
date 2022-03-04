@@ -36,7 +36,6 @@ import {fetchReport} from '@/api/v1/admin/monitor/useReport'
 import DateUtil from "@/utils/datetime/DateUtil";
 import Pages from "@/components/shared/Pages";
 import {Pager} from "@/utils/usePage";
-import _ from "lodash";
 
 const now = new Date();
 const {year, month, day} = DateUtil.dateDivider(now);
@@ -74,27 +73,38 @@ export default {
       this.isLoading = true
       const {playFromToTimeBVOList} = await fetchReport({visitFromDt, visitToDt})
 
-      const copiedList = [...playFromToTimeBVOList]
-      let sortedList = [];
-      copiedList.forEach((list) => {
-        sortedList.push({
-          ...list,
-          visitDate: `${list.visitYear}${this.removeDash(list.visitMonth)}${list.startTime}`
-        })
-      })
+      this.allRows = playFromToTimeBVOList
+      this.updatePager(playFromToTimeBVOList);
 
-      sortedList = _.orderBy(sortedList, 'visitDate', ['desc']);
+      if (caddieName || currentCourseName) {
+        //case
+        //코스 x , 캐디 o
+        //코스 o , 캐디 x
+        //코스 o , 캐디 o
+        if (caddieName && !currentCourseName) {
+          this.rows = this.allRows?.filter((row) => row.caddieName === caddieName).map((row) => row);
+          this.updatePager(this.rows);
+        }
 
-      this.allRows = sortedList
-      this.updatePager(sortedList);
+        if (!caddieName && currentCourseName) {
+          if (currentCourseName !== '전체') {
+            this.rows = this.allRows?.filter((row) => row.firstCourseNm === currentCourseName).map((row) => row);
+            this.updatePager(this.rows);
+          } else {
+            this.updatePager(this.allRows);
+          }
+        }
 
-      if (caddieName) {
-        this.rows = this.rows?.filter((row) => row.caddieName === caddieName).map((row) => row);
+        if (caddieName && currentCourseName) {
+          if (currentCourseName !== '전체') {
+            this.rows = this.allRows?.filter((row) => row.firstCourseNm === currentCourseName && row.caddieName === caddieName).map((row) => row);
+            this.updatePager(this.rows);
+          } else {
+            this.rows = this.allRows?.filter((row) => row.caddieName === caddieName).map((row) => row);
+            this.updatePager(this.rows);
+          }
+        }
       }
-      if (currentCourseName) {
-        this.rows = this.rows?.filter((row) => row.firstCourseNm === currentCourseName).map((row) => row);
-      }
-
       this.isLoading = false
     },
     async requestFetchReport() {
@@ -104,18 +114,8 @@ export default {
       this.isLoading = true;
       const {playFromToTimeBVOList} = await fetchReport({visitFromDt, visitToDt})
 
-      const copiedList = [...playFromToTimeBVOList]
-      let sortedList = [];
-      copiedList.forEach((list) => {
-        sortedList.push({
-          ...list,
-          visitDate: `${list.visitYear}${this.removeDash(list.visitMonth)}${list.startTime}`
-        })
-      })
-      sortedList = _.orderBy(sortedList, 'visitDate', ['desc']);
-
-      this.allRows = sortedList
-      this.updatePager(sortedList);
+      this.allRows = playFromToTimeBVOList
+      this.updatePager(playFromToTimeBVOList);
       this.isLoading = false;
     },
     handleChangeVisitFromDt(changedVisitFromDt) {
