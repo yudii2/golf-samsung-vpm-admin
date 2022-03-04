@@ -9,9 +9,8 @@
         <th>예약코스</th>
         <th>출발코스</th>
         <th colspan="2">스타트</th>
-        <th colspan="2">5번홀 종료</th>
         <th colspan="2">전반(9번홀) 종료</th>
-        <th colspan="2">14번홀 종료</th>
+        <th>팀간</th>
         <th colspan="2">종료시간</th>
         <th>팀간</th>
         <th rowspan="2">코스내O/T</th>
@@ -24,106 +23,160 @@
         <th>소요시간</th>
         <th>시간</th>
         <th>소요시간</th>
-        <th>시간</th>
-        <th>소요시간</th>
-        <th>시간</th>
-        <th>소요시간</th>
+        <th>간격시간</th>
         <th>시간</th>
         <th>소요시간</th>
         <th>간격시간</th>
       </tr>
       </thead>
-      <tbody v-for="(list,index) in playFromToTimeBVOList" :key="index">
+      <template v-if="hasRows">
+        <tbody v-for="(list,index) in rows" :key="index">
+        <tr>
+          <td rowspan="2">{{ index + 1 }}</td>
+          <td rowspan="2">{{ parsedVisitDt(list) }}</td>
+          <td>{{ list.memberCdName }}</td>
+          <td>{{ list.bookgCourse }}</td>
+          <td>{{ list.firstCourseNm }}</td>
+          <td rowspan="2">{{ list.startHoleTime }}</td>
+          <td rowspan="2">{{ list.startHoleTerm }}</td>
+          <td rowspan="2">{{ list.firstEndTime }}</td>
+          <td rowspan="2">{{ list.firstEndTerm }}</td>
+          <td rowspan="2">{{ list.midTeamTerm }}</td>
+          <td rowspan="2">{{ list.secondEndTime }}</td>
+          <td rowspan="2">{{ list.secondEndTerm }}</td>
+          <td rowspan="2">{{ list.teamTerm }}</td>
+          <td rowspan="2">{{ list.roundTerm }}</td>
+        </tr>
+        <tr>
+          <td>{{ list.caddieName }}</td>
+          <td>{{ parsedBookgTime(list.bookgTime) }}</td>
+          <td>{{ list.startTime }}</td>
+        </tr>
+        </tbody>
+      </template>
+      <template v-else>
+        <tbody>
+        <tr>
+          <td colspan="14">조회된 결과가 없습니다.</td>
+        </tr>
+        </tbody>
+      </template>
+    </table>
+    <table v-show="isShown" id="excel_all_table">
+      <thead>
       <tr>
-        <td rowspan="2">{{ index + 1 }}</td>
-        <td rowspan="2">{{ list.visitYear }}.{{ list.visitMonth }}</td>
-        <td>{{ list.memberCdName }}</td>
-        <td>{{ list.firstCourseNm }}</td>
-        <td>{{ list.firstCourseNm }}</td>
-        <td rowspan="2">{{ list.startHoleTime }}</td>
-        <td rowspan="2">{{ list.startHoleTerm }}</td>
-        <td rowspan="2">{{ list.firstMidTime }}</td>
-        <td rowspan="2">{{ list.firstMidTerm }}</td>
-        <td rowspan="2">{{ list.firstEndTime }}</td>
-        <td rowspan="2">{{ list.firstEndTerm }}</td>
-        <td rowspan="2">{{ list.secondMidTime }}</td>
-        <td rowspan="2">{{ list.secondMidTerm }}</td>
-        <td rowspan="2">{{ list.secondEndTime }}</td>
-        <td rowspan="2">{{ list.secondEndTerm }}</td>
-        <td rowspan="2">{{ list.teamTerm }}</td>
-        <td rowspan="2">{{ list.roundTerm }}</td>
+        <th rowspan="2">No</th>
+        <th rowspan="2">날짜</th>
+        <th>회원구분</th>
+        <th>예약코스</th>
+        <th>출발코스</th>
+        <th colspan="2">스타트</th>
+        <th colspan="2">전반(9번홀) 종료</th>
+        <th>팀간</th>
+        <th colspan="2">종료시간</th>
+        <th>팀간</th>
+        <th rowspan="2">코스내O/T</th>
       </tr>
       <tr>
-        <td>{{ list.caddieName }}</td>
-        <td>{{ list.bookgTime }}</td>
-        <td>{{ list.startTime }}</td>
+        <th>캐디명</th>
+        <th>예약시간</th>
+        <th>출발시간</th>
+        <th>시간</th>
+        <th>소요시간</th>
+        <th>시간</th>
+        <th>소요시간</th>
+        <th>간격시간</th>
+        <th>시간</th>
+        <th>소요시간</th>
+        <th>간격시간</th>
       </tr>
-      </tbody>
+      </thead>
+      <template v-if="hasRows">
+        <tbody v-for="(list,index) in allRows" :key="index">
+        <tr>
+          <td rowspan="2">{{ index + 1 }}</td>
+          <td rowspan="2">{{ parsedVisitDt(list) }}</td>
+          <td>{{ list.memberCdName }}</td>
+          <td>{{ list.firstCourseNm }}</td>
+          <td>{{ list.firstCourseNm }}</td>
+          <td rowspan="2">{{ list.startHoleTime }}</td>
+          <td rowspan="2">{{ list.startHoleTerm }}</td>
+          <td rowspan="2">{{ list.firstEndTime }}</td>
+          <td rowspan="2">{{ list.firstEndTerm }}</td>
+          <td rowspan="2">{{ list.midTeamTerm }}</td>
+          <td rowspan="2">{{ list.secondEndTime }}</td>
+          <td rowspan="2">{{ list.secondEndTerm }}</td>
+          <td rowspan="2">{{ list.teamTerm }}</td>
+          <td rowspan="2">{{ list.roundTerm }}</td>
+        </tr>
+        <tr>
+          <td>{{ list.caddieName }}</td>
+          <td>{{ parsedBookgTime(list.bookgTime) }}</td>
+          <td>{{ list.startTime }}</td>
+        </tr>
+        </tbody>
+      </template>
+      <template v-else>
+        <tbody>
+        <tr>
+          <td colspan="14">조회된 결과가 없습니다.</td>
+        </tr>
+        </tbody>
+      </template>
     </table>
   </div>
 </template>
 
 <script>
+import {mapActions} from "vuex";
+import xlsx from "xlsx";
+import TimeUtil from "@/utils/datetime/TimeUtil";
+
 export default {
   name: "ProgressTimeReportsTable",
+  props: {
+    rows: {
+      type: Array,
+    },
+    allRows: {
+      type: Array,
+    }
+  },
   data() {
     return {
-      "playFromToTimeBVOList": [
-        {
-          "roundId": '23012321',
-          "visitYear": '2022',
-          "visitMonth": '0230',
-          "memberCdName": '회원',
-          "caddieName": '최유정',
-          "bookgCourse": '서',
-          "bookgTime": '0600',
-          "firstCourseCd": '1',
-          "firstCourseNm": '서',
-          "startTime": '0000',
-          "startHoleTime": '0001',
-          "startHoleTerm": '0002',
-          "firstMidTime": '0003',
-          "firstMidTerm": '0004',
-          "firstEndTime": '0005',
-          "firstEndTerm": '0006',
-          "secondMidTime": '0007',
-          "secondMidTerm": '0008',
-          "secondEndTime": '0009',
-          "secondEndTerm": '0010',
-          "teamTerm": '0011',
-          "roundTerm": '123123',
-          "secondCourseNm": '남',
-          "secondCourseCd": '2 ',
-        },
-        {
-          "roundId": '23012321',
-          "visitYear": '2022',
-          "visitMonth": '0230',
-          "memberCdName": '회원',
-          "caddieName": '최유정12',
-          "bookgCourse": '서',
-          "bookgTime": '0600',
-          "firstCourseCd": '1',
-          "firstCourseNm": '서',
-          "startTime": '0000',
-          "startHoleTime": '0001',
-          "startHoleTerm": '0002',
-          "firstMidTime": '0003',
-          "firstMidTerm": '0004',
-          "firstEndTime": '0005',
-          "firstEndTerm": '0006',
-          "secondMidTime": '0007',
-          "secondMidTerm": '0008',
-          "secondEndTime": '0009',
-          "secondEndTerm": '0010',
-          "teamTerm": '0011',
-          "roundTerm": '123123',
-          "secondCourseNm": '남',
-          "secondCourseCd": '2 ',
-        },
-
-      ]
+      isShown: false
     }
+  },
+  computed: {
+    hasRows() {
+      return !!this.rows?.length
+    }
+  },
+  methods: {
+    parsedVisitDt(row) {
+      const {visitYear, visitMonth} = row
+      const parsedVisitMonth = visitMonth.replaceAll('-', '.');
+      return `${visitYear}.${parsedVisitMonth}`
+    },
+    parsedBookgTime(bookgTime) {
+      return TimeUtil.timeFormatWithChar(bookgTime);
+    },
+    excelDownloadFunc() {
+      if (!this.rows) {
+        this.toast({title: '엑셀 다운로드', message: ' 조회된 결과가 없습니다.'});
+        return;
+      }
+      const tableData = document.getElementById("excel_all_table")
+
+      const dataWorkSheet = xlsx.utils.table_to_sheet(tableData)
+      const dataWorkBook = xlsx.utils.book_new();
+
+      xlsx.utils.book_append_sheet(dataWorkBook, dataWorkSheet, '진행시간평가');
+      xlsx.writeFile(dataWorkBook, '진행시간평가.xlsx');
+    },
+    ...mapActions({
+      toast: "toast",
+    })
   },
 };
 </script>

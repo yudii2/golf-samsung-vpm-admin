@@ -145,6 +145,7 @@ export default {
     dateInvalidMessage(title, message) {
       this.toast({title, message});
     },
+    /* methods about paging start */
     updatePage(page) {
       this.currentPage = page;
     },
@@ -170,6 +171,7 @@ export default {
       this.pages = res.currentPages;
       this.currentPage = res.currentPage;
     },
+    /* methods about paging end*/
     ...mapActions({
       toast: "toast",
     }),
