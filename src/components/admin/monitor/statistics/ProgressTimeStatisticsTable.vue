@@ -2,62 +2,62 @@
   <div class="table__wrapper">
     <table>
       <colgroup>
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
-        <col width="7%" />
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
       </colgroup>
       <thead>
-        <tr>
-          <th>구분</th>
-          <th>라운드</th>
-          <th>전체</th>
-          <th>경기</th>
-          <th>전반</th>
-          <th>후반</th>
-          <th>중간</th>
-          <th>홀간누적대기</th>
-          <th>우수</th>
-          <th>정상</th>
-          <th>개선</th>
-          <th>위기</th>
-          <th>표준편차</th>
-          <th>평점</th>
-        </tr>
+      <tr>
+        <th>구분</th>
+        <th>라운드</th>
+        <th>전체</th>
+        <th>경기</th>
+        <th>전반</th>
+        <th>후반</th>
+        <th>중간</th>
+        <th>홀간누적대기</th>
+        <th>우수</th>
+        <th>정상</th>
+        <th>개선</th>
+        <th>위기</th>
+        <th>표준편차</th>
+        <th>평점</th>
+      </tr>
       </thead>
 
       <tbody v-if="hasRows">
-        <tr v-for="(row, i) in rows" :key="`${row.allPlayTime}${i}`">
-          <td>{{ row.visitDt }}</td>
-          <td>{{ row.roundCnt }}</td>
-          <td>{{ row.allPlayTime }}</td>
-          <td>{{ row.onlyPlayTime }}</td>
-          <td>{{ row.firstPlayTime }}</td>
-          <td>{{ row.secondPlayTime }}</td>
-          <td>{{ row.middleTime }}</td>
-          <td>{{ row.holeAccuTime }}</td>
-          <td>{{ row.exCnt }}</td>
-          <td>{{ row.standardDiv }}</td>
-          <td>{{ row.gdCnt }}</td>
-          <td>{{ row.niCnt }}</td>
-          <td>{{ row.vgCnt }}</td>
-          <td>{{ row.rating }}</td>
-        </tr>
+      <tr v-for="(row, i) in rows" :key="`${row.allPlayTime}${i}`">
+        <td>{{ row.visitDt | date }}</td>
+        <td>{{ row.roundCnt }}</td>
+        <td>{{ row.allPlayTime }}</td>
+        <td>{{ row.onlyPlayTime }}</td>
+        <td>{{ row.firstPlayTime }}</td>
+        <td>{{ row.secondPlayTime }}</td>
+        <td>{{ row.middleTime }}</td>
+        <td>{{ row.holeAccuTime }}</td>
+        <td>{{ row.exCnt }}</td>
+        <td>{{ row.standardDiv }}</td>
+        <td>{{ row.gdCnt }}</td>
+        <td>{{ row.niCnt }}</td>
+        <td>{{ row.vgCnt }}</td>
+        <td>{{ row.rating }}</td>
+      </tr>
       </tbody>
       <tbody v-else>
-        <tr>
-          <td colspan="14">조회된 결과가 없습니다.</td>
-        </tr>
+      <tr>
+        <td colspan="14">조회된 결과가 없습니다.</td>
+      </tr>
       </tbody>
     </table>
   </div>
@@ -79,6 +79,14 @@ export default {
       return Boolean(this.rows?.length);
     },
   },
+  filters: {
+    date(value) {
+      const year = value.substring(0, 4)
+      const month = value.substring(4, 6)
+      const day = value.substring(6, 8)
+      return `${year}.${month}.${day}`
+    }
+  }
 };
 </script>
 

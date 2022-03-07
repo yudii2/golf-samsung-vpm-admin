@@ -189,8 +189,8 @@ export default {
         return `${year}-${month}-${day}`
       },
       set(newValue) {
-        const changedVisitToDt = newValue.replaceAll('-', '');
-        this.visitFromDt = changedVisitToDt
+        const changedVisitFromDt = newValue.replaceAll('-', '');
+        this.visitFromDt = changedVisitFromDt
       }
     },
     parsedVisitToDt: {

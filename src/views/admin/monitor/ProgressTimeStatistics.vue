@@ -7,7 +7,7 @@
         id="search__term__input"
         autocomplete="off"
         class="input-dark ml"
-        v-model="visitFromDt"
+        v-model="parsedVisitFromDt"
         ref="input_from_date"
       />
       <span class="mx">-</span>
@@ -15,7 +15,7 @@
         type="date"
         id="search__to_term__input"
         class="input-dark"
-        v-model="visitToDt"
+        v-model="parsedVisitToDt"
         autocomplete="off"
         required
       />
@@ -26,7 +26,7 @@
     </header>
 
     <body>
-      <ProgressTimeStatisticsTable :rows="rows" />
+    <ProgressTimeStatisticsTable :rows="rows"/>
     </body>
 
     <footer>
@@ -49,14 +49,14 @@ import Pages from "@/components/shared/Pages.vue";
 import ProgressTimeStatisticsTable from "@/components/admin/monitor/statistics/ProgressTimeStatisticsTable.vue";
 import DateUtil from "@/utils/datetime/DateUtil";
 import useStatistic from "@/api/v1/admin/monitor/useStatistic";
-import { Pager } from "@/utils/usePage";
-import { mapActions } from "vuex";
-import { NO_REQUIRED_VISIT_DATE } from "@/utils/constants";
+import {Pager} from "@/utils/usePage";
+import {mapActions} from "vuex";
+import {NO_REQUIRED_VISIT_DATE} from "@/utils/constants";
 
 const now = new Date();
-const { year, month, day } = DateUtil.dateDivider(now);
+const {year, month, day} = DateUtil.dateDivider(now);
 const visitDt = year + month + day;
-const { getStatistics } = useStatistic();
+const {getStatistics} = useStatistic();
 
 export default {
   name: "ProgressTimeStatistics",
@@ -74,7 +74,7 @@ export default {
       visitToDt: "",
       visitDt,
 
-      isLoading : false,
+      isLoading: false,
     };
   },
 
@@ -85,15 +85,15 @@ export default {
      * @param visitToDt
      * @returns {Promise<void>}
      */
-    async requestGetStatistics({ visitFromDt, visitToDt }) {
-      const res = await getStatistics({ visitFromDt, visitToDt });
+    async requestGetStatistics({visitFromDt, visitToDt}) {
+      const res = await getStatistics({visitFromDt, visitToDt});
 
-      const { status } = res;
+      const {status} = res;
       this.isLoading = false;
       if (status !== "OK") return;
 
       const {
-        data: { playTimeStatsVOList },
+        data: {playTimeStatsVOList},
       } = res;
       this.updatePager(playTimeStatsVOList);
     },
@@ -110,11 +110,11 @@ export default {
         this.isLoading = true;
         const visitFromDt = oldVisitFromDt.split("-").join("");
         const visitToDt = oldVisitToDt.split("-").join("");
-        this.requestGetStatistics({ visitFromDt, visitToDt });
+        this.requestGetStatistics({visitFromDt, visitToDt});
       }
     },
     dateInvalidMessage(title, message) {
-      this.toast({ title, message });
+      this.toast({title, message});
     },
     /* paging methods start */
     updatePage(page) {
@@ -150,15 +150,46 @@ export default {
       toast: "toast",
     }),
   },
+  computed: {
+    parsedVisitFromDt: {
+      get() {
+        const year = this.visitFromDt.substring(0, 4);
+        const day = this.visitFromDt.substring(6, 8);
+        const month = this.visitFromDt.substring(4, 6);
+        return `${year}-${month}-${day}`
+      },
+      set(newValue) {
+        const changedVisitFromDt = newValue.replaceAll('-', '');
+        this.visitFromDt = changedVisitFromDt
+      }
+    },
+    parsedVisitToDt: {
+      get() {
+        const year = this.visitToDt.substring(0, 4);
+        const month = this.visitToDt.substring(4, 6);
+        const day = this.visitToDt.substring(6, 8);
+
+        return `${year}-${month}-${day}`
+      },
+      set(newValue) {
+        const changedVisitToDt = newValue.replaceAll('-', '');
+        this.visitToDt = changedVisitToDt
+      }
+    }
+  },
+  created() {
+    this.visitFromDt = this.visitDt;
+    this.visitToDt = this.visitDt;
+  },
   /**
    * 진행시간 조회 API 호출.
    */
   mounted() {
     this.currentPage = 1;
-    const visitFromDt = this.visitDt;
-    const visitToDt = this.visitDt;
+    const visitFromDt = this.visitFromDt;
+    const visitToDt = this.visitToDt;
     this.isLoading = true;
-    this.requestGetStatistics({ visitFromDt, visitToDt });
+    this.requestGetStatistics({visitFromDt, visitToDt});
   },
 };
 </script>
@@ -184,6 +215,7 @@ footer {
   left: 50%;
   transform: translateX(-50%);
 }
+
 .loading {
   width: 15px;
   height: 15px;
@@ -202,5 +234,6 @@ footer {
   animation: spinnerOne 2s infinite linear;
   margin-left: 15px;
 }
+
 /* footer end */
 </style>
