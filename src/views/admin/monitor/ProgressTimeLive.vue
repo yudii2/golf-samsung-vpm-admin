@@ -84,10 +84,15 @@ export default {
     },
     /* paging methods end */
     handleReceiveSelectedCourse(course) {
-      const {courseCd} = course;
-
-      this.rows = this.originalRows.filter((row) => row.firstCourseCd === courseCd);
-      this.updatePager(this.rows)
+      //전체
+      if (!course) {
+        this.rows = this.originalRows;
+        this.updatePager(this.rows);
+      } else {
+        const {courseCd} = course;
+        this.rows = this.originalRows.filter((row) => row.firstCourseCd === courseCd);
+        this.updatePager(this.rows)
+      }
     },
   },
   /**

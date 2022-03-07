@@ -3,7 +3,12 @@
     <div class="group-select__container" @focusout="handleFocusOut" tabindex="3">
       <!-- 셀렉스 박스 -->
       <div class="selector__wrapper round-md" @click="toggleOptionsShow">
-        <span>전반코스조회</span>
+        <template v-if="!currentCourse">
+          <span>전반코스조회</span>
+        </template>
+        <template v-else>
+          <span>{{ currentCourse }}</span>
+        </template>
         <img :src="arrowUrl" alt="arrow"/>
       </div>
 
@@ -32,19 +37,19 @@ export default {
   data() {
     return {
       optionsShown: false,
-      arrowUrl: require("@/assets/images/control/dashboard/ico_select2.png")
+      arrowUrl: require("@/assets/images/control/dashboard/ico_select2.png"),
+      currentCourse: ''
     }
   },
 
   computed: {
     companyCourseNames() {
-      const names = [];
+      let courseNames = [];
       if (this.currentCompanyCourses?.length > 0) {
-        this.currentCompanyCourses?.forEach((course) => {
-          names.push(course.courseNm)
-        })
+        courseNames = this.currentCompanyCourses?.map(({courseNm}) => courseNm)
       }
-      return names;
+      courseNames.unshift('전체');
+      return courseNames;
     },
     ...mapGetters("control/", {
       currentCompanyCourses: "getCompanyCourses",
@@ -57,11 +62,16 @@ export default {
     },
     handleCourseClick(courseName) {
       const foundCourse = this.currentCompanyCourses.find((course) => course.courseNm === courseName)
+      if (courseName !== '전체') {
+        this.currentCourse = courseName
+      } else {
+        this.currentCourse = '';
+      }
       this.toggleOptionsShow();
       this.$emit('sendSelectedCourse', foundCourse)
     },
-    handleFocusOut(event){
-      if(event.relatedTarget){
+    handleFocusOut(event) {
+      if (event.relatedTarget) {
         return;
       }
       this.optionsShown = false;

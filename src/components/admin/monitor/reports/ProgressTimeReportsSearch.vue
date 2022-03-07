@@ -35,13 +35,14 @@
         </template>
         <img :src="arrowUrl" alt="arrow"/>
       </div>
-
-      <DropDownOptions
-        v-if="optionsShown"
-        :items="getCourseName"
-        @onOptionClick="handleCourseClick"
-        class="drop-down-course-options__container"
-      />
+      <transition name="fade">
+        <DropDownOptions
+          v-if="optionsShown"
+          :items="getCourseName"
+          @onOptionClick="handleCourseClick"
+          class="drop-down-course-options__container"
+        />
+      </transition>
     </div>
     <input
       class="input-dark ml"
@@ -93,7 +94,6 @@ export default {
   },
   methods: {
     handleCourseClick(courseName) {
-      //TODO [report] course 필터링
       this.currentCourseName = courseName;
       this.toggleOptionsShow();
     },
