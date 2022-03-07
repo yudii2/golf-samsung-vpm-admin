@@ -7,7 +7,7 @@
         id="search__term__input"
         autocomplete="off"
         class="input-dark ml"
-        v-model="visitFromDt"
+        v-model="parsedVisitFromDt"
         ref="input_from_date"
       />
       <span class="mx">-</span>
@@ -15,7 +15,7 @@
         type="date"
         id="search__to_term__input"
         class="input-dark"
-        v-model="visitToDt"
+        v-model="parsedVisitToDt"
         autocomplete="off"
         required
       />
@@ -85,11 +85,15 @@ export default {
       allRows: [],
     };
   },
+  created() {
+    this.visitFromDt = this.visitDt
+    this.visitToDt = this.visitDt
+  },
   mounted() {
     this.currentPage = 1;
 
-    const visitFromDt = this.visitDt;
-    const visitToDt = this.visitDt;
+    const visitFromDt = this.visitFromDt;
+    const visitToDt = this.visitToDt;
 
     this.isLoading = true;
     this.requestGetPlayingTime({visitFromDt, visitToDt});
@@ -175,6 +179,33 @@ export default {
     ...mapActions({
       toast: "toast",
     }),
+  },
+  computed: {
+    parsedVisitFromDt: {
+      get() {
+        const year = this.visitFromDt.substring(0, 4);
+        const day = this.visitFromDt.substring(6, 8);
+        const month = this.visitFromDt.substring(4, 6);
+        return `${year}-${month}-${day}`
+      },
+      set(newValue) {
+        const changedVisitToDt = newValue.replaceAll('-', '');
+        this.visitFromDt = changedVisitToDt
+      }
+    },
+    parsedVisitToDt: {
+      get() {
+        const year = this.visitToDt.substring(0, 4);
+        const month = this.visitToDt.substring(4, 6);
+        const day = this.visitToDt.substring(6, 8);
+
+        return `${year}-${month}-${day}`
+      },
+      set(newValue) {
+        const changedVisitToDt = newValue.replaceAll('-', '');
+        this.visitToDt = changedVisitToDt
+      }
+    }
   },
   watch: {
     currentPage(newPage) {

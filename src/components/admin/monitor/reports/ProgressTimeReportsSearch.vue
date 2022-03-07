@@ -138,7 +138,6 @@ export default {
       set(newValue) {
         const changedVisitFromDt = newValue.replaceAll('-', '');
         this.$emit('changVisitFromDt', changedVisitFromDt)
-        return newValue
       }
 
     },
@@ -153,7 +152,6 @@ export default {
       set(newValue) {
         const changedVisitToDt = newValue.replaceAll('-', '')
         this.$emit('changVisitToDt', changedVisitToDt)
-        return newValue
       }
     },
     ...mapGetters("control/", {
