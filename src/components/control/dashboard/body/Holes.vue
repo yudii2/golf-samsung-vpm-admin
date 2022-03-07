@@ -17,11 +17,11 @@
       </div>
 
       <div v-if="isOrderableMode" class="hole-green">
-        <img :src="greenIcon" alt="" />
+        <!--        <img :src="greenIcon" alt="" />-->
       </div>
 
       <!-- caddie icon -->
-      <NewCaddieIcon :caddies="findCaddiesByHole(hole)" />
+      <NewCaddieIcon :caddies="findCaddiesByHole(hole)"/>
     </div>
   </div>
   <div v-else>
@@ -82,7 +82,7 @@ export default {
             code: hole.holeCd,
             name: hole.holeNm,
             par: hole.par,
-            ...(hasCaddies && { caddies: hole.caddies }),
+            ...(hasCaddies && {caddies: hole.caddies}),
           };
         });
       }
@@ -98,6 +98,7 @@ export default {
   display: flex;
   justify-content: space-around;
 }
+
 .hole {
   position: relative;
   height: 18px;
@@ -122,11 +123,13 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .hole_number {
   color: var(--deep-green);
   font-size: 0.8rem;
   font-weight: 600;
 }
+
 /* hole number end */
 
 /* green start */
@@ -144,11 +147,13 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .hole-green img {
   position: relative;
   top: -80%;
   left: 50%;
 }
+
 /* green end */
 
 /* media start */
@@ -165,17 +170,19 @@ export default {
     width: 15px;
     height: 15px;
   }
+
   .hole_number {
     font-size: 0.7rem;
   }
-  /* hole number end */
 
+  /* hole number end */
   .hole-green {
     right: 2px;
     width: 15px;
     height: 12px;
   }
 }
+
 /* laptops */
 @media screen and (min-width: 720px) {
   .hole {
@@ -190,17 +197,19 @@ export default {
     width: 16px;
     height: 16px;
   }
+
   .hole_number {
     font-size: 0.7rem;
   }
-  /* hole number end */
 
+  /* hole number end */
   .hole-green {
     right: 2px;
     width: 16px;
     height: 13px;
   }
 }
+
 /* laptops lg */
 @media screen and (min-width: 900px) {
   .hole {
@@ -215,17 +224,19 @@ export default {
     width: 17px;
     height: 17px;
   }
+
   .hole_number {
     font-size: 0.8rem;
   }
-  /* hole number end */
 
+  /* hole number end */
   .hole-green {
     right: 2px;
     width: 17px;
     height: 14px;
   }
 }
+
 /* desktop */
 @media screen and (min-width: 1080px) {
   .hole {
@@ -240,17 +251,19 @@ export default {
     width: 18px;
     height: 18px;
   }
+
   .hole_number {
     font-size: 0.8rem;
   }
-  /* hole number end */
 
+  /* hole number end */
   .hole-green {
     right: 4px;
     width: 18px;
     height: 15px;
   }
 }
+
 /* desktop lg */
 @media screen and (min-width: 1900px) {
   .hole {
@@ -265,16 +278,18 @@ export default {
     width: 25px;
     height: 25px;
   }
+
   .hole_number {
     font-size: 1.2rem;
   }
-  /* hole number end */
 
+  /* hole number end */
   .hole-green {
     right: 4px;
     width: 25px;
     height: 22px;
   }
 }
+
 /* media end */
 </style>
