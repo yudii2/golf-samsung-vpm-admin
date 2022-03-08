@@ -49,7 +49,7 @@
         </tr>
         <tr>
           <td>{{ list.caddieName }}</td>
-          <td>{{ parsedBookgTime(list.bookgTime) }}</td>
+          <td>{{ list.bookgTime }}</td>
           <td>{{ list.startTime }}</td>
         </tr>
         </tbody>
@@ -111,7 +111,7 @@
         </tr>
         <tr>
           <td>{{ list.caddieName }}</td>
-          <td>{{ parsedBookgTime(list.bookgTime) }}</td>
+          <td>{{ list.bookgTime }}</td>
           <td>{{ list.startTime }}</td>
         </tr>
         </tbody>
@@ -130,7 +130,6 @@
 <script>
 import {mapActions} from "vuex";
 import xlsx from "xlsx";
-import TimeUtil from "@/utils/datetime/TimeUtil";
 
 export default {
   name: "ProgressTimeReportsTable",
@@ -157,9 +156,6 @@ export default {
       const {visitYear, visitMonth} = row
       const parsedVisitMonth = visitMonth.replaceAll('-', '.');
       return `${visitYear}.${parsedVisitMonth}`
-    },
-    parsedBookgTime(bookgTime) {
-      return TimeUtil.timeFormatWithChar(bookgTime);
     },
     excelDownloadFunc() {
       if (!this.rows) {
