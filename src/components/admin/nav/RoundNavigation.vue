@@ -93,6 +93,22 @@
         </li>
       </ul>
     </div>
+
+    <!-- 캐디 관리 -->
+    <div class="nav caddie">
+      <h4 @click="updateContentView({ title: 'caddie', subtitle: 1 })">
+        캐디 관리
+      </h4>
+
+      <ul>
+        <li
+          @click="updateContentView({ title: 'caddie', subtitle: 1 })"
+          :class="{ clicked: isMe('caddie', 1) }"
+        >
+          <span>캐디 정보</span>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -133,13 +149,9 @@ export default {
   watch: {
     viewSubTitle() {
       this.clearRoundRuleSettingInfo();
-      // this.updateSelectedRoundGroupVisitDt();
-      // this.updateSelectedRoundGroupName();
     },
     viewTitle() {
       this.clearRoundRuleSettingInfo();
-      // this.updateSelectedRoundGroupVisitDt();
-      // this.updateSelectedRoundGroupName();
     }
   }
 };

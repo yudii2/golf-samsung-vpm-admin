@@ -15,7 +15,8 @@
       >
         <RoundManage v-if="viewTitle === 'round'" />
         <MonitorManage v-else-if="viewTitle === 'monitor'" />
-        <VehicleManage v-else />
+        <VehicleManage v-else-if="viewTitle === 'vehicle'" />
+        <CaddieManage v-else/>
       </section>
     </body>
   </div>
@@ -30,12 +31,14 @@ import { mapActions, mapGetters } from "vuex";
 import RoundNavigation from "@/components/admin/nav/RoundNavigation.vue";
 import useData from "@/api/v1/monitor/useData";
 import { COMPANY_CODE_DEFAULT_VALUE } from "@/utils/constants";
+import CaddieManage from "@/views/admin/caddie/CaddieManage";
 
 const { init } = useData();
 
 export default {
   name: "Admin",
   components: {
+    CaddieManage,
     RoundManage,
     MonitorManage,
     VehicleManage,

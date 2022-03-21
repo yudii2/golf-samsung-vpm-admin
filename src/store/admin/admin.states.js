@@ -3,6 +3,7 @@ import GroupStates from "@/store/admin/roundGroup/roundGroup.states";
 import CertificationStates from "@/store/admin/certification/certification.states";
 import roundRuleSettingsStates from "./roundRuleSettings/roundRuleSettings.states";
 import progressTimeStandardStates from "./monitor/progressTimeStandard/progressTimeStandard.states";
+import caddieStates from '@/store/admin/caddie/caddie.states'
 
 export default {
   ...roundStates,
@@ -10,4 +11,5 @@ export default {
   ...CertificationStates,
   ...roundRuleSettingsStates,
   ...progressTimeStandardStates,
+  ...caddieStates,
 };

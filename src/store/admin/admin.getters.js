@@ -3,6 +3,7 @@ import groupGetters from "@/store/admin/roundGroup/roundGroup.getters";
 import certificationGetters from "@/store/admin/certification/certification.getters";
 import roundRuleSettingsGetters from "./roundRuleSettings/roundRuleSettings.getters";
 import progressTimeStandardGetters from "./monitor/progressTimeStandard/progressTimeStandard.getters";
+import caddieGetters from '@/store/admin/caddie/caddie.getters'
 
 export default {
   ...roundGetters,
@@ -10,4 +11,5 @@ export default {
   ...certificationGetters,
   ...roundRuleSettingsGetters,
   ...progressTimeStandardGetters,
+  ...caddieGetters,
 };

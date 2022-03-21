@@ -11,8 +11,9 @@ import common from "@/store/common/common.store.js";
 import appSettings from "@/store/appSettings/appSettings.store.js";
 // import defaultStore from "@/store/default/default.store.js";
 
+
 // others
-import ProjectService from "@/service/ProjectService";
+// import ProjectService from "@/service/ProjectService";
 
 Vue.use(Vuex);
 export default new Vuex.Store({
