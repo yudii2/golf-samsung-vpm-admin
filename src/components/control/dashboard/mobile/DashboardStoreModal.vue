@@ -748,6 +748,9 @@ table td {
   display: flex;
   justify-content: space-around;
 }
+.buttons > button {
+  margin: 0 20px;
+}
 .buttons.is-order-acceptable > .button {
   color: gray;
 }
