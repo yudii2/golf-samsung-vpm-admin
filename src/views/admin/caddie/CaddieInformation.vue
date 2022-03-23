@@ -5,14 +5,12 @@
       <CaddieInformationSearch
         @handleFetchCaddieInfo="handleFetchCaddieInfo"
         @handleFetchLatest="handleFetchLatest"
-        @handleSave="handleSave"
-        :isUpdatable="isUpdatable"
       />
     </header>
     <section>
       <CaddieInformationTable
-        :isUpdatable="isUpdatable"
         :rows="rows"
+        @handleSave="handleSave"
       />
     </section>
     <footer>
@@ -36,18 +34,14 @@ import CaddieInformationTable from "@/views/admin/caddie/CaddieInformationTable"
 import Pages from "@/components/shared/Pages";
 import useCaddie from "@/api/v1/admin/caddie/useCaddie";
 import {Pager} from "@/utils/usePage";
+import {mapGetters} from "vuex";
 
-const {getCaddieInfo} = useCaddie()
+const {getCaddieInfo, initCaddieInfo, updateCaddieInfo} = useCaddie()
 export default {
   name: "CaddieInformation",
-  components: {CaddieInformationTable, CaddieInformationSearch,Pages},
+  components: {CaddieInformationTable, CaddieInformationSearch, Pages},
   data() {
     return {
-      isUpdatable: true,
-
-      caddieName : '',
-      lastTelNo : '',
-
       currentPage: 1,
       rows: [],
       pages: [],
@@ -56,31 +50,36 @@ export default {
 
     }
   },
-  //TODO 페이징 이상부터
   mounted() {
-    this.requestCaddieInfo();
+    this.handleFetchCaddieInfo();
   },
   methods: {
-    async requestCaddieInfo(){
-      const res = await getCaddieInfo()
+    async handleFetchCaddieInfo(caddieName, caddieMobileNo) {
+      const res = await getCaddieInfo(caddieName, caddieMobileNo);
+
       const {status} = res
+      if (status !== 'OK') return;
 
-      if(status !== 'OK') return;
-
-      const {data : caddieInfoList} = res
+      const {data: caddieInfoList} = res;
       this.rows = caddieInfoList;
       this.updatePager(caddieInfoList)
+    },
+    async handleFetchLatest() {
+      const {code} = this.company
+      const res = await initCaddieInfo(code);
+
+      const {status} = res
+      if (status !== 'OK') return;
+
+      await this.handleFetchCaddieInfo()
 
     },
-    handleFetchCaddieInfo() {
-      //TODO 조회
-    },
-    handleFetchLatest() {
-      //TODO 최신화
-    },
-    handleSave(isUpdatable) {
-      //TODO 수정
-      this.isUpdatable = isUpdatable
+    async handleSave() {
+      const res = await updateCaddieInfo(this.rows)
+      const {status} = res
+
+      if (status !== 'OK') return;
+
     },
     /* methods about paging start */
     updatePage(page) {
@@ -112,7 +111,17 @@ export default {
       this.currentPage = res.currentPage;
     },
     /* methods about paging end*/
-  }
+  },
+  computed: {
+    ...mapGetters("control/", {
+      company: "getCompany",
+    }),
+  },
+  watch: {
+    currentPage(newPage) {
+      this.rows = this.pager.getPageRowsByPage(newPage);
+    },
+  },
 }
 </script>
 
@@ -124,6 +133,7 @@ export default {
   flex-direction: column;
   grid-gap: 16px;
 }
+
 footer {
   position: absolute;
   bottom: 3rem;

@@ -1,6 +1,13 @@
 <template>
   <div class="table__wrapper">
     <table>
+      <colgroup>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="7%"/>
+        <col width="10%"/>
+        <col width="7%"/>
+      </colgroup>
       <thead>
       <tr>
         <th>No</th>
@@ -11,33 +18,27 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(caddie,i) in rows" :key="i">
+      <tr v-for="(caddie,i) in rows" :key="i" @click="handleCaddieInformationClick">
         <td>{{ i + 1 }}</td>
         <td>{{ caddie.caddieUniqNo }}</td>
         <td>{{ caddie.caddieName }}</td>
         <td>
-          <template v-if="isUpdatable">
-            <input
-              type="text"
-              class="update_input"
-              :value="caddie.mobileNo"
-            />
-          </template>
-          <template v-else>
-            {{ caddie.mobileNo }}
-          </template>
+          <!--          <input-->
+          <!--            type="text"-->
+          <!--            class="update_input"-->
+          <!--            :value="caddie.mobileNo | getFormattedPhoneNumber"-->
+          <!--            @input="changeCaddieMobileNo($event, caddie)"-->
+          <!--          />-->
+          {{ caddie.mobileNo }}
         </td>
         <td>
-          <template v-if="isUpdatable">
-            <input
-              type="text"
-              class="update_input"
-              :value="caddie.cartNo"
-            />
-          </template>
-          <template v-else>
-            {{ caddie.cartNo }}
-          </template>
+          {{ caddie.cartNo }}
+          <!--          <input-->
+          <!--            type="text"-->
+          <!--            class="update_input cart_no_input"-->
+          <!--            :value="caddie.cartNo"-->
+          <!--            @input="changeCaddieCartNo($event, caddie)"-->
+          <!--          />-->
         </td>
       </tr>
       </tbody>
@@ -46,21 +47,44 @@
 </template>
 
 <script>
+import {getFormattedPhoneNumber} from "@/utils/string";
+import {mapActions} from "vuex";
+
 export default {
   name: "CaddieInformationTable",
   props: {
-    isUpdatable: {
-      type: Boolean,
-      required: true
-    },
     rows: {
       type: Array,
       required: true
     }
   },
   data() {
-    return {}
+    return {
+      caddieInfoReq: [],
+      testClass: false
+    }
   },
+  methods: {
+    changeCaddieMobileNo(event, caddie) {
+      const foundCaddie = this.rows.map((caddie) => caddie).find((_caddie) => caddie.caddieUniqNo === _caddie.caddieUniqNo)
+      foundCaddie.mobileNo = event.target.value
+
+
+    },
+    changeCaddieCartNo(event, caddie) {
+      const foundCaddie = this.rows.map((caddie) => caddie).find((_caddie) => caddie.caddieUniqNo === _caddie.caddieUniqNo)
+      foundCaddie.cartNo = event.target.value
+    },
+    handleCaddieInformationClick() {
+      this.updateIsShowingClubMemoModal(true);
+    },
+    ...mapActions({
+      updateIsShowingClubMemoModal: "dispatchIsShowingCaddieInformationModal",
+    })
+  },
+  filters: {
+    getFormattedPhoneNumber
+  }
 }
 </script>
 
@@ -78,7 +102,7 @@ table {
   text-align: center;
 }
 
-table tbody:hover {
+table tr:hover {
   background-color: var(--deep-green);
 }
 
@@ -97,11 +121,19 @@ table td {
 }
 
 .update_input {
-  width: 30%;
+  width: 55%;
   background-color: transparent;
   color: var(--secondary);
   text-align: center;
   border: none;
+  /*border-bottom: 1px solid var(--primary);*/
+}
+
+.cart_no_input {
+  width: 20% !important;
+}
+
+.test {
   border-bottom: 1px solid var(--primary);
 }
 

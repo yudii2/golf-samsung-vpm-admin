@@ -58,5 +58,8 @@ export default {
   isShowingCompetitionParticipantsModal: false,
   isShowingCompetitionCreateModal: false,
 
+  //caddie-info
+  isShowingCaddieInformationModal:false,
+
 
 };

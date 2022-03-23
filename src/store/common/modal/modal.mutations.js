@@ -230,6 +230,19 @@ export default {
   },
   CLEAR_CLUB_MEMO_MODAL(state) {
     state.isShowingClubMemoModal = false;
+  },
+
+  // isShowingCaddieInformationModal
+  /**
+   * ## 캐디 정보 모달
+   * @param state
+   * @constructor
+   */
+  SHOWING_CADDIE_INFORMATION_MODAL(state){
+    state.isShowingCaddieInformationModal = true;
+  },
+  CLEAR_CADDIE_INFORMATION_MODAL(state){
+    state.isShowingCaddieInformationModal = false;
   }
 
 };

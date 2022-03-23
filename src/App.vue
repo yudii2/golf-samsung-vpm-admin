@@ -20,6 +20,7 @@
         <PicturesModal v-if="isShowingPicturesModal"/>
         <CertificationDetailModal v-if="isShowingCertificationDetailModal"/>
         <ClubThingsModal v-if="isShowingClubThingsModal"/>
+        <CaddieInformationModal v-if="isShowingCaddieInformationModal"/>
       </transition>
 
       <!-- 캐디 명 찾기 모달 -->
@@ -106,10 +107,12 @@ import CompetitionCreateModal from "./components/appSettings/competitions/Compet
 import ClubThingsModal from "@/components/admin/modal/round/all/ClubThingsModal";
 import RoundAllMemoModal from "@/components/admin/modal/round/all/RoundAllMemoModal";
 import OrderInfo from "@/components/control/dashboard/body/course/OrderInfo";
+import CaddieInformationModal from "@/components/admin/modal/caddie/CaddieInformationModal";
 
 export default {
   name: "App",
   components: {
+    CaddieInformationModal,
     OrderInfo,
     RoundAllMemoModal,
     ClubThingsModal,
@@ -184,7 +187,9 @@ export default {
         "getIsShowingCompetitionParticipantsModal",
       isShowingCompetitionCreateModal: "getIsShowingCompetitionCreateModal",
       isShowingClubThingsModal: "getIsShowingClubThingsModal",
-      isShowingClubMemoModal: "getIsShowingClubMemoModal"
+      isShowingClubMemoModal: "getIsShowingClubMemoModal",
+      isShowingCaddieInformationModal: "getIsShowingCaddieInformationModal",
+
     }),
     ...mapGetters("control/", {
       isRefresh: "getIsRefreshing",

@@ -225,5 +225,9 @@ export default {
     status
       ? commit("SHOWING_CLUB_MEMO_MODAL")
       : commit("CLEAR_CLUB_MEMO_MODAL")
+  },
+
+  dispatchIsShowingCaddieInformationModal({commit}, status) {
+    status ? commit('SHOWING_CADDIE_INFORMATION_MODAL') : commit('CLEAR_CADDIE_INFORMATION_MODAL')
   }
 };

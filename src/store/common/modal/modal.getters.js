@@ -17,7 +17,7 @@ export default {
   getIsShowingChipBoxModal: (state) => state.isShowingChipBoxModal,
   getIsShowingPlayingCaddieInfoModal: (state) =>
     state.isShowingPlayingCaddieInfoModal,
-  getIsShowingOrderInfoModal:(state) =>
+  getIsShowingOrderInfoModal: (state) =>
     state.isShowingOrderInfoModal,
   getChipBoxTitle: (state) => state.chipBoxTitle,
   getChipBoxItems: (state) => state.chipBoxItems,
@@ -64,4 +64,7 @@ export default {
 
   getIsShowingCompetitionCreateModal: (state) =>
     state.isShowingCompetitionCreateModal,
+
+  //caddie-info
+  getIsShowingCaddieInformationModal: (state) => state.isShowingCaddieInformationModal,
 };

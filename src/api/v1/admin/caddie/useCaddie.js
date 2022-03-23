@@ -11,8 +11,9 @@ const useCaddie = () => {
    */
   const getCaddieInfo = async (caddieName, lastTelNo) => {
     let uri = `${BASE_URI}/manage/caddie-info/select`;
-    if (caddieName) uri += `&caddieName=${caddieName}`;
-    if (lastTelNo) uri += `&lastTelNo=${lastTelNo}`
+    if(caddieName && lastTelNo) uri += `?caddieName=${caddieName}&lastTelNo=${lastTelNo}`
+    if (caddieName && !lastTelNo) uri += `?caddieName=${caddieName}`;
+    if (lastTelNo && !caddieName) uri += `?lastTelNo=${lastTelNo}`
 
 
     return await fetch(uri, {
@@ -31,14 +32,16 @@ const useCaddie = () => {
    * 캐디 정보 수정
    * @return {Promise<Response|void>}
    */
-  const updateCaddieInfo = async () => {
+  const updateCaddieInfo = async (caddieInfoReq) => {
     const uri = `${BASE_URI}/manage/caddie-info/update`;
 
     return await fetch(uri, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: getAccessToken(),
       },
+      body: JSON.stringify(caddieInfoReq)
     })
       .then((res) => {
         if (authenticationIsValid()) return res.json();
@@ -52,9 +55,10 @@ const useCaddie = () => {
    * @return {Promise<Response|void>}
    */
   const initCaddieInfo = async (companyCd) => {
-    const uri = `${BASE_URI}/manage/caddie-info/insert?companyCd=${companyCd}`;
+    const uri = `${BASE_URI}/manage/caddie-info/insert/${companyCd}`;
 
     return await fetch(uri, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: getAccessToken(),
