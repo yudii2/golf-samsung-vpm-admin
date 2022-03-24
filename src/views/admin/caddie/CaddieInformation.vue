@@ -1,7 +1,6 @@
 <template>
   <article id="caddie_information__container">
     <header>
-      <!-- TODO 조회 , 최신화, 수정-->
       <CaddieInformationSearch
         @handleFetchCaddieInfo="handleFetchCaddieInfo"
         @handleFetchLatest="handleFetchLatest"
@@ -10,7 +9,6 @@
     <section>
       <CaddieInformationTable
         :rows="rows"
-        @handleSave="handleSave"
       />
     </section>
     <footer>
@@ -36,7 +34,7 @@ import useCaddie from "@/api/v1/admin/caddie/useCaddie";
 import {Pager} from "@/utils/usePage";
 import {mapGetters} from "vuex";
 
-const {getCaddieInfo, initCaddieInfo, updateCaddieInfo} = useCaddie()
+const {getCaddieInfo, initCaddieInfo} = useCaddie()
 export default {
   name: "CaddieInformation",
   components: {CaddieInformationTable, CaddieInformationSearch, Pages},
@@ -49,6 +47,9 @@ export default {
 
 
     }
+  },
+  created() {
+    this.$EventBus.$on('needFetch', this.handleFetchCaddieInfo)
   },
   mounted() {
     this.handleFetchCaddieInfo();
@@ -72,13 +73,6 @@ export default {
       if (status !== 'OK') return;
 
       await this.handleFetchCaddieInfo()
-
-    },
-    async handleSave() {
-      const res = await updateCaddieInfo(this.rows)
-      const {status} = res
-
-      if (status !== 'OK') return;
 
     },
     /* methods about paging start */

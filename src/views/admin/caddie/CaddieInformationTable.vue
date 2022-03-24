@@ -18,28 +18,12 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(caddie,i) in rows" :key="i" @click="handleCaddieInformationClick">
+      <tr v-for="(caddie,i) in rows" :key="i" @click="handleCaddieInformationClick(caddie)">
         <td>{{ i + 1 }}</td>
         <td>{{ caddie.caddieUniqNo }}</td>
         <td>{{ caddie.caddieName }}</td>
-        <td>
-          <!--          <input-->
-          <!--            type="text"-->
-          <!--            class="update_input"-->
-          <!--            :value="caddie.mobileNo | getFormattedPhoneNumber"-->
-          <!--            @input="changeCaddieMobileNo($event, caddie)"-->
-          <!--          />-->
-          {{ caddie.mobileNo }}
-        </td>
-        <td>
-          {{ caddie.cartNo }}
-          <!--          <input-->
-          <!--            type="text"-->
-          <!--            class="update_input cart_no_input"-->
-          <!--            :value="caddie.cartNo"-->
-          <!--            @input="changeCaddieCartNo($event, caddie)"-->
-          <!--          />-->
-        </td>
+        <td>{{ caddie.mobileNo | getFormattedPhoneNumber}}</td>
+        <td>{{ caddie.cartNo }}</td>
       </tr>
       </tbody>
     </table>
@@ -60,26 +44,19 @@ export default {
   },
   data() {
     return {
-      caddieInfoReq: [],
       testClass: false
     }
   },
   methods: {
-    changeCaddieMobileNo(event, caddie) {
-      const foundCaddie = this.rows.map((caddie) => caddie).find((_caddie) => caddie.caddieUniqNo === _caddie.caddieUniqNo)
-      foundCaddie.mobileNo = event.target.value
-
-
-    },
-    changeCaddieCartNo(event, caddie) {
-      const foundCaddie = this.rows.map((caddie) => caddie).find((_caddie) => caddie.caddieUniqNo === _caddie.caddieUniqNo)
-      foundCaddie.cartNo = event.target.value
-    },
-    handleCaddieInformationClick() {
+    handleCaddieInformationClick(caddie) {
+      this.updateSelectedCaddieInformation(caddie)
       this.updateIsShowingClubMemoModal(true);
     },
     ...mapActions({
       updateIsShowingClubMemoModal: "dispatchIsShowingCaddieInformationModal",
+    }),
+    ...mapActions('admin/', {
+      updateSelectedCaddieInformation: "dispatchUpdateSelectedCaddieInformation",
     })
   },
   filters: {
@@ -118,23 +95,6 @@ table td {
   padding: 0.5rem;
   border: 1px solid var(--soft-green);
   font-size: 0.9rem;
-}
-
-.update_input {
-  width: 55%;
-  background-color: transparent;
-  color: var(--secondary);
-  text-align: center;
-  border: none;
-  /*border-bottom: 1px solid var(--primary);*/
-}
-
-.cart_no_input {
-  width: 20% !important;
-}
-
-.test {
-  border-bottom: 1px solid var(--primary);
 }
 
 @media (height: 1080px) {

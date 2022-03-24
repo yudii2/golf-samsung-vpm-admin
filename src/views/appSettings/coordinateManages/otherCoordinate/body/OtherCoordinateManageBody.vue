@@ -126,7 +126,7 @@ export default {
           this.currentLongitudeInput
         );
 
-        const title = "기타 촤표 변경";
+        const title = "기타 좌표 변경";
         let message;
         if (ok) {
           message = `${companyCd}-${courseCd}-${holeCd}-${positionCd} 좌표를 성공적으로 변경했습니다.`;

@@ -3,4 +3,8 @@ export default {
     state.selectedContentViewTitle = title;
     state.selectedContentViewSubtitle = subtitle;
   },
+
+  setSelectedCaddieInformation(state, caddieInfo){
+    state.selectedCaddieInformation = caddieInfo
+  }
 }

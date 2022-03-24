@@ -39,7 +39,6 @@
 import { mapGetters } from "vuex";
 import {
   APP_SETTING_AUTH_MANAGE_TAB,
-  APP_SETTING_AUTH_TITLE,
   APP_SETTING_COMPETITION_LIST,
   APP_SETTING_COMPETITION_TITLE,
   APP_SETTING_HOLE_COORDINATE_LIST,
@@ -51,7 +50,6 @@ import {
 } from "@/utils/constants";
 import CompanyLogo from "@/components/shared/CompanyLogo.vue";
 import AppSettingNavigation from "./AppSettingNavigation.vue";
-import AccountManagement from "@/components/admin/aushSetting/AccountManagement.vue";
 import CompetitionManagePage from "./competitionManages/CompetitionManagePage.vue";
 import TabletManagePage from "./tabletManages/TabletManagePage.vue";
 import HoleCoordinateManagePage from "@/views/appSettings/coordinateManages/holeCoordinate/HoleCoordinateManagePage.vue";
@@ -63,7 +61,6 @@ export default {
   components: {
     CompanyLogo,
     AppSettingNavigation,
-    AccountManagement,
     CompetitionManagePage,
     TabletManagePage,
     HoleCoordinateManagePage,

@@ -53,9 +53,6 @@ export default {
     handleFetchLatest() {
       this.$emit('handleFetchLatest')
     },
-    handleSave() {
-      this.$emit('handleSave', !this.isUpdatable)
-    },
     inputMobileNo(event) {
       const nextValue = `${Number(
         event.target.value.replace(/[^\d]/gi, "") || "0"
