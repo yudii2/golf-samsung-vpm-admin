@@ -4,6 +4,7 @@
       <CaddieInformationSearch
         @handleFetchCaddieInfo="handleFetchCaddieInfo"
         @handleFetchLatest="handleFetchLatest"
+        :isLoading="isLoading"
       />
     </header>
     <section>
@@ -32,7 +33,7 @@ import CaddieInformationTable from "@/views/admin/caddie/CaddieInformationTable"
 import Pages from "@/components/shared/Pages";
 import useCaddie from "@/api/v1/admin/caddie/useCaddie";
 import {Pager} from "@/utils/usePage";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 const {getCaddieInfo, initCaddieInfo} = useCaddie()
 export default {
@@ -45,7 +46,7 @@ export default {
       pages: [],
       pager: null,
 
-
+      isLoading: false,
     }
   },
   created() {
@@ -54,8 +55,13 @@ export default {
   mounted() {
     this.handleFetchCaddieInfo();
   },
+  beforeDestroy() {
+    this.updateSelectedCaddieInformation(null);
+    this.clearCaddieInformationModal(false)
+  },
   methods: {
     async handleFetchCaddieInfo(caddieName, caddieMobileNo) {
+      this.isLoading = true;
       const res = await getCaddieInfo(caddieName, caddieMobileNo);
 
       const {status} = res
@@ -64,8 +70,10 @@ export default {
       const {data: caddieInfoList} = res;
       this.rows = caddieInfoList;
       this.updatePager(caddieInfoList)
+      this.isLoading = false;
     },
     async handleFetchLatest() {
+      this.isLoading = true;
       const {code} = this.company
       const res = await initCaddieInfo(code);
 
@@ -73,6 +81,7 @@ export default {
       if (status !== 'OK') return;
 
       await this.handleFetchCaddieInfo()
+      this.isLoading = false;
 
     },
     /* methods about paging start */
@@ -105,6 +114,12 @@ export default {
       this.currentPage = res.currentPage;
     },
     /* methods about paging end*/
+    ...mapActions("admin/", {
+      updateSelectedCaddieInformation: "dispatchUpdateSelectedCaddieInformation",
+    }),
+    ...mapActions({
+      clearCaddieInformationModal: "dispatchIsShowingCaddieInformationModal",
+    }),
   },
   computed: {
     ...mapGetters("control/", {

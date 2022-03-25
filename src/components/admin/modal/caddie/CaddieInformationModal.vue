@@ -20,10 +20,11 @@
               <input
                 type="text"
                 class="update_input"
-                :value="getCaddieMobileNo"
-                @input="changeCaddieMobileNo"
                 maxlength="11"
                 placeholder="- 없이 입력해주세요."
+                :value="getCaddieMobileNo"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                @input="changeCaddieMobileNo"
               />
             </td>
           </tr>
@@ -35,6 +36,7 @@
                 class="update_input"
                 :value="getCaddieCartNo"
                 maxlength="10"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                 @input="changeCaddieCartNo"
               />
             </td>
@@ -65,7 +67,8 @@ export default {
       caddieInfoReq: '',
       newCaddieCartNo: '',
       newCaddieMobileNo: '',
-      errorMessage: ''
+      errorMessage: '',
+
     }
   },
   methods: {
@@ -81,16 +84,15 @@ export default {
       this.newCaddieMobileNo = e.target.value
     },
     async handleClickUpdate() {
-        if (!this.getCaddieMobileNo && !this.newCaddieMobileNo) {
-          this.toast({title: '캐디 정보 수정', message: '휴대전화는 필수값입니다.'});
-          return;
-        }
-
-        if (!this.getCaddieCartNo && !this.newCaddieCartNo) {
-          this.toast({title: '캐디 정보 수정', message: '카트번호는 필수값입니다.'});
+      if (!this.getCaddieMobileNo && !this.newCaddieMobileNo) {
+        this.toast({title: '캐디 정보 수정', message: '휴대전화는 필수값입니다.'});
         return;
-        }
+      }
 
+      if (!this.getCaddieCartNo && !this.newCaddieCartNo) {
+        this.toast({title: '캐디 정보 수정', message: '카트번호는 필수값입니다.'});
+        return;
+      }
 
       if (this.newCaddieMobileNo) {
         if (!this.validateMobileNo()) return;
@@ -102,8 +104,12 @@ export default {
         'mobileNo': this.newCaddieMobileNo ? this.newCaddieMobileNo : this.getCaddieMobileNo,
       })
 
-      const {status} = res;
-      if (status !== 'OK') return;
+      const {status, data} = res;
+      if (status !== 'OK') {
+        const errorMessage = data.errorMessage || ''
+        this.toast({title: '캐디 정보 수정', message: `${errorMessage}`});
+        return;
+      }
 
       this.handleClickClose();
       this.toastMessage();

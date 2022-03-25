@@ -23,9 +23,9 @@
         placeholder="뒷번호 4자리 입력"
         autocomplete="off"
         maxlength="4"
-        @input="inputMobileNo"
         v-model="searchedCaddieMobileNo"
         @keypress.enter="handleFetchCaddieInfo"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
       /></label>
     </div>
     <button class="button-dark ml" @click="handleFetchCaddieInfo">Search</button>
@@ -41,9 +41,14 @@ export default {
   name: "CaddieInformationSearch",
   data() {
     return {
-      isLoading: false,
       searchedCaddieName: '',
       searchedCaddieMobileNo: '',
+    }
+  },
+  props :{
+    isLoading : {
+      type :  Boolean,
+      required : true,
     }
   },
   methods: {
@@ -53,15 +58,6 @@ export default {
     handleFetchLatest() {
       this.$emit('handleFetchLatest')
     },
-    inputMobileNo(event) {
-      const nextValue = `${Number(
-        event.target.value.replace(/[^\d]/gi, "") || "0"
-      )}`;
-
-      if (nextValue === '0') {
-        this.searchedCaddieMobileNo = ''
-      }
-    }
   },
 }
 </script>
