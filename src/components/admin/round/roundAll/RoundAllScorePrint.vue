@@ -4,11 +4,22 @@
     <section>
       <div class="information">
         <div class="club_info">
-          <img
-            class="logo-image"
-            :src="require('@/assets/images/admin/round/ansungLogo.png')"
-            alt="Logo"
-          />
+          <template v-if="getCompanyCd === 'L152'">
+            <img
+              class="logo-image"
+              :src="require('@/assets/images/admin/round/ansungLogo.png')"
+              alt="Logo"
+            />
+          </template>
+
+          <template v-if="getCompanyCd === 'B11G'">
+            <img
+              class="logo-image"
+              :src="require('@/assets/images/admin/round/dongrae_logo.png')"
+              alt="Logo"
+            />
+          </template>
+
         </div>
         <div class="member-info__wrapper">
           <div class="member-info-date">
@@ -32,12 +43,24 @@
       </div>
 
       <!-- 상단 광고 -->
-      <div class="ad-top__wrapper">
-        <img
-          class="ad-top"
-          :src="require('@/assets/images/admin/round/ad_top.png')"
-        />
-      </div>
+      <template v-if="getCompanyCd === 'L152'">
+        <div class="ad-top__wrapper">
+          <img
+            class="ad-top"
+            :src="require('@/assets/images/admin/round/ad_top.png')"
+          />
+        </div>
+      </template>
+
+      <template v-if="getCompanyCd === 'B11G'">
+        <div class="ad-top__wrapper">
+          <img
+            class="ad-top"
+            :src="require('@/assets/images/admin/round/ad_top_dongrae.png')"
+          />
+        </div>
+      </template>
+
     </section>
 
     <!-- half record (하단) -->
@@ -171,12 +194,24 @@
 
     <!-- ad bottom (최하단) -->
     <section>
-      <div class="ad-bottom__wrapper">
-        <img
-          class="ad-top"
-          :src="require('@/assets/images/admin/round/ad_bottom2.png')"
-        />
-      </div>
+      <template v-if="getCompanyCd === 'L152'">
+        <div class="ad-bottom__wrapper">
+          <img
+            class="ad-top"
+            :src="require('@/assets/images/admin/round/ad_bottom2.png')"
+          />
+        </div>
+      </template>
+
+      <template v-if="getCompanyCd === 'B11G'">
+        <div class="ad-bottom__wrapper">
+          <img
+            class="ad-top"
+            :src="require('@/assets/images/admin/round/ad_botton_dongrae.png')"
+          />
+        </div>
+      </template>
+
     </section>
   </div>
 </template>
@@ -184,6 +219,7 @@
 <script>
 import TimeUtil from "@/utils/datetime/TimeUtil";
 import DateUtil from "@/utils/datetime/DateUtil";
+import {mapGetters} from "vuex";
 
 export default {
   name: "RoundAllScorePrint",
@@ -283,6 +319,12 @@ export default {
         }
       };
     },
+    getCompanyCd() {
+      return this.currentCompany?.code || ''
+    },
+    ...mapGetters("control/", {
+      currentCompany: "getCompany",
+    }),
   },
 };
 </script>
