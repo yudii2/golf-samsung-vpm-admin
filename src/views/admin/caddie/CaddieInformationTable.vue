@@ -1,5 +1,5 @@
 <template>
-  <div class="table__wrapper">
+  <div class="table__wrapper" id="table">
     <table>
       <colgroup>
         <col width="7%"/>
@@ -19,10 +19,15 @@
       </thead>
       <tbody>
       <tr v-for="(caddie,i) in rows" :key="i" @click="handleCaddieInformationClick(caddie)">
-        <td>{{ i + 1 }}</td>
+        <template v-if="currentPage <= 1">
+          <td>{{ i + 1 }}</td>
+        </template>
+        <template v-else>
+          <td>{{ getIndex(i) }}</td>
+        </template>
         <td>{{ caddie.caddieUniqNo }}</td>
         <td>{{ caddie.caddieName }}</td>
-        <td>{{ caddie.mobileNo | getFormattedPhoneNumber}}</td>
+        <td>{{ caddie.mobileNo | getFormattedPhoneNumber }}</td>
         <td>{{ caddie.cartNo }}</td>
       </tr>
       </tbody>
@@ -40,6 +45,12 @@ export default {
     rows: {
       type: Array,
       required: true
+    },
+    currentPage: {
+      type: Number
+    },
+    take: {
+      type: Number
     }
   },
   data() {
@@ -52,12 +63,20 @@ export default {
       this.updateSelectedCaddieInformation(caddie)
       this.updateIsShowingClubMemoModal(true);
     },
+    getIndex(i) {
+      return (this.currentPage * this.take) - this.take + i + 1
+    },
     ...mapActions({
       updateIsShowingClubMemoModal: "dispatchIsShowingCaddieInformationModal",
     }),
     ...mapActions('admin/', {
       updateSelectedCaddieInformation: "dispatchUpdateSelectedCaddieInformation",
     })
+  },
+  watch: {
+    currentPage() {
+      document.getElementById('table').scrollTop = 0;
+    }
   },
   filters: {
     getFormattedPhoneNumber

@@ -10,6 +10,8 @@
     <section>
       <CaddieInformationTable
         :rows="rows"
+        :currentPage="currentPage"
+        :take="take"
       />
     </section>
     <footer>
@@ -47,6 +49,7 @@ export default {
       pager: null,
 
       isLoading: false,
+      take : 15,
     }
   },
   created() {
@@ -106,7 +109,7 @@ export default {
     updatePager(list) {
       this.pager = new Pager({
         list,
-        take: 15,
+        take: this.take,
       });
       const res = this.pager.generate();
       this.rows = res.firstPageRows;

@@ -36,11 +36,11 @@
     </header>
 
     <body>
-      <RoundGroupTable
-        :roundGroups="roundGroups"
-        @clearSearchData="clearSearchData"
-        :searchParams="searchParams"
-      />
+    <RoundGroupTable
+      :roundGroups="roundGroups"
+      @clearSearchData="clearSearchData"
+      :searchParams="searchParams"
+    />
     </body>
 
     <footer class="pages">
@@ -90,6 +90,7 @@ export default {
       searchParams: {},
 
       isLoading: false,
+      take : 15
     };
   },
 
@@ -229,7 +230,7 @@ export default {
     updatePager(list) {
       this.pager = new Pager({
         list,
-        take: 15,
+        take: this.take,
       });
       const res = this.pager.generate();
       this.rows = res.firstPageRows;

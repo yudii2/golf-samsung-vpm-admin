@@ -1,5 +1,5 @@
 <template>
-  <div class="table__wrapper">
+  <div class="table__wrapper" id="table">
     <table>
       <thead>
       <tr>
@@ -32,7 +32,12 @@
       <template v-if="hasRows">
         <tbody v-for="(list,index) in rows" :key="index">
         <tr>
-          <td rowspan="2">{{ index + 1 }}</td>
+          <template v-if="currentPage <= 1 ">
+            <td rowspan="2">{{ index + 1 }}</td>
+          </template>
+          <template v-else>
+            <td rowspan="2">{{ getIndex(index) }}</td>
+          </template>
           <td rowspan="2">{{ parsedVisitDt(list) }}</td>
           <td>{{ list.memberCdName }}</td>
           <td>{{ list.bookgCourse }}</td>
@@ -139,6 +144,12 @@ export default {
     },
     allRows: {
       type: Array,
+    },
+    currentPage: {
+      type: Number
+    },
+    take: {
+      type: Number
     }
   },
   data() {
@@ -157,6 +168,9 @@ export default {
       const parsedVisitMonth = visitMonth.replaceAll('-', '.');
       return `${visitYear}.${parsedVisitMonth}`
     },
+    getIndex(index) {
+      return (this.currentPage * this.take) - this.take + index + 1
+    },
     excelDownloadFunc() {
       if (!this.rows) {
         this.toast({title: '엑셀 다운로드', message: ' 조회된 결과가 없습니다.'});
@@ -174,6 +188,11 @@ export default {
       toast: "toast",
     })
   },
+  watch: {
+    currentPage() {
+      document.getElementById('table').scrollTop = 0;
+    }
+  }
 };
 </script>
 

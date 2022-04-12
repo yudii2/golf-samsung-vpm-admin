@@ -7,7 +7,7 @@
     </header>
 
     <body>
-    <RoundAllTable :rows="rows"/>
+    <RoundAllTable :rows="rows" :currentPage="currentPage" :take="take"/>
     </body>
 
     <footer>
@@ -57,6 +57,7 @@ export default {
       startIndex: 0,
 
       isLoading: false,
+      take : 15
     };
   },
 
@@ -99,7 +100,7 @@ export default {
     updatePager(list) {
       this.pager = new Pager({
         list,
-        take: 15,
+        take: this.take,
       });
       const res = this.pager.generate();
       this.rows = res.firstPageRows;
@@ -116,7 +117,7 @@ export default {
     stayPage(list) {
       this.pager = new Pager({
         list,
-        take: 15,
+        take: this.take,
       });
       const res = this.pager.generate();
       this.rows = this.pager.getPageRowsByPage(this.currentPage);

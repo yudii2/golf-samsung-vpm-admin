@@ -1,5 +1,5 @@
 <template>
-  <div class="table_wrapper">
+  <div class="table_wrapper" id="table">
     <table>
       <colgroup>
         <col width="4%"/>
@@ -31,7 +31,12 @@
       </thead>
       <tbody v-if="hasRows">
       <tr v-for="(row, idx) in rows" :key="`${row.roundId}${idx}`">
-        <td>{{ idx + 1 }}</td>
+        <template v-if="currentPage <= 1">
+          <td>{{ idx + 1 }}</td>
+        </template>
+        <template v-else>
+          <td>{{ getIndex(idx) }}</td>
+        </template>
         <td>
           <div>
             <span>{{ parsedVisitDt(row.visitDt) }}</span>
@@ -106,6 +111,12 @@ export default {
       type: Array,
       require: true,
     },
+    currentPage: {
+      type: Number
+    },
+    take: {
+      type: Number
+    }
   },
 
   data() {
@@ -191,6 +202,10 @@ export default {
       return `${year}.${month}.${day}`;
     },
 
+    getIndex(idx) {
+      return (this.currentPage * this.take) - this.take + idx + 1
+    },
+
     toastMessage(title, message) {
       this.toast({title, message});
     },
@@ -199,6 +214,11 @@ export default {
       toastPreparing: "toastPreparing",
     }),
   },
+  watch: {
+    currentPage() {
+      document.getElementById('table').scrollTop = 0;
+    }
+  }
 };
 </script>
 

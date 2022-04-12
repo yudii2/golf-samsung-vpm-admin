@@ -83,6 +83,8 @@ export default {
 
       isLoading: true,
       allRows: [],
+
+      take : 15,
     };
   },
   created() {
@@ -168,7 +170,7 @@ export default {
     updatePager(list) {
       this.pager = new Pager({
         list,
-        take: 15,
+        take: this.take,
       });
       const res = this.pager.generate();
       this.rows = res.firstPageRows;

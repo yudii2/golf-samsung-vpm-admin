@@ -5,6 +5,8 @@
     <HoleOutTable
       :rows="rows"
       @requestHoleOutLists="requestHoleOutLists"
+      :currentPage="currentPage"
+      :take="take"
     />
     </body>
 
@@ -40,7 +42,8 @@ export default {
       currentPage: 1,
       rows: [],
       pages: [],
-      pager: null
+      pager: null,
+      take : 15
     }
   },
   methods: {
@@ -71,7 +74,7 @@ export default {
     updatePager(list) {
       this.pager = new Pager({
         list,
-        take: 15,
+        take: this.take,
       });
       const res = this.pager.generate();
       this.rows = res.firstPageRows;

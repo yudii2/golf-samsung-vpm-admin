@@ -7,7 +7,7 @@
     </header>
 
     <section>
-      <ProgressTimeLiveTable :rows="rows"/>
+      <ProgressTimeLiveTable :rows="rows" :currentPage="currentPage" :take="take"/>
     </section>
 
     <footer>
@@ -48,7 +48,8 @@ export default {
       currentPage: 1,
       pages: [],
       pager: null,
-      originalRows: []
+      originalRows: [],
+      take: 5
     };
   },
 
@@ -75,7 +76,7 @@ export default {
     updatePager(list) {
       this.pager = new Pager({
         list,
-        take: 5,
+        take: this.take,
       });
       const res = this.pager.generate();
       this.rows = res.firstPageRows;

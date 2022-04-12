@@ -111,7 +111,8 @@ export default {
     searchParams: {
       type: Object,
       require: false
-    }
+    },
+
   },
 
   data() {

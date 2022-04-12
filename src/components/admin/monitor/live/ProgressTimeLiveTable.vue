@@ -1,5 +1,5 @@
 <template>
-  <div class="table__wrapper">
+  <div class="table__wrapper" id="table">
     <table>
       <colgroup>
         <col width="*"/>
@@ -81,7 +81,12 @@
       </thead>
       <tbody v-for="(row, i) in rows" :key="i">
       <tr>
-        <td rowspan="2">{{ i + 1 }}</td>
+        <template v-if="currentPage <= 1 ">
+          <td rowspan="2">{{ i + 1 }}</td>
+        </template>
+        <template v-else>
+          <td rowspan="2">{{getIndex(i)}}</td>
+        </template>
         <td>{{ parsedBookgTime(row.startTime) }}</td>
         <td>{{ row.caddieName }}</td>
         <td>{{ row.firstCourseNm }}</td>
@@ -158,6 +163,12 @@ export default {
       type: Array,
       require: true,
     },
+    currentPage: {
+      type: Number
+    },
+    take: {
+      type: Number
+    },
   },
 
   computed: {
@@ -187,7 +198,15 @@ export default {
     getCourseParInfo(courseCd) {
       return this.getCourseParInfoByCourseCode(courseCd);
     },
+    getIndex(i){
+      return (this.currentPage * this.take) - this.take + i + 1
+    }
   },
+  watch: {
+    currentPage() {
+      document.getElementById('table').scrollTop = 0;
+    }
+  }
 };
 </script>
 
