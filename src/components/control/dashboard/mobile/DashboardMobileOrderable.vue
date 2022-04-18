@@ -53,6 +53,7 @@ import useAuth from "@/api/v1/auth/useAuth";
 import TimeUtil from "@/utils/datetime/TimeUtil";
 import SecondHalfWaitHorizontal from "./SecondHalfWaitHorizontal.vue";
 import CaddieViewTypeButton from "../modal/CaddieViewTypeButton.vue";
+import moment from "moment";
 
 const {getStoreGroup} = useRestaurant();
 const {getCaddies} = useCaddie();
@@ -75,10 +76,17 @@ export default {
       sideNavIsOpened: false,
       isDevMode: process.env.NODE_ENV === DEVELOPMENT,
       hasProblem: false,
+
+      refreshTime: moment(),
+      isFetching: false,
     };
+  },
+  created() {
+    this.$store.dispatch('intervalNowTime')
   },
   mounted() {
     this.init();
+    this.refreshOrderInfo();
   },
   destroyed() {
     this.autoRefreshModeStop();
@@ -92,6 +100,7 @@ export default {
   computed: {
     ...mapGetters({
       isShowingDashboardStoreModal: "getIsShowingDashboardStoreModal",
+      nowTime: "nowTime"
     }),
     ...mapGetters("control/", {
       isRefresh: "getIsRefreshing",
@@ -173,9 +182,21 @@ export default {
           data: {newOrderCnt},
         } = await getCaddies(this.selectedStoreType);
 
-        const data = await getOrderInfo(this.selectedStoreType)
         this.newOrderCount = newOrderCnt;
+      }
+    },
+    async refreshOrderInfo() {
+      if (this.isFetching) return;
+      try {
+        this.isFetching = true;
+        const data = await getOrderInfo(this.selectedStoreType)
         this.setOrderList(data);
+
+        this.refreshTime = moment().startOf('seconds').add(10, "seconds");
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.isFetching = false;
       }
     },
 
@@ -314,6 +335,10 @@ export default {
       } else {
         this.setIsShowingOrderMessageModal(false);
       }
+    },
+
+    nowTime() {
+      if (this.refreshTime <= this.nowTime) this.refreshOrderInfo();
     },
   },
 

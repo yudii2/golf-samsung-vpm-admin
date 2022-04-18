@@ -11,6 +11,8 @@ import common from "@/store/common/common.store.js";
 import appSettings from "@/store/appSettings/appSettings.store.js";
 // import defaultStore from "@/store/default/default.store.js";
 
+import nowTimeModule from "@/utils/nowTime";
+
 
 // others
 // import ProjectService from "@/service/ProjectService";
@@ -22,5 +24,6 @@ export default new Vuex.Store({
     admin,
     control,
     appSettings,
+    nowTimeModule,
   },
 });
