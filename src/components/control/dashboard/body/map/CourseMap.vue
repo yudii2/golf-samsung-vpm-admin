@@ -56,7 +56,7 @@ export default {
 
     /**
      * ### 캐디 위치 정보 목록.
-     * @returns {Object} bookgName : 예약자명, bookgTime : 예약시간, caddieName : 캐디명, cartNumber : 카트번호, points : 현재 캐디 좌표.
+     * @returns {Object} bookg예약자명, bookgTime : 예약시간, caddieName : 캐디명, cartNumber : 카트번호, points : 현재 캐디 좌표.
      */
     caddiePositionInfo() {
       const positions = this.filteredCaddies.map((caddie) => ({
@@ -257,20 +257,20 @@ export default {
           const groupColor = this.findGroupColorByCode(positionInfo.groupCd);
           if (groupColor) {
             //그룹이면서 첫/막팀 아이콘 설정
-            if (positionInfo.mark1 === 1) {
-              // dot.classList.remove(`team-${groupColor}`)
+            if (positionInfo.mark1 === "1") {
+              dot.classList.remove(`team-${groupColor}`)
               dot.classList.add('first-team')
-            } else if (positionInfo.mark2 === 2) {
-              // dot.classList.remove(`team-${groupColor}`)
+            } else if (positionInfo.mark2 === "2") {
+              dot.classList.remove(`team-${groupColor}`)
               dot.classList.add('last-team')
-            }else{
+            } else {
               dot.classList.add(`team-${groupColor}`);
             }
-          }else{
+          } else {
             // 첫/막팀 아이콘 설정.
-            if (positionInfo.mark1 === 1) {
+            if (positionInfo.mark1 === "1") {
               dot.classList.add("first-team");
-            } else if (positionInfo.mark1 === 2) {
+            } else if (positionInfo.mark1 === "2") {
               dot.classList.add("last-team");
             }
           }
