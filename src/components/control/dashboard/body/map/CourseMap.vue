@@ -15,12 +15,12 @@ import {
   CADDIE_PLAY_STEP_ABNORMAL,
   CADDIE_PLAY_STEP_FIRST_WAIT,
 } from "@/utils/constants";
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import useCompany from "@/api/v1/monitor/useCompany";
 import useCaddie from "@/api/v1/monitor/useCaddie";
 
-const { getCompany } = useCompany();
-const { getCaddies } = useCaddie();
+const {getCompany} = useCompany();
+const {getCaddies} = useCaddie();
 
 export default {
   name: "CourseMap",
@@ -170,7 +170,7 @@ export default {
       try {
         const {
           status,
-          data: { courseMapInfoList },
+          data: {courseMapInfoList},
         } = await getCompany();
         if (status && status === "OK") {
           const [first] = courseMapInfoList;
@@ -237,7 +237,7 @@ export default {
 
       this.caddiePositionInfo.forEach((positionInfo) => {
         if (positionInfo.points) {
-          const { latitude, longitude } = positionInfo.points;
+          const {latitude, longitude} = positionInfo.points;
           const container = this.$refs.courseMapContainer;
           const dot = document.createElement("div");
           const mapImage = this.$refs.mapImage;
@@ -256,14 +256,23 @@ export default {
           // 그룹 아이콘 설정.
           const groupColor = this.findGroupColorByCode(positionInfo.groupCd);
           if (groupColor) {
-            dot.classList.add(`team-${groupColor}`);
-          }
-
-          // 첫/막팀 아이콘 설정.
-          if (positionInfo.mark1 == 1) {
-            dot.classList.add("first-team");
-          } else if (positionInfo.mark1 == 2) {
-            dot.classList.add("last-team");
+            //그룹이면서 첫/막팀 아이콘 설정
+            if (positionInfo.mark1 === 1) {
+              // dot.classList.remove(`team-${groupColor}`)
+              dot.classList.add('first-team')
+            } else if (positionInfo.mark2 === 2) {
+              // dot.classList.remove(`team-${groupColor}`)
+              dot.classList.add('last-team')
+            }else{
+              dot.classList.add(`team-${groupColor}`);
+            }
+          }else{
+            // 첫/막팀 아이콘 설정.
+            if (positionInfo.mark1 === 1) {
+              dot.classList.add("first-team");
+            } else if (positionInfo.mark1 === 2) {
+              dot.classList.add("last-team");
+            }
           }
 
           // 선택된 단체 표시.
@@ -380,7 +389,7 @@ export default {
     /**
      * ### 화면 리사이즈 이벤트 핸들러.
      */
-    handleWindowResize(e) {
+    handleWindowResize() {
       this.drawDots();
     },
 
@@ -434,7 +443,7 @@ export default {
     /**
      * ### 캐디 목록.
      */
-    caddies(_) {
+    caddies() {
       // 캐디 점 다시 그리기.
       this.drawDots();
     },
@@ -521,5 +530,6 @@ export default {
     height: 15px;
   }
 }
+
 /* media end */
 </style>
