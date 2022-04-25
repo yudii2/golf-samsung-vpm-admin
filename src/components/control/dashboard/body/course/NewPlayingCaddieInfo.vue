@@ -5,9 +5,9 @@
       <div class="caddie-info-row">
         <span>캐디명 : </span>
         <span
-          >{{ hoveredCaddie.caddieName }}
+        >{{ hoveredCaddie.caddieName }}
           <span v-if="hoveredCaddie.cartNo"
-            >({{ hoveredCaddie.cartNo }})</span
+          >({{ hoveredCaddie.cartNo }})</span
           ></span
         >
       </div>
@@ -23,13 +23,23 @@
         <span>예약자 : </span>
         <span>{{ hoveredCaddie.bookgName }} </span>
       </div>
+
+      <template v-if="isMobileMode">
+        <div class="caddie-info-row" v-for="(player, playerIndex) in hoveredCaddie.playerNameVOList"
+             :key="player.playerId">
+          <span :style="{'opacity' : playerIndex !== 0 ? 0 : undefined}">내장객 : </span>
+          <span>{{ player.name | maskedPlayerName }} </span>
+          <span>{{ getOverPar(player.overPar) }}</span>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
 import TimeUtil from "@/utils/datetime/TimeUtil";
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "NewPlayingCaddieInfo",
 
@@ -40,12 +50,17 @@ export default {
     ...mapGetters("control/", {
       hoveredCaddie: "getHoveredCaddie",
     }),
+    isMobileMode() {
+      const isMobile =
+        this.$route.name === "DashboardMobileCommon"
+      return isMobile;
+    },
   },
 
   methods: {
     handleMouseEvent(e) {
       try {
-        const { innerWidth } = window;
+        const {innerWidth} = window;
         const moveX =
           e.x > innerWidth - 400
             ? -1 * (innerWidth / 10 / 2) - 80
@@ -59,6 +74,10 @@ export default {
         console.error(e.message);
       }
     },
+    getOverPar(overPar) {
+      const isNegative = Math.sign(overPar);
+      return isNegative === -1 || isNegative === 0 ? overPar : `+${overPar}`
+    },
 
     ...mapActions({
       updateIsShowingPlayingCaddieInfoModal:
@@ -71,7 +90,7 @@ export default {
   },
 
   watch: {
-    isShown(status) {
+    isShown(status) {``
       if (status) {
         window.addEventListener("mousemove", this.handleMouseEvent, true);
       } else {
@@ -110,9 +129,21 @@ export default {
           splittedName.push(maskedName[i]);
         }
 
-        if (splittedName.length > 1) {
+        if (splittedName.length > 1 && splittedName.length < 4) {
           splittedName[1] = "*";
         }
+
+        if (splittedName.length > 3) {
+          splittedName[1] = '*';
+          splittedName[2] = '*';
+        }
+
+        if (splittedName.length > 4) {
+          splittedName[1] = '*';
+          splittedName[2] = '*';
+          splittedName[3] = '*';
+        }
+
         return splittedName.join("");
       }
       return name;
@@ -147,7 +178,7 @@ export default {
     padding: 7px;
   }
 
-  .caddie-info-row:nth-child(2) {
+  .caddie-info-row {
     margin: 3px 0;
   }
 
@@ -161,7 +192,7 @@ export default {
     padding: 10px;
   }
 
-  .caddie-info-row:nth-child(2) {
+  .caddie-info-row {
     margin: 5px 0;
   }
 
@@ -169,5 +200,6 @@ export default {
     font-size: 1rem;
   }
 }
+
 /* media end */
 </style>
