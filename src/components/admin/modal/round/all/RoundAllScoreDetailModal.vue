@@ -295,7 +295,7 @@ export default {
 
   data() {
     return {
-      viewTypeIsAll: true,
+      viewTypeIsAll: false,
       isUpdatable: false,
 
       roundPlayerScoreStrokeList: [],

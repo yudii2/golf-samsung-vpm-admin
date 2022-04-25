@@ -1,6 +1,6 @@
 {
   "name": "vpmadmin",
-  "version": "1.52.1",
+  "version": "1.53.0",
   "private": true,
   "scripts": {
     "build:development": "vue-cli-service build --mode development",

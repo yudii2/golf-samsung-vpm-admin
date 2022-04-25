@@ -1,7 +1,3 @@
-import useCopy from "@/composables/useCopy";
-
-const { objectCopier } = useCopy();
-
 export default {
   UPDATE_COMPANY(state, companyInfo) {
     state.company.code = companyInfo.companyCd;

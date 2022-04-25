@@ -45,15 +45,10 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { COMPANY_CODE_DEFAULT_VALUE } from "@/utils/constants";
-import SimpleButton from "@/components/shared/SimpleButton.vue";
 import { getOtherCoordinates } from "@/api/v1/appSettings/useCoordinate";
 
 export default {
   name: "OtherCoordinateManageHeader",
-
-  components: {
-    SimpleButton,
-  },
 
   props: ["value"],
 
@@ -92,6 +87,7 @@ export default {
      */
     initData() {
       if (this.currentCompanyCode !== COMPANY_CODE_DEFAULT_VALUE) {
+        console.log('타냐??')
         this.companyCode = this.currentCompanyCode;
         this.companyCodePlaceholder = this.currentCompanyCode;
 

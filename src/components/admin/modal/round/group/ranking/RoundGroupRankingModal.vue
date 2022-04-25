@@ -233,7 +233,7 @@
                     )
                   }}</span>
               </td>
-              <td style="border: 1px solid red">
+              <td>
                 <input
                   v-if="!isCheckedStrokeHandy && isCheckedNewPerio && isUpdatable"
                   type="number"

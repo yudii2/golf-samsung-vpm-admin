@@ -123,16 +123,21 @@ export default {
         // }
       }
 
+      // if (foundCompetitionSetting.checkYn === 'N') {
+      //   if (this.countCheckBox() > this.maxCheckBoxCount) {
+      //     this.maxCountNoticeMessage();
+      //   } else {
+      //     foundCompetitionSetting.checkYn = 'Y'
+      //   }
+      // } else {
+      //   foundCompetitionSetting.checkYn = 'N'
+      // }
+
       if (foundCompetitionSetting.checkYn === 'N') {
-        if (this.countCheckBox() > this.maxCheckBoxCount) {
-          this.maxCountNoticeMessage();
-        } else {
-          foundCompetitionSetting.checkYn = 'Y'
-        }
+        foundCompetitionSetting.checkYn = 'Y'
       } else {
         foundCompetitionSetting.checkYn = 'N'
       }
-
 
     },
     updateCompetitionName(e, competition) {

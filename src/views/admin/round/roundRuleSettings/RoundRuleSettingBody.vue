@@ -178,7 +178,8 @@ export default {
           [value] = Object.values(hole);
           if (value === "Y") {
             this.applyRoundCourseSettingByHoleKey(hole, foundNewPerioCourse);
-          } else {
+          }
+          else {
             // Get setting columns count.
             const setColumnsCount = this.getSelectedCount(foundNewPerioCourse);
             const isValid = setColumnsCount < this.MAX_SELECTED_COUNT;
