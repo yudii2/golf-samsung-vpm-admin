@@ -205,7 +205,7 @@
                 }}
               </td>
               <td>
-               <input
+                <input
                   v-if="isCheckedStrokeHandy && !isCheckedNewPerio && isUpdatable"
                   type="number"
                   :value="
@@ -477,7 +477,7 @@
                       getOriginalNearValue(
                         getLongOrNearPlayerInfo(
                           i - 1,
-                          selectedRoundGroupRank.roundGroupPlayerLongRankVOList
+                          selectedRoundGroupRank.roundGroupPlayerNearRankVOList
                         )
                       )
                     "
@@ -1325,6 +1325,7 @@ export default {
         playerId: value.playerId,
         value: this.updatedNearScore,
       };
+
       this.roundGroupPlayerNearRankVOList.push(updatedNearValue);
 
       this.setPlayerGroupScoreRankReq();
