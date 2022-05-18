@@ -21,6 +21,7 @@
         <CertificationDetailModal v-if="isShowingCertificationDetailModal"/>
         <ClubThingsModal v-if="isShowingClubThingsModal"/>
         <CaddieInformationModal v-if="isShowingCaddieInformationModal"/>
+        <RoundAllEtiquetteModal v-if="isShowingEtiquetteModal"/>
       </transition>
 
       <!-- 캐디 명 찾기 모달 -->
@@ -108,10 +109,12 @@ import ClubThingsModal from "@/components/admin/modal/round/all/ClubThingsModal"
 import RoundAllMemoModal from "@/components/admin/modal/round/all/RoundAllMemoModal";
 import OrderInfo from "@/components/control/dashboard/body/course/OrderInfo";
 import CaddieInformationModal from "@/components/admin/modal/caddie/CaddieInformationModal";
+import RoundAllEtiquetteModal from "@/components/admin/modal/round/all/RoundAllEtiquetteModal";
 
 export default {
   name: "App",
   components: {
+    RoundAllEtiquetteModal,
     CaddieInformationModal,
     OrderInfo,
     RoundAllMemoModal,
@@ -189,6 +192,7 @@ export default {
       isShowingClubThingsModal: "getIsShowingClubThingsModal",
       isShowingClubMemoModal: "getIsShowingClubMemoModal",
       isShowingCaddieInformationModal: "getIsShowingCaddieInformationModal",
+      isShowingEtiquetteModal: "getIsShowingEtiquetteModal",
 
     }),
     ...mapGetters("control/", {

@@ -29,6 +29,7 @@
         <th>사진/동영상</th>
         <th>클럽체크</th>
         <th>클럽항목</th>
+        <th>안전운행서약</th>
       </tr>
       </thead>
 
@@ -123,6 +124,16 @@
             @click="handleClubCheckThings(row)"
           >
             항목
+          </button>
+          <span v-else> </span>
+        </td>
+        <td>
+          <button
+            v-if="!!row.roundPlayerPicEtiquetteList.length"
+            class="button-dark"
+            @click="handleEtiquetteList(row)"
+          >
+            안전서약
           </button>
           <span v-else> </span>
         </td>
@@ -277,7 +288,25 @@ export default {
       this.updateIsShowingClubThingsModal(true);
       this.updateClubThings(roundPlayerClubMemoVOList);
     },
+
     /**
+     * 안전수칙 모달창
+     */
+    handleEtiquetteList(row) {
+      const {roundPlayerPicEtiquetteList, roundPlayerList} = row;
+
+
+      //FIXME 데이터 확인되면
+      roundPlayerPicEtiquetteList.forEach((player) => {
+        const foundPlayerId = roundPlayerList.find(({playerId}) => playerId === player.playerId);
+        player.name = foundPlayerId?.name;
+      })
+
+      this.updateIsShowingEtiquetteModal(true);
+      this.updateEtiquettePictures(roundPlayerPicEtiquetteList)
+
+    },
+    /**ㅅ
      * visitDt 포맷팅.
      * input : 20210914
      * output : 2021.09.14
@@ -300,12 +329,14 @@ export default {
         "dispatchIsShowingRoundAllScoreDetailModal",
       updateIsShowingPicturesModal: "updateIsShowingPicturesModal",
       updateIsShowingClubThingsModal: "dispatchIsShowingClubThingsModal",
+      updateIsShowingEtiquetteModal: "dispatchIsShowingEtiquetteModal",
     }),
     ...mapActions("admin/", {
       updateSelectedRound: "dispatchSelectedRound",
       updateClubCheckImages: "dispatchUpdateClubCheckImages",
       updatePictures: "dispatchUpdatePictures",
       updateClubThings: "dispatchUpdateSelectedClubThings",
+      updateEtiquettePictures: "dispatchSetEtiquettePictures",
     }),
   },
 

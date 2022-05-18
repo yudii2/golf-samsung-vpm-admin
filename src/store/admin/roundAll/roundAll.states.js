@@ -25,4 +25,7 @@ export default {
   // roundAll rows
   roundAllRows: [],
 
+  //roundAll etiquette
+  etiquettePictures: [],
+
 };

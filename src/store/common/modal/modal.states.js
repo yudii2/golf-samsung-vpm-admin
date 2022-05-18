@@ -38,6 +38,8 @@ export default {
   // all-roundAll scoreCard sms
   isShowingSMSModal: false,
 
+  // all-roundAll etiquette
+  isShowingEtiquetteModal : false,
 
   // caddie
   isShowingCaddieSettingModal: false,
@@ -60,6 +62,8 @@ export default {
 
   //caddie-info
   isShowingCaddieInformationModal:false,
+
+
 
 
 };

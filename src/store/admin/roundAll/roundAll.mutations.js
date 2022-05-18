@@ -66,6 +66,10 @@ export default {
     state.roundAllRows = rows;
   },
 
+  //roundAll etiquetteRows
+  setEtiquettePictures(state, rows){
+    state.etiquettePictures = rows;
+  }
 
 
 

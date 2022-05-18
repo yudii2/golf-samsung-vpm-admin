@@ -65,5 +65,10 @@ export default {
     commit("setRoundAllRows", rows);
   },
 
+  //roundAll etiquette pictures
+  dispatchSetEtiquettePictures({commit}, rows){
+    commit('setEtiquettePictures', rows)
+  }
+
 
 };

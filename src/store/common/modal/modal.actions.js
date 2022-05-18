@@ -229,5 +229,10 @@ export default {
 
   dispatchIsShowingCaddieInformationModal({commit}, status) {
     status ? commit('SHOWING_CADDIE_INFORMATION_MODAL') : commit('CLEAR_CADDIE_INFORMATION_MODAL')
+  },
+
+  dispatchIsShowingEtiquetteModal({commit}, status) {
+    commit("updateIsShowingEtiquetteModal", status)
   }
 };
+

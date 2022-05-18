@@ -20,6 +20,9 @@ export default {
   updateIsShowingRoundGroupRankingModal(state, status) {
     state.isShowingRoundGroupRankingModal = status;
   },
+  updateIsShowingEtiquetteModal(state, status){
+    state.isShowingEtiquetteModal = status;
+  },
 
   // new
   UPDATE_SHOW_PLAYTIME_MODAL_ON(state) {

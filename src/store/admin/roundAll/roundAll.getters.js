@@ -25,4 +25,7 @@ export default {
   //roundAll rows
   getRoundAllRows: (state) => state.roundAllRows,
 
+  //roundAll etiquette pictures
+  getEtiquettePictures : (state) => state.etiquettePictures,
+
 };

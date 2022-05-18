@@ -41,6 +41,8 @@ export default {
   // all-roundAll pictures
   getIsShowingPicturesModal: (state) => state.isShowingPicturesModal,
 
+  getIsShowingEtiquetteModal : (state) => state.isShowingEtiquetteModal,
+
   // caddie
   getIsShowingCaddieSettingModal: (state) => state.isShowingCaddieSettingModal,
 
