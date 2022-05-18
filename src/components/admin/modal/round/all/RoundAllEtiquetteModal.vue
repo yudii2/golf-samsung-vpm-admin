@@ -98,6 +98,7 @@ export default {
 
 #etiquette-modal__container #etiquette_table table td > img{
   cursor: pointer;
+  width: 50%
 }
 
 </style>

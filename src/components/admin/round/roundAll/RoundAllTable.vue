@@ -296,10 +296,9 @@ export default {
       const {roundPlayerPicEtiquetteList, roundPlayerList} = row;
 
 
-      //FIXME 데이터 확인되면
       roundPlayerPicEtiquetteList.forEach((player) => {
-        const foundPlayerId = roundPlayerList.find(({playerId}) => playerId === player.playerId);
-        player.name = foundPlayerId?.name;
+        const {name} = roundPlayerList.find(({playerId}) => playerId === player.playerId);
+        player.name = name || "";
       })
 
       this.updateIsShowingEtiquetteModal(true);
