@@ -108,6 +108,14 @@
           <span>캐디 정보</span>
         </li>
       </ul>
+      <ul>
+        <li
+          @click="updateContentView({ title: 'caddie', subtitle: 2 })"
+          :class="{ clicked: isMe('caddie', 2) }"
+        >
+          <span>캐디 평가</span>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>

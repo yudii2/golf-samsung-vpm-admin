@@ -6,29 +6,39 @@
         <col width="7%"/>
         <col width="7%"/>
         <col width="10%"/>
+        <col width="10%"/>
         <col width="7%"/>
+        <col width="7%"/>
+        <col width="*"/>
       </colgroup>
       <thead>
       <tr>
         <th>No</th>
-        <th>캐디번호</th>
-        <th>캐디이름</th>
-        <th>핸드폰번호</th>
-        <th>카트번호</th>
+        <th>골프장</th>
+        <th>방문일</th>
+        <th>출발 코스</th>
+        <th>출발 시간</th>
+        <th>캐디명</th>
+        <th>유형</th>
+        <th>VALUE_REMARK</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(caddie,i) in rows" :key="i" @click="handleCaddieInformationClick(caddie)">
-        <template v-if="currentPage <= 1">
-          <td>{{ i + 1 }}</td>
-        </template>
-        <template v-else>
-          <td>{{ getIndex(i) }}</td>
-        </template>
-        <td>{{ caddie.caddieUniqNo }}</td>
-        <td>{{ caddie.caddieName }}</td>
-        <td>{{ caddie.mobileNo | getFormattedPhoneNumber }}</td>
-        <td>{{ caddie.cartNo }}</td>
+      <tr>
+<!--        <template v-if="currentPage <= 1">-->
+<!--          <td>{{ i + 1 }}</td>-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--          <td>{{ getIndex(i) }}</td>-->
+<!--        </template>|-->
+        <td>1</td>
+        <td>안성베네스트</td>
+        <td>20211001</td>
+        <td>출발 코스</td>
+        <td>출발 시간</td>
+        <td>캐디명</td>
+        <td>유형</td>
+        <td>#친절하고 밝아요</td>
       </tr>
       </tbody>
     </table>
@@ -36,11 +46,8 @@
 </template>
 
 <script>
-import {getFormattedPhoneNumber} from "@/utils/string";
-import {mapActions} from "vuex";
-
 export default {
-  name: "CaddieInformationTable",
+  name: "CaddieEvaluationTable",
   props: {
     rows: {
       type: Array,
@@ -53,28 +60,10 @@ export default {
       type: Number
     }
   },
-  methods: {
-    handleCaddieInformationClick(caddie) {
-      this.updateSelectedCaddieInformation(caddie)
-      this.updateIsShowingClubMemoModal(true);
-    },
+  methods :{
     getIndex(i) {
       return (this.currentPage * this.take) - this.take + i + 1
     },
-    ...mapActions({
-      updateIsShowingClubMemoModal: "dispatchIsShowingCaddieInformationModal",
-    }),
-    ...mapActions('admin/', {
-      updateSelectedCaddieInformation: "dispatchUpdateSelectedCaddieInformation",
-    })
-  },
-  watch: {
-    currentPage() {
-      document.getElementById('table').scrollTop = 0;
-    }
-  },
-  filters: {
-    getFormattedPhoneNumber
   }
 }
 </script>
@@ -119,6 +108,4 @@ table td {
     margin-top: 15px;
   }
 }
-
-
 </style>
