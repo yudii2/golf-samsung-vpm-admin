@@ -70,11 +70,31 @@ const useCaddie = () => {
       .catch((err) => console.error(err.message));
   }
 
+  /**
+   * 캐디 라운딩 평가 조회
+   * @param companyCd
+   * @returns {Promise<Response|void>}
+   */
+  const getCaddieEvaluation = async (companyCd,startDt, endDt) => {
+    const uri = `${BASE_URI}/round/info/roundEvaluation?companyCd=${companyCd}&startDt=${startDt}&endDt=${endDt}`
+
+    return await fetch(uri, {
+      headers : {
+        "Content-Type": "application/json",
+        Authorization: getAccessToken(),
+      }
+    }).then((res) => {
+      if(authenticationIsValid()) return res.json();
+    }).catch((err) => console.error(err.message))
+
+  }
+
 
   return {
     getCaddieInfo,
     updateCaddieInfo,
-    initCaddieInfo
+    initCaddieInfo,
+    getCaddieEvaluation
   }
 }
 
