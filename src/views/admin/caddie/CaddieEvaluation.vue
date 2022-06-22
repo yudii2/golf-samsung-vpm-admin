@@ -5,11 +5,17 @@
         :isLoading="isLoading"
         :visitFromDt="visitFromDt"
         :visitToDt="visitToDt"
-      @onSearchClick="handleFetchCaddieEvaluation"
+        @onSearchClick="handleFetchCaddieEvaluation"
+        @changVisitFromDt="handleChangeVisitFromDt"
+        @changVisitToDt="handleChangeVisitToDt"
       />
     </header>
     <section>
-      <CaddieEvaluationTable/>
+      <CaddieEvaluationTable
+        :rows="rows"
+        :currentPage="currentPage"
+        :take="take"
+      />
     </section>
     <footer>
       <Pages
@@ -34,11 +40,13 @@ import useCaddie from "@/api/v1/admin/caddie/useCaddie";
 import {Pager} from "@/utils/usePage";
 import {mapGetters} from "vuex";
 import DateUtil from "@/utils/datetime/DateUtil";
+
 const {getCaddieEvaluation} = useCaddie();
 
 const now = new Date();
 const {year, month, day} = DateUtil.dateDivider(now);
 const visitDt = year + month + day;
+
 export default {
   name: "CaddieEvaluation",
   components: {Pages, CaddieEvaluationTable, CaddieEvaluationSearch},
@@ -53,7 +61,7 @@ export default {
       isLoading: false,
       visitFromDt: "",
       visitToDt: "",
-      take : 15,
+      take: 15,
     }
   },
   created() {
@@ -61,21 +69,27 @@ export default {
     this.visitToDt = visitDt
   },
   mounted() {
-    this.handleFetchCaddieEvaluation();
+    this.handleFetchCaddieEvaluation(this.visitFromDt, this.visitToDt);
   },
-  methods : {
-    async handleFetchCaddieEvaluation(fromDt , toDt){
-     this.isLoading = true;
-     const {code} = this.company
-     const res = await getCaddieEvaluation(code , fromDt , toDt);
+  methods: {
+    async handleFetchCaddieEvaluation(fromDt, toDt) {
+      this.isLoading = true;
+      const {code} = this.company
+      const res = await getCaddieEvaluation(code, fromDt, toDt);
 
-     const {status} = res;
-     if(status !=='OK')return;
+      const {status} = res;
+      if (status !== 'OK') return;
 
-     const {data : roundEvaluationList} = res;
-     this.rows = roundEvaluationList;
-     this.updatePager(roundEvaluationList);
-     this.isLoading = false;
+      const {data: {roundEvaluationList}} = res;
+      this.rows = roundEvaluationList;
+      this.updatePager(this.rows);
+      this.isLoading = false;
+    },
+    handleChangeVisitFromDt(changedVisitFromDt){
+      this.visitFromDt = changedVisitFromDt
+    },
+    handleChangeVisitToDt(changedVisitToDt) {
+      this.visitToDt = changedVisitToDt
     },
     /* methods about paging start */
     updatePage(page) {

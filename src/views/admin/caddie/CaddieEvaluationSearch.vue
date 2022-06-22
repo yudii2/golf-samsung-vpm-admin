@@ -19,16 +19,17 @@
       required
     />
     <button class="button-dark ml" @click="onSearchClick">Search</button>
-    <div class="loading" >
+    <div class="loading" v-if="isLoading">
       <div></div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "CaddieEvaluationSearch",
-  props :{
+  props: {
     visitFromDt: {
       type: String,
       required: false
@@ -42,14 +43,14 @@ export default {
       required: true
     },
   },
-  methods :{
-    onSearchClick(){
+  methods: {
+    onSearchClick() {
       const visitFromDt = this.visitFromDt.split('-').join("");
       const visitToDt = this.visitToDt.split('-').join("");
       this.$emit('onSearchClick', visitFromDt, visitToDt)
     }
   },
-  computed : {
+  computed: {
     parsedVisitFromDt: {
       get() {
         const year = this.visitFromDt.substring(0, 4);
@@ -75,7 +76,7 @@ export default {
         const changedVisitToDt = newValue.replaceAll('-', '')
         this.$emit('changVisitToDt', changedVisitToDt)
       }
-    }
+    },
   }
 }
 </script>

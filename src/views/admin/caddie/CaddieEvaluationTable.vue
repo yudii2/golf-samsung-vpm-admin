@@ -3,7 +3,7 @@
     <table>
       <colgroup>
         <col width="7%"/>
-        <col width="7%"/>
+        <col width="13%"/>
         <col width="7%"/>
         <col width="10%"/>
         <col width="10%"/>
@@ -23,35 +23,45 @@
         <th>VALUE_REMARK</th>
       </tr>
       </thead>
-      <tbody>
-      <tr>
-<!--        <template v-if="currentPage <= 1">-->
-<!--          <td>{{ i + 1 }}</td>-->
-<!--        </template>-->
-<!--        <template v-else>-->
-<!--          <td>{{ getIndex(i) }}</td>-->
-<!--        </template>|-->
-        <td>1</td>
-        <td>안성베네스트</td>
-        <td>20211001</td>
-        <td>출발 코스</td>
-        <td>출발 시간</td>
-        <td>캐디명</td>
-        <td>유형</td>
-        <td>#친절하고 밝아요</td>
-      </tr>
-      </tbody>
+      <template v-if="hasRows">
+        <tbody v-for="(row, index) in rows" :key="`caddie-evaluation-${index}`">
+        <tr>
+          <template v-if="currentPage <= 1">
+            <td>{{ index + 1 }}</td>
+          </template>
+          <template v-else>
+            <td>{{ getIndex(index) }}</td>
+          </template>
+          <td>{{company.name}}</td>
+          <td>{{ formatRoundDt(row.roundDt) }}</td>
+          <td>{{ row.startCourseNm }}</td>
+          <td>{{ parsedBookgTime(row.startTime) }}</td>
+          <td>{{ row.caddieName }}</td>
+          <td>{{ row.valueName }}</td>
+          <td>{{ row.valueRemark }}</td>
+        </tr>
+        </tbody>
+      </template>
+      <template v-else>
+        <tbody>
+        <tr>
+          <td colspan="8">조회된 결과가 없습니다.</td>
+        </tr>
+        </tbody>
+      </template>
+
     </table>
   </div>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+import TimeUtil from "@/utils/datetime/TimeUtil";
 export default {
   name: "CaddieEvaluationTable",
   props: {
     rows: {
       type: Array,
-      required: true
     },
     currentPage: {
       type: Number
@@ -60,11 +70,37 @@ export default {
       type: Number
     }
   },
-  methods :{
+  methods: {
     getIndex(i) {
       return (this.currentPage * this.take) - this.take + i + 1
     },
-  }
+    formatRoundDt(roundDt){
+      const year = roundDt.substring(0,4);
+      const month = roundDt.substring(4,6);
+      const day = roundDt.substring(6,8);
+      return `${year}.${month}.${day}`
+    }
+  },
+  computed: {
+    hasRows() {
+      return !!this.rows?.length
+    },
+    /**
+     * bookgTime 포맷팅
+     * input : 0600
+     * output : 06:00
+     * @returns {function(*=): string}
+     */
+    parsedBookgTime() {
+      return (bookgTime) => {
+        return TimeUtil.timeFormatWithChar(bookgTime);
+      };
+    },
+
+    ...mapGetters("control/", {
+      company: "getCompany",
+    }),
+  },
 }
 </script>
 
