@@ -121,12 +121,16 @@ export default {
       this.currentPage = res.currentPage;
     },
   },
-
   /* methods about paging end*/
   computed: {
     ...mapGetters("control/", {
       company: "getCompany",
     }),
+  },
+  watch: {
+    currentPage(newPage) {
+      this.rows = this.pager.getPageRowsByPage(newPage);
+    },
   },
 
 }
