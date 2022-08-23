@@ -233,6 +233,7 @@ export default {
         this.setIsCheckedFirstSecond(data.competitionSettingList?.find((gubun) => gubun.gubun === '24')?.checkYn)
         this.setIsCheckedSecondClass(data.competitionSettingList?.find((gubun) => gubun.gubun === '25')?.checkYn)
         this.setIsCheckedThirdClass(data.competitionSettingList?.find((gubun) => gubun.gubun === '26')?.checkYn)
+        this.setIsCheckedHandyMode(data.competitionSettingList?.find((gubun) => gubun.gubun === '00')?.checkYn)
       }
     },
 
@@ -280,6 +281,7 @@ export default {
       setIsCheckedHonest: 'dispatchSetIsCheckedHonest',
       setSelectedRoundGroupName: 'dispatchSetSelectedRoundGroupName',
       setSelectedRoundGroupVisitDt: 'dispatchSetSelectedRoundGroupVisitDt',
+      setIsCheckedHandyMode: 'dispatchSetIsCheckedHandyMode'
     }),
   },
 
