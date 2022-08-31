@@ -59,7 +59,7 @@
           {{
             certificateNmByCd(selectedCertification.certificateCd)
           }}
-          기념을 축하드리며 이 증서를 드립니다.
+          기록을 축하드리며 이 증서를 드립니다.
         </p>
       </div>
     </div>

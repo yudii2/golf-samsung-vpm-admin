@@ -77,7 +77,7 @@
               {{
                 certificateNmByCd(getSelectedCertification.certificateCd)
               }}
-              기념을 축하드리며 이 증서를 드립니다.
+              기록을 축하드리며 이 증서를 드립니다.
             </p>
           </div>
         </div>
@@ -137,7 +137,6 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import CloseButton from "@/components/shared/CloseButton";
-import useCertificate from "@/api/v1/admin/certificate/useCertificate";
 import {print} from "@/composables/usePrinter";
 import CertificationPrint from "@/components/admin/round/certification/CertificationPrint";
 
