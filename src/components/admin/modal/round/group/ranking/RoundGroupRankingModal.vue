@@ -1426,39 +1426,6 @@ export default {
   grid-gap: 16px;
 }
 
-#round_group_ranking_modal__container article {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  padding-top: 40px;
-}
-
-#round_group_ranking_modal__container article > section {
-  height: 100%;
-}
-
-#round_group_ranking_modal__container article section:first-child {
-  grid-column: 1/4;
-}
-
-#round_group_ranking_modal__container article section:last-child {
-  grid-column: 1/13;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
-}
-
-#round_group_ranking_modal__container article section:last-child > div {
-  overflow-y: scroll;
-  height: 700px;
-}
-
-#round_group_ranking_modal__container article section:last-child footer {
-  grid-row: 18/21;
-  display: flex;
-  justify-content: center;
-}
-
 /* content positions end */
 
 /* content right start */

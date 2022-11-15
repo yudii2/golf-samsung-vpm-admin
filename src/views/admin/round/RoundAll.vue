@@ -6,11 +6,10 @@
       />
     </header>
 
-    <body>
-    <RoundAllTable :rows="rows" :currentPage="currentPage" :take="take"/>
-    </body>
-
-    <footer>
+    <section>
+      <RoundAllTable :rows="rows" :currentPage="currentPage" :take="take"/>
+    </section>
+    <footer class="pages__container mt">
       <Pages
         v-if="pager"
         :currentPage="currentPage"
@@ -57,7 +56,7 @@ export default {
       startIndex: 0,
 
       isLoading: false,
-      take : 15
+      take: 15
     };
   },
 
@@ -208,8 +207,7 @@ export default {
   color: var(--secondary);
 }
 
-#round_all__container body {
-  height: 700px;
+#round_all__container section {
   text-align: center;
 }
 
@@ -217,13 +215,4 @@ export default {
   height: 35px;
 }
 
-/* footer start */
-#round_all__container footer {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* footer end */
 </style>

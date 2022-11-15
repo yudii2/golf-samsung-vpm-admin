@@ -1,16 +1,16 @@
 <template>
   <article id="round_hole_out__container">
 
-    <body class="mt">
-    <HoleOutTable
-      :rows="rows"
-      @requestHoleOutLists="requestHoleOutLists"
-      :currentPage="currentPage"
-      :take="take"
-    />
-    </body>
+    <section class="mt">
+      <HoleOutTable
+        :rows="rows"
+        @requestHoleOutLists="requestHoleOutLists"
+        :currentPage="currentPage"
+        :take="take"
+      />
+    </section>
 
-    <footer>
+    <footer class="pages__container mt">
       <Pages
         v-if="pager"
         :currentPage="currentPage"
@@ -43,7 +43,7 @@ export default {
       rows: [],
       pages: [],
       pager: null,
-      take : 15
+      take: 15
     }
   },
   methods: {
@@ -104,10 +104,6 @@ export default {
 
 #round_hole_out__container * {
   color: var(--secondary);
-}
-
-#round_hole_out__container body {
-  height: 700px;
 }
 
 #round_hole_out__container footer {

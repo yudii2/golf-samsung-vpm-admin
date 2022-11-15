@@ -14,7 +14,7 @@
         :take="take"
       />
     </section>
-    <footer>
+    <footer class="pages__container mt">
       <Pages
         v-if="pager"
         :currentPage="currentPage"
@@ -144,12 +144,5 @@ export default {
   display: flex;
   flex-direction: column;
   grid-gap: 16px;
-}
-
-footer {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
 }
 </style>

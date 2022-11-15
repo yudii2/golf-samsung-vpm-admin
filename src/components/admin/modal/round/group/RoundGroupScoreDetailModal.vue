@@ -300,8 +300,9 @@ export default {
 }
 
 #round_group_score_detail_modal__container article section:last-child > div {
+  height: 100%;
+  max-height: calc(100vh - 50px - 30px - 35px - 16px - 100px);
   overflow-y: scroll;
-  height: 660px;
   margin-top: 15px;
 
 }

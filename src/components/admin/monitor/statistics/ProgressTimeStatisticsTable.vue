@@ -96,7 +96,8 @@ table {
 }
 
 .table__wrapper {
-  height: 725px;
+  height: 100%;
+  max-height: calc(100vh - 50px - 30px - 35px - 16px - 100px);
   overflow-y: scroll;
   text-align: center;
 }

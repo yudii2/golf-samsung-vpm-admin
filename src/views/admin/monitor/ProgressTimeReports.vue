@@ -13,7 +13,7 @@
       <ProgressTimeReportsTable ref="reportTable" :rows="rows" :allRows="allRows" :currentPage="currentPage" :take="take"/>
     </section>
 
-    <footer>
+    <footer class="pages__container mt">
       <Pages
         v-if="pager"
         :currentPage="currentPage"
@@ -187,10 +187,4 @@ export default {
   grid-gap: 16px;
 }
 
-footer {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
 </style>

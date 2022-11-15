@@ -115,7 +115,11 @@ export default {
 #admin__container aside {
   grid-column: 1/3;
   border-right: 1px solid var(--primary);
+  height: 100%;
+  max-height: calc(100vh - 35px - 30px - 100px);
+  overflow-y: scroll;
 }
+
 /* side-bar end */
 
 /* content start */

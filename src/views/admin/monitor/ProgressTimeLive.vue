@@ -10,7 +10,7 @@
       <ProgressTimeLiveTable :rows="rows" :currentPage="currentPage" :take="take"/>
     </section>
 
-    <footer>
+    <footer class="pages__container mt">
       <Pages
         v-if="pager"
         :currentPage="currentPage"
@@ -127,13 +127,4 @@ export default {
   height: 100%;
 }
 
-/* footer start */
-footer {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* footer end */
 </style>

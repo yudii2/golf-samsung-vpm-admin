@@ -349,11 +349,11 @@ export default {
 
 <style scoped>
 /* contents start */
-.table_wrapper {
-  height: 725px;
+.table_wrapper{
+  height: 100%;
+  max-height: calc(100vh - 50px - 30px - 35px - 16px - 100px);
   overflow-y: scroll;
 }
-
 table {
   width: 120%;
   border: 1px solid var(--primary);

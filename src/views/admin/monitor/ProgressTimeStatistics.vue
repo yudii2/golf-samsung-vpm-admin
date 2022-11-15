@@ -29,7 +29,7 @@
     <ProgressTimeStatisticsTable :rows="rows"/>
     </body>
 
-    <footer>
+    <footer class="pages__container mt">
       <Pages
         v-if="pager"
         :currentPage="currentPage"
@@ -209,13 +209,6 @@ export default {
 }
 
 /* footer start */
-footer {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .loading {
   width: 15px;
   height: 15px;

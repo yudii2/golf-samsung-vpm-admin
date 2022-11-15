@@ -22,7 +22,7 @@
       <CertificationTable :rows="rows" />
     </body>
 
-    <footer>
+    <footer class="pages__container mt">
       <Pages
         v-if="pager"
         :currentPage="currentPage"
@@ -227,12 +227,7 @@ export default {
 #search__lookup_date__input {
   width: 180px;
 }
-#certificate_issue__container footer {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
+
 .loading {
   width: 15px;
   height: 15px;

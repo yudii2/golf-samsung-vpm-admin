@@ -35,15 +35,15 @@
       </div>
     </header>
 
-    <body>
-    <RoundGroupTable
-      :roundGroups="roundGroups"
-      @clearSearchData="clearSearchData"
-      :searchParams="searchParams"
-    />
-    </body>
+    <section>
+      <RoundGroupTable
+        :roundGroups="roundGroups"
+        @clearSearchData="clearSearchData"
+        :searchParams="searchParams"
+      />
+    </section>
 
-    <footer class="pages">
+    <footer class="pages__container mt">
       <Pages
         v-if="pager"
         :currentPage="currentPage"
@@ -90,7 +90,7 @@ export default {
       searchParams: {},
 
       isLoading: false,
-      take : 15
+      take: 15
     };
   },
 
@@ -289,8 +289,7 @@ export default {
   grid-gap: 16px;
 }
 
-#round_group__container body {
-  height: 700px;
+#round_group__container section {
   text-align: center;
 }
 
@@ -314,17 +313,6 @@ export default {
 }
 
 /* header end */
-
-/* footer start */
-#round_group__container footer {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* footer end */
-
 #search__lookup_date__input {
   width: 180px;
 }
