@@ -191,6 +191,11 @@ export default {
     this.isLoading = true;
     this.requestGetStatistics({visitFromDt, visitToDt});
   },
+  watch: {
+    currentPage(newPage) {
+      this.rows = this.pager.getPageRowsByPage(newPage);
+    },
+  },
 };
 </script>
 
