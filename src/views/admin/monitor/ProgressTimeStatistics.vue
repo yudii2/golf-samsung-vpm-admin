@@ -25,9 +25,9 @@
       </div>
     </header>
 
-    <body>
-    <ProgressTimeStatisticsTable :rows="rows"/>
-    </body>
+    <section>
+      <ProgressTimeStatisticsTable :rows="rows"/>
+    </section>
 
     <footer class="pages__container mt">
       <Pages
@@ -75,6 +75,7 @@ export default {
       visitDt,
 
       isLoading: false,
+      take: 15,
     };
   },
 
@@ -95,6 +96,7 @@ export default {
       const {
         data: {playTimeStatsVOList},
       } = res;
+
       this.updatePager(playTimeStatsVOList);
     },
     /**
@@ -138,7 +140,7 @@ export default {
     updatePager(list) {
       this.pager = new Pager({
         list,
-        take: 5,
+        take: this.take,
       });
       const res = this.pager.generate();
       this.rows = res.firstPageRows;
