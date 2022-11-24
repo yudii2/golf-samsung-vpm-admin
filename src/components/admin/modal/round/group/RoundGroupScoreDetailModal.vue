@@ -301,7 +301,7 @@ export default {
 
 #round_group_score_detail_modal__container article section:last-child > div {
   height: 100%;
-  max-height: calc(100vh - 50px - 30px - 35px - 16px - 100px);
+  max-height: calc(100vh - 50px - 30px - 35px - 16px - 180px);
   overflow-y: scroll;
   margin-top: 15px;
 
