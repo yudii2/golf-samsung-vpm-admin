@@ -88,7 +88,8 @@
                 <td rowspan="2">
                   {{ player.secondCourse }}
                 </td>
-                <td rowspan="2">{{ parsedBookgTime(selectedRound.round.lastTeamTime) }}</td>
+
+                <td rowspan="2">{{ parsedBookgTime(player.startTime) }}</td>
                 <td rowspan="2">{{ maskedPlayerName(player.name, selectedRound.visitDt) }}</td>
                 <td>스코어</td>
                 <td
