@@ -24,6 +24,12 @@
         <span>{{ hoveredCaddie.bookgName }} </span>
       </div>
 
+      <!-- 경과시간-->
+      <div class="caddie-info-row">
+        <span>경과시간 : </span>
+        <span>{{ this.parsedCaddieTime(hoveredCaddie.lastReceivedTerm) }}</span>
+      </div>
+
       <template v-if="isMobileMode">
         <div class="caddie-info-row" v-for="(player, playerIndex) in hoveredCaddie.playerNameVOList"
              :key="player.playerId">
@@ -54,6 +60,18 @@ export default {
       const isMobile =
         this.$route.name === "DashboardMobileCommon"
       return isMobile;
+    },
+
+    /**
+     * 캐디 예약 시간
+     * - 구문 분석 후 포맷 변경하여 반환.
+     * - 캐디 텍스트를 시간으로 보는 경우.
+     */
+    parsedCaddieTime() {
+      return (bookgTime) => {
+        const pos = String(bookgTime).lastIndexOf(":");
+        return bookgTime.substring(0, pos);
+      };
     },
   },
 
