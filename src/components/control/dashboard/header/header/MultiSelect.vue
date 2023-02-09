@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { COURSE, MAP } from "@/utils/constants";
+import {mapActions, mapGetters} from "vuex";
+import {MAP} from "@/utils/constants";
 
 export default {
   name: "MultiSelect",

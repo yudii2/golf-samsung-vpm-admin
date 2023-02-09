@@ -3,19 +3,24 @@
     <div class="top_wrap">
       <CompanyLogo />
       <ControlDashBoardHeaderContents />
+      <SwitchAdminPage />
     </div>
   </div>
 </template>
 
 <script>
 import CompanyLogo from "@/components/shared/CompanyLogo.vue";
-import ControlDashBoardHeaderContents from "@/views/control/dashboard/header/contents/ControlDashBoardHeaderContents.vue";
+import ControlDashBoardHeaderContents
+  from "@/views/control/dashboard/header/contents/ControlDashBoardHeaderContents.vue";
+import SwitchAdminPage from "@/views/control/dashboard/header/contents/SwitchAdminPage";
+
 
 export default {
   name: "ControlDashBoardHeader",
   components: {
     CompanyLogo,
     ControlDashBoardHeaderContents,
+    SwitchAdminPage,
   },
 };
 </script>
@@ -33,5 +38,6 @@ export default {
   align-items: center;
   background-color: #002123;
   align-self: center;
+  justify-content: space-between;
 }
 </style>

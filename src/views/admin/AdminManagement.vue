@@ -1,7 +1,10 @@
 <template>
   <div id="admin__container">
     <header>
-      <CompanyLogo />
+      <div class="admin__header_wrap">
+        <CompanyLogo />
+        <SwitchDashboardPage />
+      </div>
     </header>
 
     <body>
@@ -27,11 +30,12 @@ import CompanyLogo from "@/components/shared/CompanyLogo.vue";
 import RoundManage from "@/views/admin/round/RoundManage.vue";
 import MonitorManage from "@/views/admin/monitor/MonitorManage.vue";
 import VehicleManage from "./vehicle/VehicleManage.vue";
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import RoundNavigation from "@/components/admin/nav/RoundNavigation.vue";
 import useData from "@/api/v1/monitor/useData";
-import { COMPANY_CODE_DEFAULT_VALUE } from "@/utils/constants";
+import {COMPANY_CODE_DEFAULT_VALUE} from "@/utils/constants";
 import CaddieManage from "@/views/admin/caddie/CaddieManage";
+import SwitchDashboardPage from "@/views/admin/header/SwitchDashboardPage";
 
 const { init } = useData();
 
@@ -44,6 +48,7 @@ export default {
     VehicleManage,
     CompanyLogo,
     RoundNavigation,
+    SwitchDashboardPage
   },
   data() {
     return {
@@ -97,9 +102,14 @@ export default {
 #admin__container > header {
   padding: 5px 10px;
   height: 50px;
-  display: flex;
+  /*display: flex;*/
   align-items: center;
   border-bottom: 1px solid var(--primary);
+}
+.admin__header_wrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 /* header end */
 
