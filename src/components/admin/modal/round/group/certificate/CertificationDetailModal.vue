@@ -14,12 +14,23 @@
       <CloseButton @onClose="handleClickClose"/>
       <section>
         <div class="certification_image__wrapper" ref="certification">
-          <img
-            class="certification_image"
-            :src="
+            <img
+              v-if="company.code === 'L153'"
+              class="certification_image"
+              :src="
+              require('@/assets/images/admin/group/certification_gapyeongBenest.png')
+            "
+              alt=""
+            />
+            <img
+              v-else
+              class="certification_image"
+              :src="
               require('@/assets/images/admin/group/certification_ansung.png')
             "
-          />
+              alt=""
+            />
+
           <div class="text_container">
             <p class="record_number">No. {{ getSelectedCertification.recordNo }}</p>
             <p class="certification_name">
