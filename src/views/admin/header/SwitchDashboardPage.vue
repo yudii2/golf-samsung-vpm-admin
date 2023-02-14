@@ -1,7 +1,7 @@
 <template>
   <div class="change_web_mode__container ml" @click="goDashboard">
     <div class="change_web_mode__wrapper round-md">
-      <span><i class="page-arrow fas fa-arrow-up"></i></span>
+      <i class="page-arrow fas fa-arrow-up"></i>
     </div>
 
   </div>

@@ -2,7 +2,6 @@
   <div class="change_web_mode__container ml" @click="goManagement">
     <div class="change_web_mode__wrapper round-md">
       <i class="page-arrow fas fa-arrow-up"></i>
-<!--      <span><i class="page-arrow fas fa-arrow-right"></i></span>-->
     </div>
 
   </div>
