@@ -33,7 +33,7 @@
 
           <div class="text_container">
             <p class="record_number">No. {{ getSelectedCertification.recordNo }}</p>
-            <p class="certification_name">
+            <p class="certification_name" :class="{'is-gapyeong' : company.code === 'L153'}">
               {{ certificateNmByCd(getSelectedCertification.certificateCd) }}
             </p>
             <template v-if="updatedPlayerName">
@@ -386,6 +386,9 @@ export default {
   font-style: italic;
   margin-top: -11px;
 }
+#certification_modal__container .certification_image__wrapper p.certification_name.is-gapyeong{
+  font-style: normal;
+}
 
 #certification_modal__container .certification_image__wrapper p.player_name {
   font-weight: 700;
@@ -513,6 +516,9 @@ export default {
     color: #216668;
     font-style: italic;
     margin-top: 40px;
+  }
+  #certification_modal__container .certification_image__wrapper p.certification_name.is-gapyeong{
+    font-style: normal;
   }
 
   #certification_modal__container .certification_image__wrapper p.player_name {
