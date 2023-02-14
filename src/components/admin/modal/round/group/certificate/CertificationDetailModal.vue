@@ -14,15 +14,26 @@
       <CloseButton @onClose="handleClickClose"/>
       <section>
         <div class="certification_image__wrapper" ref="certification">
-          <img
-            class="certification_image"
-            :src="
+            <img
+              v-if="company.code === 'L153'"
+              class="certification_image"
+              :src="
+              require('@/assets/images/admin/group/certification_gapyeongBenest.png')
+            "
+              alt=""
+            />
+            <img
+              v-else
+              class="certification_image"
+              :src="
               require('@/assets/images/admin/group/certification_ansung.png')
             "
-          />
+              alt=""
+            />
+
           <div class="text_container">
             <p class="record_number">No. {{ getSelectedCertification.recordNo }}</p>
-            <p class="certification_name">
+            <p class="certification_name" :class="{'is-gapyeong' : company.code === 'L153'}">
               {{ certificateNmByCd(getSelectedCertification.certificateCd) }}
             </p>
             <template v-if="updatedPlayerName">
@@ -375,6 +386,9 @@ export default {
   font-style: italic;
   margin-top: -11px;
 }
+#certification_modal__container .certification_image__wrapper p.certification_name.is-gapyeong{
+  font-style: normal;
+}
 
 #certification_modal__container .certification_image__wrapper p.player_name {
   font-weight: 700;
@@ -502,6 +516,9 @@ export default {
     color: #216668;
     font-style: italic;
     margin-top: 40px;
+  }
+  #certification_modal__container .certification_image__wrapper p.certification_name.is-gapyeong{
+    font-style: normal;
   }
 
   #certification_modal__container .certification_image__wrapper p.player_name {
