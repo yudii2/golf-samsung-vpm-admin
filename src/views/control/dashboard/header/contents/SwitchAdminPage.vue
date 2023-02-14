@@ -1,7 +1,8 @@
 <template>
   <div class="change_web_mode__container ml" @click="goManagement">
     <div class="change_web_mode__wrapper round-md">
-      <span>관리자페이지 <i class="page-arrow fas fa-arrow-right"></i></span>
+      <i class="page-arrow fas fa-arrow-up"></i>
+<!--      <span><i class="page-arrow fas fa-arrow-right"></i></span>-->
     </div>
 
   </div>
@@ -26,18 +27,14 @@ export default {
 }
 
 .change_web_mode__wrapper {
-  width: 120px;
-  height: 35px;
   background-color: var(--primary);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
+  padding: 10px;
   transition: all 0.3s ease;
+  border-radius: 50%;
 }
 
-.change_web_mode__wrapper > span {
-  font-size: 0.8rem;
-}
 </style>
